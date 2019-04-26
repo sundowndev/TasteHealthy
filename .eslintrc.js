@@ -35,13 +35,13 @@ module.exports = {
       let: 'never',
       const: 'never',
     }],
-    'require-jsdoc': [ERROR, {
-      'require': {
-        'FunctionDeclaration': true,
-        'MethodDefinition': true,
-        'ClassDeclaration': true,
-      }
-    }],
+    // 'require-jsdoc': [ERROR, {
+    //   'require': {
+    //     'FunctionDeclaration': true,
+    //     'MethodDefinition': true,
+    //     'ClassDeclaration': true,
+    //   }
+    // }],
     'space-before-function-paren': [ERROR, {
       asyncArrow: 'always',
       anonymous: 'never',
