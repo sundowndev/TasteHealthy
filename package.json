@@ -1,0 +1,19 @@
+{
+  "name": "tastehealthy",
+  "version": "1.0.0",
+  "description": "Taste Healthy est un projet de data journalisme basé sur l’alimentation et la consommation journalière des Français.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sundowndev/TasteHealthy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sundowndev/TasteHealthy/issues"
+  },
+  "homepage": "https://github.com/sundowndev/TasteHealthy#readme"
+}
