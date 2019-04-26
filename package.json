@@ -4,7 +4,12 @@
   "description": "Taste Healthy est un projet de data journalisme basé sur l’alimentation et la consommation journalière des Français.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run client:test && npm server:test",
+    "lint": "echo 1",
+    "client:test": "echo 1",
+    "server:test": "echo 2",
+    "docker:up": "",
+    "docker:down": ""
   },
   "repository": {
     "type": "git",
@@ -15,5 +20,15 @@
   "bugs": {
     "url": "https://github.com/sundowndev/TasteHealthy/issues"
   },
-  "homepage": "https://github.com/sundowndev/TasteHealthy#readme"
+  "homepage": "https://github.com/sundowndev/TasteHealthy#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^7.5.2",
+    "@commitlint/config-conventional": "^7.5.0",
+    "husky": "^2.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }  
+  }
 }
