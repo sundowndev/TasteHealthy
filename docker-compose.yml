@@ -1,4 +1,68 @@
-# services
-# postgres
-# node:11
-# react+nginx
+version: '2'
+
+services:
+  adminer:
+    image: adminer
+    restart: on-failure
+    ports:
+      - 8080:8080
+
+  db:
+    container_name: th_db
+    image: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: tastehealthy
+      POSTGRES_DB: tastehealthy
+    ports:
+      - 3306:5432
+    networks:
+      - default
+      - postgres
+
+  client:
+    container_name: th_client
+    restart: on-failure
+    build:
+      context: './client'
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - client_data:/usr/app/client
+
+  server:
+    container_name: th_server
+    restart: on-failure
+    image: node:latest
+    build:
+      context: './server'
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+    ports:
+      - '3000:3000'
+    networks:
+      - default
+      - postgres
+      # - web
+
+  nginx:
+    container_name: th_nginx
+    image: nginx:latest
+    volumes_from:
+      - client
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - default
+      # - web
+
+volumes:
+  client_data:
+
+networks:
+  # web:
+  #   external: true
+  postgres: {}
