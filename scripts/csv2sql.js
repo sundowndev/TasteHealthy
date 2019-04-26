@@ -1,7 +1,7 @@
 const csv = require('csvtojson');
-const csvFilePath =
-  '/home/sundowndev/Téléchargements/fr.openfoodfacts.org.products.csv';
-// const csvFilePath = './scripts/test.csv';
+// const csvFilePath =
+  // '/home/sundowndev/Téléchargements/fr.openfoodfacts.org.products.csv';
+const csvFilePath = './scripts/test.csv';
 
 csv(
   {
@@ -19,14 +19,14 @@ csv(
           return reject('ok');
         }
 
-        console.log(`Processing line ${lineNumber}`);
+        console.log(`Processing line ${lineNumber}`, json);
 
         return resolve();
       }),
     (error) => {
       throw new Error(error);
     },
-    (json) => {
-      console.log('success!', json);
+    () => {
+      console.log('Done.');
     },
   );
