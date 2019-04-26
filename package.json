@@ -4,12 +4,15 @@
   "description": "Taste Healthy est un projet de data journalisme basé sur l’alimentation et la consommation journalière des Français.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run client:test && npm server:test",
-    "lint": "eslint -c ./.eslintrc.js ./ --no-eslintrc --quiet",
-    "client:test": "",
-    "server:test": "",
-    "docker:up": "",
-    "docker:down": ""
+    "test": "npm run client:test && npm run server:test",
+    "lint": "eslint -c ./.eslintrc.js . --no-eslintrc --quiet",
+    "client:build": "exit 0",
+    "client:test": "exit 0",
+    "server:build:dev": "webpack --config ./server/webpack.dev.config.js",
+    "server:build:prod": "webpack --config ./server/webpack.prod.config.js",
+    "server:test": "exit 0",
+    "docker:up": "exit 0",
+    "docker:down": "exit 0"
   },
   "repository": {
     "type": "git",
@@ -22,15 +25,28 @@
   },
   "homepage": "https://github.com/sundowndev/TasteHealthy#readme",
   "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "eslint": "^5.16.0",
-    "husky": "^2.1.0"
+    "husky": "^2.1.0",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.1",
+    "webpack-node-externals": "^1.7.2"
   },
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "helmet": "^3.16.0"
   }
 }
