@@ -17,9 +17,7 @@ csv(
   .subscribe(
     (doc, lineNumber) =>
       new Promise((resolve, reject) => {
-        if (lineNumber > 10000) {
-          return reject('ok');
-        } else if (doc.product_name === '') {
+        if (doc.product_name === '') {
           return resolve();
         }
 
