@@ -11,10 +11,10 @@ Cette application repose sur les données d'[Open Food Facts](https://fr.openfoo
 ### Processing CSV to SQL converter
 
 ``` shell
-# Copy the first 200 lines
-head -200 ~/Téléchargements/fr.openfoodfacts.org.products.csv > ./scripts/test2.csv
+# Copy the first 10000 lines (example)
+head -10000 ~/Téléchargements/fr.openfoodfacts.org.products.csv > ./scripts/test2.csv
 
-# Fix delimiter char
+# Fix delimiter char (replace tab with comma)
 sed -i -- 's/ /,/g' ./scripts/test2.csv
 
 # Run script
