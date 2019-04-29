@@ -1,25 +1,32 @@
+const path = require('path');
 const csv = require('csvtojson');
 // const csvFilePath =
-  // '/home/sundowndev/Téléchargements/fr.openfoodfacts.org.products.csv';
-const csvFilePath = './scripts/test.csv';
+// '/home/sundowndev/Téléchargements/fr.openfoodfacts.org.products.csv';
+const csvFilePath = path.join(process.cwd(), './scripts/test2.csv');
 
 csv(
   {
     output: 'json',
     maxRowLength: 65535,
     fork: true,
+    delimiter: ',',
   },
   {},
 )
   .fromFile(csvFilePath)
   .subscribe(
-    (json, lineNumber) =>
+    (doc, lineNumber) =>
       new Promise((resolve, reject) => {
         if (lineNumber > 10000) {
           return reject('ok');
+        } else if (doc.product_name === '') {
+          return resolve();
         }
 
-        console.log(`Processing line ${lineNumber}`, json);
+        console.log(
+          `Processing line ${lineNumber} --`,
+          doc.product_name || null,
+        );
 
         return resolve();
       }),
