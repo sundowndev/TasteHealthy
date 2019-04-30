@@ -19,7 +19,7 @@ const tables = [
   {
     table: 'products',
     query: `CREATE TABLE "products" (
-    "id" serial primary key,
+    "id" serial primary key NOT NULL,
     "code"  character  varying  NOT NULL,
     "url" character varying NOT NULL,
     "creator" character varying NOT NULL,
@@ -38,7 +38,7 @@ const tables = [
     table: 'product_nutrition_facts',
     query: `CREATE TABLE "product_nutrition_facts" (
     "id" serial NOT NULL,
-    "product_id"  varchar(80) references  products(id),
+    "product_id"  serial references  products(id) NOT NULL,
     "energy_100g" character varying,
     "energy_from_fat_100g" character varying,
     "fat_100g" character varying,
@@ -163,15 +163,14 @@ async function main() {
       throw new Error(error);
     });
 
+  await client
+    .query(`DROP TABLE IF EXISTS products, product_nutrition_facts CASCADE;`)
+    .then(() => logger(`[*] Dropped tables database`));
+
   for (let i = 0; i < tables.length; i++) {
     await client
-      .query(`DROP TABLE IF EXISTS ${tables[i].table}`)
-      .then(() => logger(`[*] Dropped ${tables[i].table} database`))
-      .then(() =>
-        client
-          .query(tables[i].query)
-          .then(() => logger(`[*] Created ${tables[i].table} schema`)),
-      )
+      .query(tables[i].query)
+      .then(() => logger(`[*] Created ${tables[i].table} schema`))
       .catch((error) => {
         throw new Error(error);
       });
@@ -190,6 +189,10 @@ async function main() {
     .subscribe(
       (doc, lineNumber) =>
         new Promise((resolve, reject) => {
+          // console.log(doc.carbohydrates_100g);
+
+          // return resolve();
+
           if (doc.product_name === '') {
             return reject();
           }
@@ -241,7 +244,7 @@ async function main() {
               ],
             )
             .then((res) => {
-              console.log(2222222222222222, res);
+              let productId = res.rows[0].id;
 
               client.query(
                 `INSERT INTO product_nutrition_facts(
@@ -464,7 +467,7 @@ async function main() {
                 $108
               )`,
                 [
-                  1,
+                  productId,
                   doc.energy_100g,
                   doc.energy_from_fat_100g,
                   doc.fat_100g,
