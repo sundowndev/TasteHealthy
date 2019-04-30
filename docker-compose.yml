@@ -21,7 +21,7 @@ services:
     ports:
       - 3306:5432
     volumes:
-      - db_data
+      - db_data:/var/lib/postgresql/data
     networks:
       - default
       - postgres
@@ -63,7 +63,7 @@ services:
   #     # - web
 
 volumes:
-  - db_data
+  db_data:
 #   client_data:
 
 networks:
