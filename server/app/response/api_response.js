@@ -9,6 +9,19 @@ export default function(req, res, next) {
         json.message = req.message;
       }
 
+      if (req.limit) {
+        json.limit = req.limit;
+      }
+
+      if (req.page) {
+        json.page = req.page || 0;
+        json.offset = req.offset || 0;
+      }
+
+      if (req.results) {
+        json.results = req.results;
+      }
+
       if (req.return) {
         if (Array.isArray(req.return)) json.items = req.return;
         else json.item = req.return;
