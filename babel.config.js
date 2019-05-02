@@ -7,6 +7,7 @@ module.exports = {
       },
     ],
     '@babel/preset-react',
+    "@babel/preset-flow"
   ],
   plugins: [
     'styled-components',
