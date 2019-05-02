@@ -6,6 +6,9 @@ const { Client } = require('pg');
 
 // ---------------- Variables ----------------
 const csvFilePath = path.join(process.cwd(), './scripts/test2.csv');
+// const csvFilePath = path.join(
+//   '/home/sundowndev/Téléchargements/fr.openfoodfacts.org.products.csv',
+// );
 
 const dbDns = {
   user: 'postgres',
@@ -17,21 +20,34 @@ const dbDns = {
 
 const tables = [
   {
+    table: 'categories',
+    query: `CREATE TABLE "categories" (
+    "id" serial primary key NOT NULL,
+    "name"  character  varying  NOT NULL
+  );`,
+  },
+  {
     table: 'products',
     query: `CREATE TABLE "products" (
     "id" serial primary key NOT NULL,
     "code"  character  varying  NOT NULL,
     "url" character varying NOT NULL,
     "creator" character varying NOT NULL,
-    "created_t" INT NOT NULL,
     "created_datetime"  DATE  NOT NULL,
-    "last_modified_t" INT NOT NULL,
     "last_modified_datetime"  DATE  NOT NULL,
     "product_name"  character  varying  NOT NULL,
     "generic_name"  character  varying,
     "quantity"  character  varying,
     "image_url" character  varying,
-    "image_small_url" character  varying
+    "category_id" serial references  categories(id) NOT NULL,
+    "packaging" character varying,
+    "packaging_tags" character varying,
+    "brands" character varying,
+    "brands_tags" character varying,
+    "origins" character varying,
+    "manufacturing_places" character varying,
+    "manufacturing_places_tags" character varying,
+    "countries_tags" character varying
   );`,
   },
   {
@@ -164,7 +180,9 @@ async function main() {
     });
 
   await client
-    .query(`DROP TABLE IF EXISTS products, product_nutrition_facts CASCADE;`)
+    .query(
+      `DROP TABLE IF EXISTS products, product_nutrition_facts, categories CASCADE;`,
+    )
     .then(() => logger(`[*] Dropped tables database`));
 
   for (let i = 0; i < tables.length; i++) {
@@ -175,6 +193,24 @@ async function main() {
         throw new Error(error);
       });
   }
+
+  let iProduct = 1;
+  let productId = null;
+  let categories = null;
+  let defaultCategory = null;
+
+  client
+    .query(
+      `INSERT INTO categories(
+                name
+              ) VALUES(
+                $1
+              ) ON CONFLICT DO NOTHING RETURNING id, name`,
+      ['Inconnue'],
+    )
+    .then((res) => {
+      defaultCategory = res.rows[0].id;
+    });
 
   csv(
     {
@@ -189,31 +225,71 @@ async function main() {
     .subscribe(
       (doc, lineNumber) =>
         new Promise((resolve, reject) => {
-          // console.log(doc.carbohydrates_100g);
-
-          // return resolve();
-
           if (doc.product_name === '') {
             return reject();
           }
 
-          logger(`Processing line ${lineNumber} --`, doc.product_name || null);
+          logger(
+            `Processing line ${lineNumber} (id ${iProduct}) -- ${doc.product_name ||
+              null}`,
+          );
 
-          return client
-            .query(
-              `INSERT INTO products(
+          categories = doc.categories_fr.split(',');
+
+          if (doc.categories_fr === '') {
+            return resolve(doc);
+          }
+
+          for (i = 0; i < categories.length; i++) {
+            if (categories[i] === '') {
+              continue;
+            }
+
+            client
+              .query(
+                `INSERT INTO categories(
+                name
+              ) VALUES(
+                $1
+              ) ON CONFLICT DO NOTHING RETURNING id, name`,
+                [categories[i]],
+              )
+              .then((res) => {
+                doc.categoryId = res.rows[0].id;
+
+                logger(333333333, res.rows[0].name, res.rows[0].id);
+              });
+
+            if (i === categories.length - 1) {
+              resolve(doc);
+            }
+          }
+        }).then(
+          (doc) =>
+            new Promise((resolve, reject) => {
+              logger(doc.categoryId || defaultCategory);
+
+              return client
+                .query(
+                  `INSERT INTO products(
                 code,
                 url,
                 creator,
-                created_t,
                 created_datetime,
-                last_modified_t,
                 last_modified_datetime,
                 product_name,
                 generic_name,
                 quantity,
                 image_url,
-                image_small_url
+                category_id,
+                packaging,
+                packaging_tags,
+                brands,
+                brands_tags,
+                origins,
+                manufacturing_places,
+                manufacturing_places_tags,
+                countries_tags
               ) VALUES(
                 $1,
                 $2,
@@ -226,28 +302,42 @@ async function main() {
                 $9,
                 $10,
                 $11,
-                $12
+                $12,
+                $13,
+                $14,
+                $15,
+                $16,
+                $17,
+                $18
               ) RETURNING id`,
-              [
-                doc.code || null,
-                doc.url || null,
-                doc.creator || null,
-                doc.created_t || null,
-                doc.created_datetime || null,
-                doc.last_modified_t || null,
-                doc.last_modified_datetime || null,
-                doc.product_name || null,
-                doc.generic_name || null,
-                doc.quantity || null,
-                doc.image_url || null,
-                doc.image_small_url || null,
-              ],
-            )
-            .then((res) => {
-              let productId = res.rows[0].id;
+                  [
+                    doc.code || null,
+                    doc.url || null,
+                    doc.creator || null,
+                    doc.created_datetime || null,
+                    doc.last_modified_datetime || null,
+                    doc.product_name || null,
+                    doc.generic_name || null,
+                    doc.quantity || null,
+                    doc.image_url || null,
+                    doc.categoryId || defaultCategory,
+                    doc.packaging || null,
+                    doc.packaging_tags || null,
+                    doc.brands || null,
+                    doc.brands_tags || null,
+                    doc.origins || null,
+                    doc.manufacturing_places || null,
+                    doc.manufacturing_places_tags || null,
+                    doc.countries_tags || null,
+                  ],
+                )
+                .then(
+                  (res) =>
+                    new Promise((resolve, reject) => {
+                      productId = res.rows[0].id;
 
-              client.query(
-                `INSERT INTO product_nutrition_facts(
+                      client.query(
+                        `INSERT INTO product_nutrition_facts(
                   product_id,
                   energy_100g,
                   energy_from_fat_100g,
@@ -466,121 +556,127 @@ async function main() {
                 $107,
                 $108
               )`,
-                [
-                  productId,
-                  doc.energy_100g || null,
-                  doc.energy_from_fat_100g || null,
-                  doc.fat_100g || null,
-                  doc.saturated_fat_100g || null,
-                  doc.butyric_acid_100g || null,
-                  doc.caproic_acid_100g || null,
-                  doc.caprylic_acid_100g || null,
-                  doc.capric_acid_100g || null,
-                  doc.lauric_acid_100g || null,
-                  doc.myristic_acid_100g || null,
-                  doc.palmitic_acid_100g || null,
-                  doc.stearic_acid_100g || null,
-                  doc.arachidic_acid_100g || null,
-                  doc.behenic_acid_100g || null,
-                  doc.lignoceric_acid_100g || null,
-                  doc.cerotic_acid_100g || null,
-                  doc.montanic_acid_100g || null,
-                  doc.melissic_acid_100g || null,
-                  doc.monounsaturated_fat_100g || null,
-                  doc.polyunsaturated_fat_100g || null,
-                  doc.omega_3_fat_100g || null,
-                  doc.alpha_linolenic_acid_100g || null,
-                  doc.eicosapentaenoic_acid_100g || null,
-                  doc.docosahexaenoic_acid_100g || null,
-                  doc.omega_6_fat_100g || null,
-                  doc.linoleic_acid_100g || null,
-                  doc.arachidonic_acid_100g || null,
-                  doc.gamma_linolenic_acid_100g || null,
-                  doc.dihomo_gamma_linolenic_acid_100g || null,
-                  doc.omega_9_fat_100g || null,
-                  doc.oleic_acid_100g || null,
-                  doc.elaidic_acid_100g || null,
-                  doc.gondoic_acid_100g || null,
-                  doc.mead_acid_100g || null,
-                  doc.erucic_acid_100g || null,
-                  doc.nervonic_acid_100g || null,
-                  doc.trans_fat_100g || null,
-                  doc.cholesterol_100g || null,
-                  doc.carbohydrates_100g || null,
-                  doc.sugars_100g || null,
-                  doc.sucrose_100g || null,
-                  doc.glucose_100g || null,
-                  doc.fructose_100g || null,
-                  doc.lactose_100g || null,
-                  doc.maltose_100g || null,
-                  doc.maltodextrins_100g || null,
-                  doc.starch_100g || null,
-                  doc.polyols_100g || null,
-                  doc.fiber_100g || null,
-                  doc.proteins_100g || null,
-                  doc.casein_100g || null,
-                  doc.serum_proteins_100g || null,
-                  doc.nucleotides_100g || null,
-                  doc.salt_100g || null,
-                  doc.sodium_100g || null,
-                  doc.alcohol_100g || null,
-                  doc.vitamin_a_100g || null,
-                  doc.beta_carotene_100g || null,
-                  doc.vitamin_d_100g || null,
-                  doc.vitamin_e_100g || null,
-                  doc.vitamin_k_100g || null,
-                  doc.vitamin_c_100g || null,
-                  doc.vitamin_b1_100g || null,
-                  doc.vitamin_b2_100g || null,
-                  doc.vitamin_pp_100g || null,
-                  doc.vitamin_b6_100g || null,
-                  doc.vitamin_b9_100g || null,
-                  doc.folates_100g || null,
-                  doc.vitamin_b12_100g || null,
-                  doc.biotin_100g || null,
-                  doc.pantothenic_acid_100g || null,
-                  doc.silica_100g || null,
-                  doc.bicarbonate_100g || null,
-                  doc.potassium_100g || null,
-                  doc.chloride_100g || null,
-                  doc.calcium_100g || null,
-                  doc.phosphorus_100g || null,
-                  doc.iron_100g || null,
-                  doc.magnesium_100g || null,
-                  doc.zinc_100g || null,
-                  doc.copper_100g || null,
-                  doc.manganese_100g || null,
-                  doc.fluoride_100g || null,
-                  doc.selenium_100g || null,
-                  doc.chromium_100g || null,
-                  doc.molybdenum_100g || null,
-                  doc.iodine_100g || null,
-                  doc.caffeine_100g || null,
-                  doc.taurine_100g || null,
-                  doc.ph_100g || null,
-                  doc.fruits_vegetables_nuts_100g || null,
-                  doc.fruits_vegetables_nuts_dried_100g || null,
-                  doc.fruits_vegetables_nuts_estimate_100g || null,
-                  doc.collagen_meat_protein_ratio_100g || null,
-                  doc.cocoa_100g || null,
-                  doc.chlorophyl_100g || null,
-                  doc.carbon_footprint_100g || null,
-                  doc.carbon_footprint_from_meat_or_fish_100g || null,
-                  doc.nutrition_score_fr_100g || null,
-                  doc.nutrition_score_uk_100g || null,
-                  doc.glycemic_index_100g || null,
-                  doc.water_hardness_100g || null,
-                  doc.choline_100g || null,
-                  doc.phylloquinone_100g || null,
-                  doc.beta_glucan_100g || null,
-                  doc.inositol_100g || null,
-                  doc.carnitine_100g || null,
-                ],
-              );
-            })
-            .then(resolve)
-            .catch((error) => reject(error));
-        }),
+                        [
+                          productId,
+                          doc.energy_100g || null,
+                          doc.energy_from_fat_100g || null,
+                          doc.fat_100g || null,
+                          doc.saturated_fat_100g || null,
+                          doc.butyric_acid_100g || null,
+                          doc.caproic_acid_100g || null,
+                          doc.caprylic_acid_100g || null,
+                          doc.capric_acid_100g || null,
+                          doc.lauric_acid_100g || null,
+                          doc.myristic_acid_100g || null,
+                          doc.palmitic_acid_100g || null,
+                          doc.stearic_acid_100g || null,
+                          doc.arachidic_acid_100g || null,
+                          doc.behenic_acid_100g || null,
+                          doc.lignoceric_acid_100g || null,
+                          doc.cerotic_acid_100g || null,
+                          doc.montanic_acid_100g || null,
+                          doc.melissic_acid_100g || null,
+                          doc.monounsaturated_fat_100g || null,
+                          doc.polyunsaturated_fat_100g || null,
+                          doc.omega_3_fat_100g || null,
+                          doc.alpha_linolenic_acid_100g || null,
+                          doc.eicosapentaenoic_acid_100g || null,
+                          doc.docosahexaenoic_acid_100g || null,
+                          doc.omega_6_fat_100g || null,
+                          doc.linoleic_acid_100g || null,
+                          doc.arachidonic_acid_100g || null,
+                          doc.gamma_linolenic_acid_100g || null,
+                          doc.dihomo_gamma_linolenic_acid_100g || null,
+                          doc.omega_9_fat_100g || null,
+                          doc.oleic_acid_100g || null,
+                          doc.elaidic_acid_100g || null,
+                          doc.gondoic_acid_100g || null,
+                          doc.mead_acid_100g || null,
+                          doc.erucic_acid_100g || null,
+                          doc.nervonic_acid_100g || null,
+                          doc.trans_fat_100g || null,
+                          doc.cholesterol_100g || null,
+                          doc.carbohydrates_100g || null,
+                          doc.sugars_100g || null,
+                          doc.sucrose_100g || null,
+                          doc.glucose_100g || null,
+                          doc.fructose_100g || null,
+                          doc.lactose_100g || null,
+                          doc.maltose_100g || null,
+                          doc.maltodextrins_100g || null,
+                          doc.starch_100g || null,
+                          doc.polyols_100g || null,
+                          doc.fiber_100g || null,
+                          doc.proteins_100g || null,
+                          doc.casein_100g || null,
+                          doc.serum_proteins_100g || null,
+                          doc.nucleotides_100g || null,
+                          doc.salt_100g || null,
+                          doc.sodium_100g || null,
+                          doc.alcohol_100g || null,
+                          doc.vitamin_a_100g || null,
+                          doc.beta_carotene_100g || null,
+                          doc.vitamin_d_100g || null,
+                          doc.vitamin_e_100g || null,
+                          doc.vitamin_k_100g || null,
+                          doc.vitamin_c_100g || null,
+                          doc.vitamin_b1_100g || null,
+                          doc.vitamin_b2_100g || null,
+                          doc.vitamin_pp_100g || null,
+                          doc.vitamin_b6_100g || null,
+                          doc.vitamin_b9_100g || null,
+                          doc.folates_100g || null,
+                          doc.vitamin_b12_100g || null,
+                          doc.biotin_100g || null,
+                          doc.pantothenic_acid_100g || null,
+                          doc.silica_100g || null,
+                          doc.bicarbonate_100g || null,
+                          doc.potassium_100g || null,
+                          doc.chloride_100g || null,
+                          doc.calcium_100g || null,
+                          doc.phosphorus_100g || null,
+                          doc.iron_100g || null,
+                          doc.magnesium_100g || null,
+                          doc.zinc_100g || null,
+                          doc.copper_100g || null,
+                          doc.manganese_100g || null,
+                          doc.fluoride_100g || null,
+                          doc.selenium_100g || null,
+                          doc.chromium_100g || null,
+                          doc.molybdenum_100g || null,
+                          doc.iodine_100g || null,
+                          doc.caffeine_100g || null,
+                          doc.taurine_100g || null,
+                          doc.ph_100g || null,
+                          doc.fruits_vegetables_nuts_100g || null,
+                          doc.fruits_vegetables_nuts_dried_100g || null,
+                          doc.fruits_vegetables_nuts_estimate_100g || null,
+                          doc.collagen_meat_protein_ratio_100g || null,
+                          doc.cocoa_100g || null,
+                          doc.chlorophyl_100g || null,
+                          doc.carbon_footprint_100g || null,
+                          doc.carbon_footprint_from_meat_or_fish_100g || null,
+                          doc.nutrition_score_fr_100g || null,
+                          doc.nutrition_score_uk_100g || null,
+                          doc.glycemic_index_100g || null,
+                          doc.water_hardness_100g || null,
+                          doc.choline_100g || null,
+                          doc.phylloquinone_100g || null,
+                          doc.beta_glucan_100g || null,
+                          doc.inositol_100g || null,
+                          doc.carnitine_100g || null,
+                        ],
+                      );
+
+                      iProduct++;
+
+                      return resolve();
+                    }),
+                )
+                .then(resolve)
+                .catch((error) => reject(error));
+            }),
+        ),
       (error) => {
         throw new Error(error);
       },
