@@ -18,7 +18,13 @@ export const get_products = (req, res, next) => {
 };
 
 export const get_one_product = (req, res, next) => {
-  test_schema(Joi.object().keys({}), req.query, next);
+  test_schema(
+    Joi.object().keys({
+      productId: Joi.number().integer().min(1),
+    }),
+    req.params,
+    next,
+  );
 };
 
 export const get_product_nutrition_facts = (req, res, next) => {
