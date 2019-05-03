@@ -133,10 +133,6 @@ const product_nutrition_facts_fields = [
 ];
 
 export const get_products = (req, res, next) => {
-  req.limit = 20;
-  req.page = req.query.page || 1;
-  req.offset = (req.page - 1) * req.limit;
-
   let query = null;
   let params = [];
 
