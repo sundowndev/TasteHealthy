@@ -2,63 +2,31 @@ import { client } from '@/db/db.connect';
 
 const products_fields = [
   'id',
-  'code',
   'url',
-  'creator',
   'created_datetime',
   'last_modified_datetime',
   'product_name',
   'generic_name',
   'quantity',
   'image_url',
-  'category_id',
-  'packaging',
-  'packaging_tags',
-  'brands',
-  'brands_tags',
+  'category',
   'origins',
+  'packaging',
   'manufacturing_places',
-  'manufacturing_places_tags',
-  'countries_tags',
+  'traces',
+  'countries',
+  'labels',
+  'purchase_places',
+  'stores',
+  'ingredients_text',
 ];
 const product_nutrition_facts_fields = [
+  'id',
   'product_id',
   'energy_100g',
   'energy_from_fat_100g',
   'fat_100g',
   'saturated_fat_100g',
-  'butyric_acid_100g',
-  'caproic_acid_100g',
-  'caprylic_acid_100g',
-  'capric_acid_100g',
-  'lauric_acid_100g',
-  'myristic_acid_100g',
-  'palmitic_acid_100g',
-  'stearic_acid_100g',
-  'arachidic_acid_100g',
-  'behenic_acid_100g',
-  'lignoceric_acid_100g',
-  'cerotic_acid_100g',
-  'montanic_acid_100g',
-  'melissic_acid_100g',
-  'monounsaturated_fat_100g',
-  'polyunsaturated_fat_100g',
-  'omega_3_fat_100g',
-  'alpha_linolenic_acid_100g',
-  'eicosapentaenoic_acid_100g',
-  'docosahexaenoic_acid_100g',
-  'omega_6_fat_100g',
-  'linoleic_acid_100g',
-  'arachidonic_acid_100g',
-  'gamma_linolenic_acid_100g',
-  'dihomo_gamma_linolenic_acid_100g',
-  'omega_9_fat_100g',
-  'oleic_acid_100g',
-  'elaidic_acid_100g',
-  'gondoic_acid_100g',
-  'mead_acid_100g',
-  'erucic_acid_100g',
-  'nervonic_acid_100g',
   'trans_fat_100g',
   'cholesterol_100g',
   'carbohydrates_100g',
@@ -67,10 +35,6 @@ const product_nutrition_facts_fields = [
   'glucose_100g',
   'fructose_100g',
   'lactose_100g',
-  'maltose_100g',
-  'maltodextrins_100g',
-  'starch_100g',
-  'polyols_100g',
   'fiber_100g',
   'proteins_100g',
   'casein_100g',
@@ -80,7 +44,6 @@ const product_nutrition_facts_fields = [
   'sodium_100g',
   'alcohol_100g',
   'vitamin_a_100g',
-  'beta_carotene_100g',
   'vitamin_d_100g',
   'vitamin_e_100g',
   'vitamin_k_100g',
@@ -90,26 +53,11 @@ const product_nutrition_facts_fields = [
   'vitamin_pp_100g',
   'vitamin_b6_100g',
   'vitamin_b9_100g',
-  'folates_100g',
   'vitamin_b12_100g',
-  'biotin_100g',
-  'pantothenic_acid_100g',
-  'silica_100g',
-  'bicarbonate_100g',
   'potassium_100g',
   'chloride_100g',
   'calcium_100g',
-  'phosphorus_100g',
-  'iron_100g',
   'magnesium_100g',
-  'zinc_100g',
-  'copper_100g',
-  'manganese_100g',
-  'fluoride_100g',
-  'selenium_100g',
-  'chromium_100g',
-  'molybdenum_100g',
-  'iodine_100g',
   'caffeine_100g',
   'taurine_100g',
   'ph_100g',
@@ -129,6 +77,7 @@ const product_nutrition_facts_fields = [
   'phylloquinone_100g',
   'beta_glucan_100g',
   'inositol_100g',
+  'bicarbonate_100g',
   'carnitine_100g',
 ];
 
@@ -139,12 +88,11 @@ export const get_products = (req, res, next) => {
   if (req.query.query) {
     query = `SELECT
     ${products_fields.join(',')}
-    FROM products WHERE product_name ~ $1 LIMIT ${req.limit} OFFSET ${
-  req.offset
-}`;
+    FROM products WHERE to_tsvector(product_name) @@ to_tsquery($1) LIMIT ${
+  req.limit
+} OFFSET ${req.offset}`;
     params = [req.query.query];
-  }
-  else {
+  } else {
     query = `SELECT
     ${products_fields.join(',')}
     FROM products ORDER BY id DESC LIMIT ${req.limit} OFFSET ${req.offset}`;
