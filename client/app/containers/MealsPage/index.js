@@ -34,7 +34,7 @@ type propsType = {
   mealsData: mealsType,
 };
 
-const HomePage = (props: propsType) => {
+export const HomePage = (props: propsType) => {
   const [meals, setMeals] = useState(props.mealsData);
 
   return (

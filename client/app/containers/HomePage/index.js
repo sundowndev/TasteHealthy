@@ -7,16 +7,24 @@
 
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
 import messages from './messages';
 
-export default function HomePage() {
-  return (
-    <h1>
-      <FormattedMessage {...messages.header} />
-      <FormattedMessage {...messages.content} />
+type Props = {
+  history: {
+    push: string => any,
+  },
+};
 
-      <Link to="/meals">{"Commencer l'expérience".toUpperCase()}</Link>
-    </h1>
+export default function HomePage(props: Props) {
+  return (
+    <div>
+      <h1>
+        <FormattedMessage {...messages.header} />
+        <FormattedMessage {...messages.content} />
+      </h1>
+      <button type="button" onClick={() => props.history.push('/meals')}>
+        {"commencer l'expérience".toUpperCase()}
+      </button>
+    </div>
   );
 }
