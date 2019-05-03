@@ -6,14 +6,11 @@ import http from 'http';
 import logger from 'morgan';
 import * as path from 'path';
 import { config as env_config } from 'dotenv';
-env_config({
-  path: path.join(process.cwd(), 'server/.env'),
-});
 
 // Internals libraries
 import api_response from '@/response/api_response';
 import api_response_error from '@/response/api_error_response';
-import { connect } from '@/db/db.connect';
+import { connect as db_connect } from '@/db/db.connect';
 
 // Routes
 import products from '@/routes/products';
@@ -21,11 +18,15 @@ import products from '@/routes/products';
 // ---------- GLOBALS ----------
 const app = express();
 
+env_config({
+  path: path.join(process.cwd(), 'server/.env'),
+});
+
 // ---------- INITIALIZE DATABASE ----------
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-connect();
+db_connect();
 
 // ---------- CONFIGURATION HEADERS HTTP ----------
 // app.use(config_headers);
