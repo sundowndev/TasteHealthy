@@ -1,7 +1,7 @@
 export const errorApi = (err) => {
-  return { code: 100, message: err };
+  return { status: 500, message: err };
 };
 
 export const formatResponse = (res) => {
-  return { code: 100, message: res };
+  return { status: 400, message: res };
 };
