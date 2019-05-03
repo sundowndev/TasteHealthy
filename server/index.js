@@ -7,12 +7,12 @@ import logger from 'morgan';
 
 // Internals libraries
 // import initializeExpressArgument from '@/common/initialize-express-argument';
-import api_response from './app/response/api_response';
-import api_response_error from './app/response/api_error_response';
+import api_response from '@/response/api_response';
+import api_response_error from '@/response/api_error_response';
 import { connect } from '@/db/db.connect';
 
 // Routes
-import products from './app/routes/products';
+import products from '@/routes/products';
 
 // ---------- GLOBALS ----------
 const app = express();
