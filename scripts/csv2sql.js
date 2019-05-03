@@ -11,11 +11,11 @@ const csvFilePath = path.join(process.cwd(), './scripts/test2.csv');
 // );
 
 const dbDns = {
-  user: 'postgres',
-  host: 'localhost',
-  database: 'tastehealthy',
-  password: 'tastehealthy',
-  port: 3306,
+  user: process.env.API_DB_USER || 'postgres',
+  host: process.env.API_DB_HOST || '127.0.0.1',
+  database: process.env.API_DB || 'tastehealthy',
+  password: process.env.API_DB_PWD || 'tastehealthy',
+  port: process.env.API_DB_PORT || 3306,
 };
 
 const tables = [
