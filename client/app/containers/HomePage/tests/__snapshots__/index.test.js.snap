@@ -1,9 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<HomePage /> should render and match the snapshot 1`] = `
-<h1>
-  <span>
-    This is the HomePage container!
-  </span>
-</h1>
+<div>
+  <h1>
+    <span>
+      Evaluez la qualité de ce que vous mangez
+    </span>
+    <span>
+      Savez-vous vraiment ce que vous mangez ? Nous oui ! En un clin d’oeil, visualisez les produits qui sont bons et ceux qu’il vaut mieux éviter.
+    </span>
+  </h1>
+  <button
+    type="button"
+  >
+    COMMENCER L'EXPÉRIENCE
+  </button>
+</div>
 `;

@@ -9,10 +9,22 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 
-export default function HomePage() {
+type Props = {
+  history: {
+    push: string => any,
+  },
+};
+
+export default function HomePage(props: Props) {
   return (
-    <h1>
-      <FormattedMessage {...messages.header} />
-    </h1>
+    <div>
+      <h1>
+        <FormattedMessage {...messages.header} />
+        <FormattedMessage {...messages.content} />
+      </h1>
+      <button type="button" onClick={() => props.history.push('/meals')}>
+        {"commencer l'expérience".toUpperCase()}
+      </button>
+    </div>
   );
 }
