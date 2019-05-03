@@ -7,13 +7,12 @@ export default function(error, req, res, next) {
       //   message: error.stack,
       // });
       res.sendStatus(500);
-    }
-    else {
+    } else {
       res.status(404);
       res.json({
         success: false,
         errorMessage: error.message || 'Unknown Error',
-        errorCode: error.code,
+        // errorCode: error.code,
       });
 
       // req.logger.warn({
