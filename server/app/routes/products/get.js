@@ -143,7 +143,9 @@ export const get_products = (req, res, next) => {
   if (req.query.query) {
     query = `SELECT
     ${products_fields.join(',')}
-    FROM products WHERE product_name ~ $1 LIMIT ${req.limit} OFFSET ${req.offset}`;
+    FROM products WHERE product_name ~ $1 LIMIT ${req.limit} OFFSET ${
+  req.offset
+}`;
     params = [req.query.query];
   }
   else {
