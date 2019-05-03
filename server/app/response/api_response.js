@@ -14,7 +14,7 @@ export default function(req, res, next) {
       }
 
       if (req.page) {
-        json.page = req.page || 0;
+        json.page = req.page || 1;
         json.offset = req.offset || 0;
       }
 
