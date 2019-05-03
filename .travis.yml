@@ -12,5 +12,6 @@ before_script:
 script:
   - npm run client:build
   - npm run server:build:prod
+  - npm run lint
   - npm run test
 #- npm run docker:down

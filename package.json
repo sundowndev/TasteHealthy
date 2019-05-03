@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "npm run client:test && npm run server:test",
+    "lint": "npm run client:lint && npm run server:lint",
     "server:lint": "eslint -c ./server/.eslintrc.js ./server --no-eslintrc --quiet --ignore-path ./server/.eslintignore",
     "server:build:dev": "webpack --config ./server/webpack.dev.config.js",
     "server:build:prod": "webpack --config ./server/webpack.prod.config.js",
-    "server:test": "exit 0",
+    "server:test": "cross-env jest ./server --config ./server/jest.config.js --coverage --useStderr --forceExit --detectOpenHandles",
+    "server:test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "docker:up": "exit 0",
     "docker:down": "exit 0",
     "client:analyze:clean": "rimraf stats.json",
