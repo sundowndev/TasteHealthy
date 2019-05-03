@@ -4,9 +4,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import http from 'http';
 import logger from 'morgan';
+import * as path from 'path';
+import { config as env_config } from 'dotenv';
+env_config({
+  path: path.join(process.cwd(), 'server/.env'),
+});
 
 // Internals libraries
-// import initializeExpressArgument from '@/common/initialize-express-argument';
 import api_response from '@/response/api_response';
 import api_response_error from '@/response/api_error_response';
 import { connect } from '@/db/db.connect';
@@ -25,7 +29,6 @@ connect();
 
 // ---------- CONFIGURATION HEADERS HTTP ----------
 // app.use(config_headers);
-// app.use(mandatory_headers);
 
 app.use(logger('[:method] :url :status - :response-time ms'));
 
