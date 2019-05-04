@@ -10,8 +10,9 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+import Modal from 'react-modal';
 import messages from './messages';
+
 import {
   changeLunch,
   changeBreakfast,
@@ -34,11 +35,45 @@ type propsType = {
   mealsData: mealsType,
 };
 
+const customStyles = {
+  content: {
+    top: '5%',
+    left: '5%',
+    right: '5%',
+    bottom: '5%',
+  },
+};
+
 export const HomePage = (props: propsType) => {
   const [meals, setMeals] = useState(props.mealsData);
+  const [modalIsOpen, toggleModal] = useState(false);
+
+  const afterOpenModal = () => {};
+
+  const changeBreakfast = data => props.changeBreakfast(data);
+  const changeLunch = data => props.changeLunch(data);
+  const changeDinner = data => props.changeDinner(data);
+  const changeSnack = data => props.changeSnack(data);
 
   return (
     <h1>
+      {/**
+       * Modal component
+       */}
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={() => toggleModal(false)}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <button type="button" onClick={() => toggleModal(false)}>
+          close
+        </button>
+        <div>I am a modal</div>
+      </Modal>
+      {/**  */}
+
       <FormattedMessage {...messages.header} />
       <button
         type="button"
@@ -53,8 +88,17 @@ export const HomePage = (props: propsType) => {
       >
         TTTTT
       </button>
-      <button type="button" onClick={() => props.changeBreakfast(meals)}>
-        -
+      <button type="button" onClick={() => toggleModal(true)}>
+        Breakfast
+      </button>
+      <button type="button" onClick={() => toggleModal(true)}>
+        Lunch
+      </button>
+      <button type="button" onClick={() => toggleModal(true)}>
+        Dinner
+      </button>
+      <button type="button" onClick={() => toggleModal(true)}>
+        Snack
       </button>
     </h1>
   );
