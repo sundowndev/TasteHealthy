@@ -11,6 +11,10 @@ router.route('/').get(schemas.get_products, paginate(20), get.get_products);
 router.route('/:productId').get(schemas.get_one_product, get.get_one_product);
 
 router
+  .route('/:productId/misc_data')
+  .get(schemas.get_one_product, get.get_one_product_misc_data);
+
+router
   .route('/:productId/nutrition_facts')
   .get(schemas.get_product_nutrition_facts, get.get_one_product_facts);
 
