@@ -1,4 +1,5 @@
 import { client } from '@/db/db.connect';
+import * as msg from '@/errors/message_errors.js';
 
 const products_fields = [
   'id',
@@ -80,17 +81,32 @@ const product_nutrition_facts_fields = [
   'bicarbonate_100g',
   'carnitine_100g',
 ];
+const product_misc_data_fields = [
+  'id',
+  'product_id',
+  'serving_size_g',
+  'no_nutriments',
+  'additives_n',
+  'additives',
+  'ingredients_from_palm_oil_n',
+  'ingredients_from_palm_oil',
+  'nutrition_grade_fr',
+  'main_category_fr',
+  'carbon_footprint_100g',
+  'nutrition_score_fr_100g',
+  'nutrition_score_uk_100g',
+];
 
 export const get_products = (req, res, next) => {
   let query = null;
   let params = [];
 
   if (req.query.query) {
-    query = `SELECT
-    ${products_fields.join(',')}
-    FROM products WHERE to_tsvector(product_name) @@ to_tsquery($1) LIMIT ${
-  req.limit
-} OFFSET ${req.offset}`;
+    query = `SELECT ${products_fields.join(
+      ',',
+    )} FROM products WHERE to_tsvector(product_name) @@ to_tsquery($1) LIMIT ${
+      req.limit
+    } OFFSET ${req.offset}`;
     params = [req.query.query];
   } else {
     query = `SELECT
@@ -114,7 +130,7 @@ export const get_one_product = (req, res, next) => {
     ])
     .then((res) => {
       if (!res.rows[0]) {
-        return next({ code: 404, message: 'Product not found' });
+        return next(msg.productNotFound());
       }
 
       req.return = res.rows[0] || {};
@@ -132,7 +148,25 @@ export const get_one_product_facts = (req, res, next) => {
     )
     .then((res) => {
       if (!res.rows[0]) {
-        return next({ code: 404, message: 'Product not found' });
+        return next(msg.productNotFound());
+      }
+
+      req.return = res.rows[0] || {};
+    })
+    .then(next);
+};
+
+export const get_one_product_misc_data = (req, res, next) => {
+  client
+    .query(
+      `SELECT ${product_misc_data_fields.join(
+        ',',
+      )} FROM product_misc_data WHERE product_id = $1`,
+      [req.params.productId],
+    )
+    .then((res) => {
+      if (!res.rows[0]) {
+        return next(msg.productNotFound());
       }
 
       req.return = res.rows[0] || {};
