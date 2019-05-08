@@ -5,7 +5,6 @@ export const get_products = (req, res, next) => {
   test_schema(
     Joi.object().keys({
       query: Joi.string()
-        .alphanum()
         .min(3)
         .max(45),
       page: Joi.number()

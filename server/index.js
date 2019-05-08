@@ -14,6 +14,7 @@ import { connect as db_connect } from '@/db/db.connect';
 
 // Routes
 import products from '@/routes/products';
+import categories from '@/routes/categories';
 
 // ---------- GLOBALS ----------
 const app = express();
@@ -35,6 +36,7 @@ app.use(logger('[:method] :url :status - :response-time ms'));
 
 // ROUTES
 app.use('/products', products);
+app.use('/categories', categories);
 
 // ---------- RESPONSE ----------
 // SUCCESS

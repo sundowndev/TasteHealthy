@@ -1,4 +1,3 @@
-
 import Joi from 'joi';
 import * as msgErr from '@/errors/message_errors';
 
@@ -15,8 +14,7 @@ function _parse_joi_error(error) {
 
     // remove extra comma
     message = message.slice(0, -1);
-  }
-  else {
+  } else {
     message = error.message;
   }
 
@@ -34,14 +32,12 @@ function _parse_joi_error(error) {
 function test_schema(schema, recv, cb) {
   // try
   try {
-
     const result = Joi.validate(recv, schema);
 
     if (!result.error) cb();
     else cb(msgErr.formatResponse(_parse_joi_error(result.error)));
-
-  } // catch
-  catch (err) {
+  } catch (err) {
+    // catch
     cb(msgErr.errorApi(err));
   }
 }

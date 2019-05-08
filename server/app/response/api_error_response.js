@@ -6,9 +6,9 @@ export default function(error, req, res, next) {
       //   route: `${req.method} - ${req.url}`,
       //   message: error.stack,
       // });
-      res.sendStatus(500);
+      res.sendStatus(error.status || 500);
     } else {
-      res.status(404);
+      res.status(error.status || 404);
       res.json({
         success: false,
         errorMessage: error.message || 'Unknown Error',
