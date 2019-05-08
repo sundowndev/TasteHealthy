@@ -10,7 +10,7 @@
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
 import messages from './messages';
 import {
   changeLunch,
