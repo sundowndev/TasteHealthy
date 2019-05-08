@@ -37,7 +37,8 @@ export const get_categories = (req, res, next) => {
       req.results = res.rows.length;
       req.return = res.rows || [];
     })
-    .then(next);
+    .then(next)
+    .catch((error) => next(msg.errorApi(error)));
 };
 
 export const get_one_category = (req, res, next) => {
@@ -53,7 +54,8 @@ export const get_one_category = (req, res, next) => {
 
       req.return = res.rows[0] || {};
     })
-    .then(next);
+    .then(next)
+    .catch((error) => next(msg.errorApi(error)));
 };
 
 export const get_products_by_category = (req, res, next) => {
@@ -70,5 +72,6 @@ export const get_products_by_category = (req, res, next) => {
       req.results = res.rows.length;
       req.return = res.rows || [];
     })
-    .then(next);
+    .then(next)
+    .catch((error) => next(msg.errorApi(error)));
 };
