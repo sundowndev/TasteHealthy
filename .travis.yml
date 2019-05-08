@@ -10,8 +10,7 @@ node_js:
 before_script:
   - npm install
 script:
-  - npm run client:build
-  - npm run server:build:prod
+  - npm run build
   - npm run lint
   - npm run test
 #- npm run docker:down
