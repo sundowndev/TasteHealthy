@@ -19,7 +19,7 @@ export const get_products = (req, res, next) => {
 export const get_one_product = (req, res, next) => {
   test_schema(
     Joi.object().keys({
-      productId: Joi.number().integer().min(1),
+      productId: Joi.number().integer().min(1).required(),
     }),
     req.params,
     next,

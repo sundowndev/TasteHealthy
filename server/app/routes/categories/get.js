@@ -1,27 +1,7 @@
 import { client } from '@/db/db.connect';
 import * as msg from '@/errors/message_errors.js';
-
-const categories_fields = ['id', 'name'];
-const products_fields = [
-  'id',
-  'url',
-  'created_datetime',
-  'last_modified_datetime',
-  'product_name',
-  'generic_name',
-  'quantity',
-  'image_url',
-  'category',
-  'origins',
-  'packaging',
-  'manufacturing_places',
-  'traces',
-  'countries',
-  'labels',
-  'purchase_places',
-  'stores',
-  'ingredients_text',
-];
+import { categories_fields } from '@/db/fields/categories';
+import { products_fields } from '@/db/fields/products';
 
 export const get_categories = (req, res, next) => {
   let query = null;
