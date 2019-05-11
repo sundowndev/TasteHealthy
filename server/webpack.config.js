@@ -33,32 +33,4 @@ const app = {
   plugins: [],
 };
 
-const tests = {
-  mode,
-  watch,
-  entry: path.join(root, 'test/index.js'),
-  resolve: {
-    modules: [path.join(root, 'node_modules')],
-    alias: { '@': path.join(root, 'app') },
-    extensions: ['.js', '.json', '.pem'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: { loader: 'babel-loader' },
-      },
-    ],
-  },
-  target: 'node',
-  output: {
-    path: path.join(root, 'build'),
-    filename: 'tests.spec.js',
-  },
-  externals: [nodeExternals()],
-  devtool: 'eval-cheap-module-source-map',
-  plugins: [],
-};
-
-module.exports = [app, tests];
+module.exports = [app];
