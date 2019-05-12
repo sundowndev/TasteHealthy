@@ -27,9 +27,11 @@ export const get_products = (req, res, next) => {
     .query(query, params)
     .then((res) => {
       req.results = res.rows.length;
-      req.return = res.rows || [];
+      req.return = res.rows;
+
+      return next();
     })
-    .then(next);
+    .catch((error) => next(msg.errorApi(error)));
 };
 
 export const get_one_product = (req, res, next) => {
@@ -42,9 +44,11 @@ export const get_one_product = (req, res, next) => {
         return next(msg.productNotFound());
       }
 
-      req.return = res.rows[0] || {};
+      req.return = res.rows[0];
+
+      return next();
     })
-    .then(next);
+    .catch((error) => next(msg.errorApi(error)));
 };
 
 export const get_one_product_facts = (req, res, next) => {
@@ -60,9 +64,11 @@ export const get_one_product_facts = (req, res, next) => {
         return next(msg.productNotFound());
       }
 
-      req.return = res.rows[0] || {};
+      req.return = res.rows[0];
+
+      return next();
     })
-    .then(next);
+    .catch((error) => next(msg.errorApi(error)));
 };
 
 export const get_one_product_misc_data = (req, res, next) => {
@@ -78,7 +84,9 @@ export const get_one_product_misc_data = (req, res, next) => {
         return next(msg.productNotFound());
       }
 
-      req.return = res.rows[0] || {};
+      req.return = res.rows[0];
+
+      return next();
     })
-    .then(next);
+    .catch((error) => next(msg.errorApi(error)));
 };
