@@ -4,10 +4,6 @@
 import { paginate } from '@/common/pagination';
 
 describe('PAGINATION', () => {
-  beforeEach(() => {
-    // sinon.reset();
-  });
-
   it('default limit', () => {
     const req = {
       query: {},
