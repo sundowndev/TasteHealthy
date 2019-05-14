@@ -59,9 +59,8 @@ describe('PRODUCTS ROUTES -- GET', () => {
       sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
         const expectedQuery = `SELECT ${products_fields.join(
           ',',
-        )} FROM products WHERE to_tsvector(product_name) @@ to_tsquery($1) LIMIT ${
-          req.limit
-        } OFFSET ${req.offset}`;
+        )} FROM products WHERE to_tsvector(product_name) @@ to_tsquery($1) LIMIT
+        ${req.limit} OFFSET ${req.offset}`;
 
         expect(query).toBe(expectedQuery);
         expect(params).toEqual(['nutella']);
