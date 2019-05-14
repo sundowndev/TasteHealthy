@@ -3,7 +3,10 @@ const path = require('path');
 
 const mode = process.env.NODE_ENV || 'production';
 const watch = process.env.WATCH || false;
-const root = process.env.ROOT_PROGRAM || path.resolve('./server');
+const root = path.join(
+  process.cwd(),
+  path.resolve(process.env.ROOT_PROGRAM || './server'),
+);
 
 const app = {
   mode,
