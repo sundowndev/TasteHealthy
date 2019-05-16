@@ -10,24 +10,23 @@ import { config as env_config } from 'dotenv';
 // Internals libraries
 import api_response from '@/response/api_response';
 import api_response_error from '@/response/api_error_response';
-import { connect as db_connect } from '@/db/db.connect';
+import models from '@/db/models';
 
 // Routes
 import products from '@/routes/products';
-import categories from '@/routes/categories';
+// import categories from '@/routes/categories';
 
 // ---------- GLOBALS ----------
 const app = express();
 
 env_config({
-  path: path.join(process.cwd(), 'server/.env'),
+  path: path.join(process.cwd(), '.env'),
 });
 
 // ---------- INITIALIZE DATABASE ----------
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-db_connect();
 
 // ---------- CONFIGURATION HEADERS HTTP ----------
 // app.use(config_headers);
@@ -36,7 +35,7 @@ app.use(logger('[:method] :url :status - :response-time ms'));
 
 // ROUTES
 app.use('/products', products);
-app.use('/categories', categories);
+// app.use('/categories', categories);
 
 // ---------- RESPONSE ----------
 // SUCCESS
@@ -51,16 +50,50 @@ app.set('port', port);
 
 const server = http.createServer(app);
 
-server
-  .listen(port, () => {
-    const host = server.address().address;
-    const port = server.address().port;
+models.sequelize.sync({ force: true }).then(() => {
+  /**
+  * Listen on provided port, on all network interfaces.
+  */
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+});
 
-    process.stdout.write(`running at http://${host}:${port}\n`);
-    return;
-  })
-  .on('error', console.error);
+// Event listener for HTTP server "error" event.
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  let bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
 
 process.on('SIGINT', () => {
   process.exit(-1);
 });
+
+// Event listener for HTTP server "listening" event.
+function onListening() {
+  let addr = server.address();
+  let bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+
+  logger('Listening on ' + bind);
+}
