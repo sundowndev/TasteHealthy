@@ -180,7 +180,8 @@
     "lodash": "4.17.11",
     "minimist": "1.2.0",
     "morgan": "^1.9.1",
-    "pg": "^7.10.0",
+    "pg": "^7.11.0",
+    "pg-hstore": "^2.3.2",
     "prop-types": "15.7.2",
     "react": "16.8.6",
     "react-dom": "16.8.6",
@@ -192,6 +193,7 @@
     "redux-saga": "1.0.2",
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
+    "sequelize": "^5.8.6",
     "styled-components": "4.2.0"
   }
 }
