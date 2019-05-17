@@ -6,7 +6,8 @@ export const get_categories = (req, res, next) => {
     Joi.object().keys({
       page: Joi.number()
         .integer()
-        .min(1),
+        .min(1)
+        .max(Number.MAX_SAFE_INTEGER),
     }),
     req.query,
     next,
@@ -18,7 +19,8 @@ export const get_one_category = (req, res, next) => {
     Joi.object().keys({
       categoryId: Joi.number()
         .integer()
-        .min(1),
+        .min(1)
+        .max(Number.MAX_SAFE_INTEGER),
     }),
     req.params,
     next,
