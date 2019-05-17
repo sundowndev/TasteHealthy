@@ -9,7 +9,8 @@ export const get_products = (req, res, next) => {
         .max(45),
       page: Joi.number()
         .integer()
-        .min(1),
+        .min(1)
+        .max(Number.MAX_SAFE_INTEGER),
     }),
     req.query,
     next,
@@ -19,7 +20,7 @@ export const get_products = (req, res, next) => {
 export const get_one_product = (req, res, next) => {
   test_schema(
     Joi.object().keys({
-      productId: Joi.number().integer().min(1).required(),
+      productId: Joi.number().integer().min(1).max(Number.MAX_SAFE_INTEGER).required(),
     }),
     req.params,
     next,
