@@ -4,7 +4,7 @@ import models from '@/db/models';
 
 const Products = models.Products;
 const Facts = models.Facts;
-// const MiscData = models.MiscData;
+const MiscData = models.MiscData;
 const Op = Sequelize.Op;
 
 export const get_products = (req, res, next) => {
@@ -19,26 +19,23 @@ export const get_products = (req, res, next) => {
       },
       limit: req.limit,
       offset: req.offset,
-      order: [
-        ['id', 'DESC'],
-      ],
+      order: [['id', 'DESC']],
     };
   } else {
     query = {
       limit: req.limit,
       offset: req.offset,
-      order: [
-        ['id', 'DESC'],
-      ],
+      order: [['id', 'DESC']],
     };
   }
 
-  Products.findAll(query).then((projects) => {
-    req.results = projects.length;
-    req.return = projects;
+  Products.findAll(query)
+    .then((projects) => {
+      req.results = projects.length;
+      req.return = projects;
 
-    return next();
-  })
+      return next();
+    })
     .catch((error) => next(msg.errorApi(error)));
 };
 
@@ -51,37 +48,20 @@ export const get_one_product = (req, res, next) => {
     },
   };
 
-  Products.findOne(query).then((projects) => {
-    if (!projects) {
-      return next(msg.productNotFound());
-    }
+  Products.findOne(query)
+    .then((projects) => {
+      if (!projects) {
+        return next(msg.productNotFound());
+      }
 
-    req.return = projects;
+      req.return = projects;
 
-    return next();
-  })
+      return next();
+    })
     .catch((error) => next(msg.errorApi(error)));
 };
 
 export const get_one_product_facts = (req, res, next) => {
-  // client
-  //   .query(
-  //     `SELECT ${product_nutrition_facts_fields.join(
-  //       ',',
-  //     )} FROM product_nutrition_facts WHERE product_id = $1`,
-  //     [req.params.productId],
-  //   )
-  //   .then((res) => {
-  //     if (!res.rows[0]) {
-  //       return next(msg.productNotFound());
-  //     }
-
-  //     req.return = res.rows[0];
-
-  //     return next();
-  //   })
-  //   .catch((error) => next(msg.errorApi(error)));
-
   let query = null;
 
   query = {
@@ -90,34 +70,37 @@ export const get_one_product_facts = (req, res, next) => {
     },
   };
 
-  Facts.findOne(query).then((projects) => {
-    if (!projects) {
-      return next(msg.productNotFound());
-    }
+  Facts.findOne(query)
+    .then((documents) => {
+      if (!documents) {
+        return next(msg.productNotFound());
+      }
 
-    req.return = projects;
+      req.return = documents;
 
-    return next();
-  })
+      return next();
+    })
     .catch((error) => next(msg.errorApi(error)));
 };
 
-// export const get_one_product_misc_data = (req, res, next) => {
-//   client
-//     .query(
-//       `SELECT ${product_misc_data_fields.join(
-//         ',',
-//       )} FROM product_misc_data WHERE product_id = $1`,
-//       [req.params.productId],
-//     )
-//     .then((res) => {
-//       if (!res.rows[0]) {
-//         return next(msg.productNotFound());
-//       }
+export const get_one_product_misc_data = (req, res, next) => {
+  let query = null;
 
-//       req.return = res.rows[0];
+  query = {
+    where: {
+      productId: req.params.productId,
+    },
+  };
 
-//       return next();
-//     })
-//     .catch((error) => next(msg.errorApi(error)));
-// };
+  MiscData.findOne(query)
+    .then((documents) => {
+      if (!documents) {
+        return next(msg.productNotFound());
+      }
+
+      req.return = documents;
+
+      return next();
+    })
+    .catch((error) => next(msg.errorApi(error)));
+};
