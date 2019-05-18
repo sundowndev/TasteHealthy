@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 
 export default (sequelize/* , DataTypes*/) => {
-  const Facts = sequelize.define('nutrition_facts', {
+  const Facts = sequelize.define('Facts', {
     energy_100g: {
       type: Sequelize.STRING,
       allowNull: true,
@@ -226,21 +226,7 @@ export default (sequelize/* , DataTypes*/) => {
       type: Sequelize.STRING,
       allowNull: true,
     },
-  }, {
-    sequelize,
-    modelName: 'nutrition_facts',
   });
-
-  Facts.associate = (models) => {
-    models.Facts.hasOne(models.Products);
-
-    models.Facts.belongsTo(models.Products, {
-      onDelete: 'CASCADE',
-      foreignKey: {
-        allowNull: false,
-      },
-    });
-  };
 
   return Facts;
 };

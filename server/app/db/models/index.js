@@ -7,10 +7,10 @@ import facts from './nutrition_facts';
 import miscData from './misc_data';
 
 const models = {
-  'Products': products,
-  'Categories': categories,
-  'Facts': facts,
-  'MiscData': miscData,
+  Products: products,
+  Categories: categories,
+  Facts: facts,
+  MiscData: miscData,
 };
 const db = {};
 const dbDns = {
@@ -22,15 +22,22 @@ const dbDns = {
 };
 
 // Init DB connection
-const sequelize = new Sequelize(dbDns.database, dbDns.user, dbDns.password, {
-  host: dbDns.host,
-  port: dbDns.port,
-  dialect: 'postgres',
-}, {
-  define: {
-    timestamps: false,
+const sequelize = new Sequelize(
+  dbDns.database,
+  dbDns.user,
+  dbDns.password,
+  {
+    host: dbDns.host,
+    port: dbDns.port,
+    dialect: 'postgres',
+    // logging: false,
   },
-});
+  {
+    define: {
+      timestamps: false,
+    },
+  },
+);
 
 Object.assign(db, {
   sequelize,
@@ -39,11 +46,13 @@ Object.assign(db, {
 
 // Register models
 for (const model in models) {
-  db[model] = registerModel(models[model]);
+  db[model] = models[model](sequelize, Sequelize);
 }
 
-function registerModel(model) {
-  return model(sequelize, Sequelize);
-}
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 
 export default db;

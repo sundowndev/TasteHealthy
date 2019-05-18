@@ -1,16 +1,7 @@
 import Sequelize from 'sequelize';
-import facts from './nutrition_facts';
-import miscData from './misc_data';
 
-export default (sequelize/* , DataTypes*/) => {
-  const FactsEntity = facts(sequelize);
-  const MiscDataEntity = miscData(sequelize);
-
-  const Products = sequelize.define('products', {
-    url: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
+export default (sequelize /* , DataTypes*/) => {
+  const Products = sequelize.define('Products', {
     product_name: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -20,7 +11,7 @@ export default (sequelize/* , DataTypes*/) => {
       allowNull: true,
     },
     quantity: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING,
       allowNull: false,
     },
     image_url: {
@@ -28,7 +19,7 @@ export default (sequelize/* , DataTypes*/) => {
       allowNull: true,
     },
     origins: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     packaging: {
@@ -36,7 +27,7 @@ export default (sequelize/* , DataTypes*/) => {
       allowNull: false,
     },
     manufacturing_places: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     traces: {
@@ -48,12 +39,12 @@ export default (sequelize/* , DataTypes*/) => {
       allowNull: false,
     },
     labels: {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     purchase_places: {
       type: Sequelize.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     stores: {
       type: Sequelize.STRING,
@@ -63,26 +54,25 @@ export default (sequelize/* , DataTypes*/) => {
       type: Sequelize.TEXT,
       allowNull: true,
     },
-  }, {
-    sequelize,
-    modelName: 'products',
   });
 
-  Products.hasOne(FactsEntity);
-  FactsEntity.belongsTo(Products, {
-    onDelete: 'CASCADE',
-    foreignKey: {
-      allowNull: false,
-    },
-  });
+  Products.associate = (models) => {
+    models.Facts.belongsTo(models.Products, {
+      as: 'product',
+      onDelete: 'CASCADE',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
 
-  Products.hasOne(MiscDataEntity);
-  MiscDataEntity.belongsTo(Products, {
-    onDelete: 'CASCADE',
-    foreignKey: {
-      allowNull: false,
-    },
-  });
+    models.MiscData.belongsTo(models.Products, {
+      as: 'product',
+      onDelete: 'CASCADE',
+      foreignKey: {
+        allowNull: false,
+      },
+    });
+  };
 
   return Products;
 };
