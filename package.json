@@ -29,7 +29,7 @@
     "client:clean": "shjs ./client/internals/scripts/clean.js",
     "client:clean:all": "npm run client:analyze:clean && npm run client:test:clean && npm run client:build:clean",
     "client:generate": "plop --plopfile client/internals/generators/index.js",
-    "client:lint": "npm run client:lint:js && npm run client:lint:css",
+    "client:lint": "npm run client:lint:js -- -c ./client/.eslintrc.js && npm run client:lint:css",
     "client:lint:css": "stylelint client/app/**/*.js",
     "client:lint:eslint": "eslint --ignore-path .gitignore --ignore-pattern client/internals/scripts",
     "client:lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern client/internals/scripts --fix",
