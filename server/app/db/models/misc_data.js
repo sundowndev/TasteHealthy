@@ -6,10 +6,6 @@ export default (sequelize/* , DataTypes*/) => {
       type: Sequelize.STRING,
       allowNull: false,
     },
-    no_nutriments: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-    },
     additives_n: {
       type: Sequelize.INTEGER,
       allowNull: false,
