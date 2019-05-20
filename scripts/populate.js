@@ -1,15 +1,19 @@
 /* eslint-disable no-console */
 /* eslint-disable max-lines */
+import path from 'path';
 import csv from 'csvtojson';
 import models from '../server/app/db/models';
 
 // ---------------- Variables ----------------
-// const csvFilePath = path.join(process.cwd(), './scripts/test2.csv');
+// const csvFilePath = path.join(process.cwd(), './scripts/fixtures/data.csv');
 const csvFilePath =
   '/home/sundowndev/Téléchargements/fr.openfoodfacts.org.products.csv';
 
 // ---------------- Functions & script ----------------
 const logger = (...args) => console.log(...args);
+
+let countCategories = 0;
+let countProducts = 0;
 
 async function main() {
   let productId = null;
@@ -18,6 +22,7 @@ async function main() {
   await models.Categories.create({ name: 'Inconnue' })
     .then(doc => {
       defaultCategoryId = doc.id;
+      countCategories++;
     })
     .catch(error => {
       throw new Error(error);
@@ -38,42 +43,53 @@ async function main() {
         new Promise((resolve, reject) => {
           const promises = [];
 
+          Object.keys(doc).map(k => {
+            doc[k] = doc[k] !== '' || doc[k] !== undefined ? doc[k] : null;
+          });
+
           if (
-            doc['product_name'] === '' ||
-            doc['main_category_fr'] === '' ||
+            !doc['product_name'] ||
+            !doc['main_category_fr'] ||
             // doc['main_category_fr'].indexOf(':') === 2 ||
-            doc['countries_fr'] === '' ||
-            // doc['labels_fr'] === '' ||
-            doc['origins'] === '' ||
-            doc['manufacturing_places'] === '' ||
-            doc['purchase_places'] === '' ||
-            doc['energy_100g'] === '' ||
-            doc['serving_size'] === '' ||
-            // doc['no_nutriments'] === '' ||
-            doc['additives_n'] === '' ||
-            doc['additives'] === '' ||
-            // doc['ingredients_from_palm_oil_n'] === '' ||
-            // doc['ingredients_from_palm_oil'] === '' ||
-            doc['nutrition_grade_fr'] === '' ||
-            // doc['carbon-footprint_100g'] === '' ||
-            doc['nutrition-score-fr_100g'] === '' ||
-            doc['nutrition-score-uk_100g'] === ''
+            !doc['countries_fr'] ||
+            // !doc['labels_fr']' ||
+            // !doc['origins'] ||
+            !doc['manufacturing_places'] ||
+            // !doc['purchase_places']' ||
+            !doc['energy_100g'] ||
+            !doc['serving_size'] ||
+            // !doc['no_nutriments']' ||
+            !doc['additives_n'] ||
+            !doc['additives'] ||
+            // !doc['ingredients_from_palm_oil_n']' ||
+            // !doc['ingredients_from_palm_oil']' ||
+            !doc['nutrition_grade_fr'] ||
+            // !doc['carbon-footprint_100g']' ||
+            !doc['nutrition-score-fr_100g'] ||
+            !doc['nutrition-score-uk_100g']
           ) {
             return reject();
           }
 
-          promises.push(
-            models.Categories.findOrCreate({
-              where: {
-                name: doc.main_category_fr,
-              },
-              defaults: { name: doc.main_category_fr },
-            }).then(cat => {
-              doc.categoryId = cat[0].id;
+          if (doc.main_category_fr.indexOf(':') < 0) {
+            promises.push(
+              models.Categories.findOrCreate({
+                where: {
+                  name: doc.main_category_fr,
+                },
+                defaults: { name: doc.main_category_fr },
+              }).spread((cat, created) => {
+                doc.categoryId = cat.id;
 
-              logger(`New Category: ${cat[0].name} (id:${cat.categoryId}) `);
-            }),
-          );
+                if (created) {
+                  logger(
+                    `Created category: ${cat.name} (id:${doc.categoryId}) `,
+                  );
+                  countCategories++;
+                }
+              }),
+            );
+          }
 
           Promise.all(promises)
             .then(() => {
@@ -113,7 +129,7 @@ async function main() {
                   generic_name: doc['generic_name'],
                   quantity: doc['quantity'],
                   image_url: doc['image_url'],
-                  origins: doc['origins'],
+                  origins: doc['origins'] || 'unknown',
                   packaging: doc['packaging_tags'],
                   manufacturing_places: doc['manufacturing_places'],
                   traces: doc['traces_fr'],
@@ -127,7 +143,7 @@ async function main() {
                     productId = doc.id;
 
                     logger(
-                      `New product: ${doc.product_name ||
+                      `Created product: ${doc.product_name ||
                         null} (id ${productId}/${lineNumber})`,
                     );
                   })
@@ -196,7 +212,6 @@ async function main() {
                     models.MiscData.create({
                       productId,
                       serving_size_g: doc['serving_size'],
-                      no_nutriments: doc['no_nutriments'],
                       additives_n: parseInt(doc['additives_n'], 10),
                       additives: doc['additives'],
                       ingredients_from_palm_oil_n: parseInt(
@@ -218,6 +233,7 @@ async function main() {
 
               Promise.all(promises)
                 .then(() => {
+                  countProducts++;
                   resolve(doc);
                 })
                 .catch(error => {
@@ -229,10 +245,14 @@ async function main() {
         throw new Error(error);
       },
       () => {
+        logger(`-----------------------------------`);
+        logger(`Created ${countProducts} products`);
+        logger(`Created ${countCategories} categories`);
         logger('Done.');
+
         process.exit();
       },
     );
 }
 
-models.sequelize.sync({ force: true }).then(main);
+models.sequelize.sync({ force: true, logging: true }).then(main);
