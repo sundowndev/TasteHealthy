@@ -1,5 +1,7 @@
 export const errorApi = (err) => {
-  return { status: 500, message: err || 'An internal error occured.' };
+  console.error(err);
+
+  return { status: 500, message: 'An internal error occured.' };
 };
 
 export const formatResponse = (res) => {
