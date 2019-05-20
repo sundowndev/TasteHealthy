@@ -13,9 +13,10 @@ export const get_products = (req, res, next) => {
   if (req.query.query) {
     query = {
       where: {
-        product_name: {
-          [Op.substring]: req.query.query,
-        },
+        [Op.or]: [
+          { product_name: { [Op.like]: `%${req.query.query}%` } },
+          { generic_name: { [Op.like]: `%${req.query.query}%` } },
+        ],
       },
       limit: req.limit,
       offset: req.offset,
@@ -30,9 +31,9 @@ export const get_products = (req, res, next) => {
   }
 
   Products.findAll(query)
-    .then((projects) => {
-      req.results = projects.length;
-      req.return = projects;
+    .then((documents) => {
+      req.results = documents.length;
+      req.return = documents;
 
       return next();
     })
@@ -40,21 +41,19 @@ export const get_products = (req, res, next) => {
 };
 
 export const get_one_product = (req, res, next) => {
-  let query = null;
-
-  query = {
+  let query = {
     where: {
       id: req.params.productId,
     },
   };
 
   Products.findOne(query)
-    .then((projects) => {
-      if (!projects) {
+    .then((documents) => {
+      if (!documents) {
         return next(msg.productNotFound());
       }
 
-      req.return = projects;
+      req.return = documents;
 
       return next();
     })
@@ -62,9 +61,7 @@ export const get_one_product = (req, res, next) => {
 };
 
 export const get_one_product_facts = (req, res, next) => {
-  let query = null;
-
-  query = {
+  let query = {
     where: {
       productId: req.params.productId,
     },
@@ -84,9 +81,7 @@ export const get_one_product_facts = (req, res, next) => {
 };
 
 export const get_one_product_misc_data = (req, res, next) => {
-  let query = null;
-
-  query = {
+  let query = {
     where: {
       productId: req.params.productId,
     },
