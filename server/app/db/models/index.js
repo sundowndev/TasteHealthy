@@ -30,7 +30,7 @@ const sequelize = new Sequelize(
     host: dbDns.host,
     port: dbDns.port,
     dialect: 'postgres',
-    // logging: false,
+    logging: false,
   },
   {
     define: {
