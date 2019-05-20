@@ -11,6 +11,10 @@ export default (sequelize /* , DataTypes*/) => {
       allowNull: true,
     },
     quantity: {
+      type: Sequelize.FLOAT,
+      allowNull: false,
+    },
+    quantity_unity: {
       type: Sequelize.STRING,
       allowNull: false,
     },
