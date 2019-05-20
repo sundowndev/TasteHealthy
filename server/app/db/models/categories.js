@@ -11,6 +11,7 @@ export default (sequelize /* , DataTypes*/) => {
   Categories.associate = (models) => {
     models.Products.belongsTo(models.Categories, {
       as: 'category',
+      onDelete: 'CASCADE',
       foreignKey: {
         allowNull: false,
       },
