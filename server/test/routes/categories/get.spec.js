@@ -3,15 +3,12 @@
 /* eslint-disable no-console */
 
 import sinon from 'sinon';
-import { client } from '@/db/db.connect';
 import * as get from '@/routes/categories/get';
-// import {
-//   products_fields,
-//   product_nutrition_facts_fields,
-//   product_misc_data_fields,
-// } from '@/db/fields/products';
-import { categories_fields } from '@/db/fields/categories';
-// import * as msg from '@/errors/message_errors.js';
+import * as msg from '@/errors/message_errors.js';
+import models from '@/db/models';
+
+const Categories = models.Categories;
+const Products = models.Products;
 
 describe('CATEGORIES ROUTES -- GET', () => {
   afterEach(() => {
@@ -26,18 +23,16 @@ describe('CATEGORIES ROUTES -- GET', () => {
         offset: 0,
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
-        const expectedQuery = `SELECT
-        ${categories_fields.join(',')}
-        FROM categories ORDER BY id DESC LIMIT ${req.limit} OFFSET
-        ${req.offset}`;
+      sinon.stub(Categories, 'findAll').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          limit: req.limit,
+          offset: req.offset,
+          order: [['id', 'DESC']],
+        };
 
-        expect(query).toBe(expectedQuery);
-        expect(params).toEqual([]);
+        expect(query).toEqual(expectedQuery);
 
-        return Promise.resolve({
-          rows: [{ id: 1 }, { id: 2 }],
-        });
+        return Promise.resolve([{ id: 1 }, { id: 2 }]);
       });
 
       get.get_categories(req, {}, (err) => {
@@ -54,12 +49,132 @@ describe('CATEGORIES ROUTES -- GET', () => {
         offset: 60,
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn() {
+      sinon.stub(Categories, 'findAll').callsFake(function fakeFn() {
         return Promise.reject('test1');
       });
 
       get.get_categories(req, {}, (err) => {
-        expect(err).toEqual({ message: 'test1', status: 500 });
+        expect(err).toEqual(msg.errorApi());
+      });
+    });
+  });
+
+  describe('GET / -- get_one_category', () => {
+    it('should succeed', () => {
+      const req = {
+        params: {
+          categoryId: 2,
+        },
+        limit: 20,
+        offset: 0,
+      };
+
+      sinon.stub(Categories, 'findOne').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            id: req.params.categoryId,
+          },
+        };
+
+        expect(query).toEqual(expectedQuery);
+
+        return Promise.resolve({ id: 2 });
+      });
+
+      get.get_one_category(req, {}, (err) => {
+        expect(req.return.id).toEqual(req.params.categoryId);
+        expect(err).toEqual(undefined);
+      });
+    });
+
+    it('should return not found', () => {
+      const req = {
+        params: {
+          categoryId: 2,
+        },
+        limit: 20,
+        offset: 0,
+      };
+
+      sinon.stub(Categories, 'findOne').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            id: req.params.categoryId,
+          },
+        };
+
+        expect(query).toEqual(expectedQuery);
+
+        return Promise.resolve();
+      });
+
+      get.get_one_category(req, {}, (err) => {
+        expect(err).toEqual(msg.categoryNotFound());
+      });
+    });
+
+    it('should handle error', () => {
+      const req = {
+        params: {
+          categoryId: 2,
+        },
+        limit: 20,
+        offset: 0,
+      };
+
+      sinon.stub(Categories, 'findOne').callsFake(function fakeFn() {
+        return Promise.reject('test1');
+      });
+
+      get.get_one_category(req, {}, (err) => {
+        expect(err).toEqual(msg.errorApi());
+      });
+    });
+  });
+
+  describe('GET / -- get_products_by_category', () => {
+    it('should succeed', () => {
+      const req = {
+        params: {
+          categoryId: 1,
+        },
+        limit: 20,
+        offset: 0,
+      };
+
+      sinon.stub(Products, 'findAll').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            categoryId: req.params.categoryId,
+          },
+        };
+
+        expect(query).toEqual(expectedQuery);
+
+        return Promise.resolve([{ id: 1 }, { id: 2 }]);
+      });
+
+      get.get_products_by_category(req, {}, (err) => {
+        expect(req.return).toEqual([{ id: 1 }, { id: 2 }]);
+        expect(err).toEqual(undefined);
+      });
+    });
+
+    it('should handle error', () => {
+      const req = {
+        params: {
+          categoryId: 1,
+        },
+        limit: 20,
+        offset: 0,
+      };
+
+      sinon.stub(Products, 'findAll').callsFake(function fakeFn() {
+        return Promise.reject('test1');
+      });
+
+      get.get_products_by_category(req, {}, (err) => {
+        expect(err).toEqual(msg.errorApi());
       });
     });
   });
