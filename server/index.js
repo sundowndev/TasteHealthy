@@ -14,7 +14,7 @@ import models from '@/db/models';
 
 // Routes
 import products from '@/routes/products';
-// import categories from '@/routes/categories';
+import categories from '@/routes/categories';
 
 // ---------- GLOBALS ----------
 const app = express();
@@ -35,7 +35,7 @@ app.use(logger('[:method] :url :status - :response-time ms'));
 
 // ROUTES
 app.use('/products', products);
-// app.use('/categories', categories);
+app.use('/categories', categories);
 
 // ---------- RESPONSE ----------
 // SUCCESS
