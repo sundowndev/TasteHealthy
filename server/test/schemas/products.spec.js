@@ -107,6 +107,33 @@ describe('PRODUCTS SCHEMAS', () => {
         expect(err).toEqual({ status: 400, message: '"test" is not allowed' });
       });
     });
+
+    it('should fail with too high id', () => {
+      const req = {
+        params: {
+          productId: 2147483648,
+        },
+      };
+
+      schema.get_one_product(req, {}, (err) => {
+        expect(err).toEqual({
+          status: 400,
+          message: '"productId" must be less than or equal to 2147483647',
+        });
+      });
+    });
+
+    it('should succeed with proper id max range', () => {
+      const req = {
+        params: {
+          productId: 2147483647,
+        },
+      };
+
+      schema.get_one_product(req, {}, (err) => {
+        expect(err).toEqual(undefined);
+      });
+    });
   });
 
   describe('get_product_nutrition_facts', () => {
@@ -120,7 +147,7 @@ describe('PRODUCTS SCHEMAS', () => {
       });
     });
 
-    it('should fail with params', () => {
+    it('should succeed with foreign params', () => {
       const req = {
         query: {
           productId: 18,
@@ -128,10 +155,34 @@ describe('PRODUCTS SCHEMAS', () => {
       };
 
       schema.get_product_nutrition_facts(req, {}, (err) => {
+        expect(err).toEqual(undefined);
+      });
+    });
+
+    it('should fail with too high id', () => {
+      const req = {
+        params: {
+          productId: 2147483648,
+        },
+      };
+
+      schema.get_product_nutrition_facts(req, {}, (err) => {
         expect(err).toEqual({
           status: 400,
-          message: '"productId" is not allowed',
+          message: '"productId" must be less than or equal to 2147483647',
         });
+      });
+    });
+
+    it('should succeed with proper id max range', () => {
+      const req = {
+        params: {
+          productId: 2147483647,
+        },
+      };
+
+      schema.get_product_nutrition_facts(req, {}, (err) => {
+        expect(err).toEqual(undefined);
       });
     });
   });
