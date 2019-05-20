@@ -5,19 +5,6 @@ export default function(req, res, next) {
     else {
       let json = { success: true };
 
-      if (req.message) {
-        json.message = req.message;
-      }
-
-      if (req.limit) {
-        json.limit = req.limit;
-      }
-
-      if (req.page) {
-        json.page = req.page || 1;
-        json.offset = req.offset || 0;
-      }
-
       if (req.results) {
         json.results = req.results;
       }
