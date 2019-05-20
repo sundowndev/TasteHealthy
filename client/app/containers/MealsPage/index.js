@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 // @flow
 
 /*
@@ -44,16 +45,113 @@ const customStyles = {
   },
 };
 
+const SearchBar = () => {
+  const [valueSearch, handleChange] = useState('');
+  return (
+    <input
+      type="text"
+      value={valueSearch}
+      onChange={e => handleChange(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+};
+
+const ModalComponent = ({ mealsData }) => {
+  const [consummedAliments, changeConsumedAliments] = useState([]);
+  const [meals, setMeals] = useState(mealsData);
+  return (
+    <div>
+      <SearchBar />
+      {[
+        { name: 'ZAEAZZE', id: 132, quantity: 100 },
+        { name: 'fsddsfsd', id: 341, quantity: 100 },
+      ].map(_ => (
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div
+          onClick={() => {
+            if (!consummedAliments.some(e => e.id === _.id)) {
+              changeConsumedAliments(consummedAliments.concat([_]));
+            }
+          }}
+          key={_.id}
+        >
+          {_.name}
+        </div>
+      ))}
+      <button
+        type="button"
+        onClick={() =>
+          setMeals({
+            ...meals,
+            breakfast: {
+              test: 'OK',
+            },
+          })
+        }
+      >
+        Valider
+      </button>
+      <h1>Aliments consommés</h1>
+      {consummedAliments.map(el => (
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+        <div>
+          <h1
+            key={el.id}
+            onClick={() =>
+              changeConsumedAliments(
+                consummedAliments.filter(ll => ll.id !== el.id),
+              )
+            }
+          >
+            {el.name}
+            {el.quantity} gr
+          </h1>
+          <p
+            onClick={() => {
+              const tt = consummedAliments.map(ll => {
+                if (ll.id === el.id) {
+                  if (el.quantity > 100) {
+                    ll.quantity -= 100;
+                  }
+                }
+                return ll;
+              });
+              changeConsumedAliments(tt);
+            }}
+          >
+            -
+          </p>
+          <p
+            onClick={() => {
+              const tt = consummedAliments.map(ll => {
+                if (ll.id === el.id) {
+                  ll.quantity += 100;
+                }
+                return ll;
+              });
+              changeConsumedAliments(tt);
+            }}
+          >
+            +
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export const HomePage = (props: propsType) => {
-  const [meals, setMeals] = useState(props.mealsData);
   const [modalIsOpen, toggleModal] = useState(false);
+  const [currentModalName, changeModalName] = useState(null);
 
   const afterOpenModal = () => {};
 
-  const changeBreakfast = data => props.changeBreakfast(data);
-  const changeLunch = data => props.changeLunch(data);
-  const changeDinner = data => props.changeDinner(data);
-  const changeSnack = data => props.changeSnack(data);
+  // const changeBreakfast = data => props.changeBreakfast(data);
+  // const changeLunch = data => props.changeLunch(data);
+  // const changeDinner = data => props.changeDinner(data);
+  // const changeSnack = data => props.changeSnack(data);
 
   return (
     <h1>
@@ -70,34 +168,46 @@ export const HomePage = (props: propsType) => {
         <button type="button" onClick={() => toggleModal(false)}>
           close
         </button>
-        <div>I am a modal</div>
+        <div>{currentModalName}</div>
+        <ModalComponent mealsData={props.mealsData} />
       </Modal>
       {/**  */}
 
       <FormattedMessage {...messages.header} />
       <button
         type="button"
-        onClick={() =>
-          setMeals({
-            ...meals,
-            breakfast: {
-              test: 'OK',
-            },
-          })
-        }
+        onClick={() => {
+          toggleModal(true);
+          changeModalName('Breakfast');
+        }}
       >
-        TTTTT
-      </button>
-      <button type="button" onClick={() => toggleModal(true)}>
         Breakfast
       </button>
-      <button type="button" onClick={() => toggleModal(true)}>
+      <button
+        type="button"
+        onClick={() => {
+          toggleModal(true);
+          changeModalName('Lunch');
+        }}
+      >
         Lunch
       </button>
-      <button type="button" onClick={() => toggleModal(true)}>
+      <button
+        type="button"
+        onClick={() => {
+          toggleModal(true);
+          changeModalName('Dinner');
+        }}
+      >
         Dinner
       </button>
-      <button type="button" onClick={() => toggleModal(true)}>
+      <button
+        type="button"
+        onClick={() => {
+          toggleModal(true);
+          changeModalName('Snack');
+        }}
+      >
         Snack
       </button>
     </h1>

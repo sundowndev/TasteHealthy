@@ -3,7 +3,6 @@
  * MealsPage reducer
  *
  */
-import produce from 'immer';
 import {
   CHANGE_BREAKFAST,
   CHANGE_LUNCH,
