@@ -3,14 +3,15 @@
 /* eslint-disable no-console */
 
 import sinon from 'sinon';
-import { client } from '@/db/db.connect';
 import * as get from '@/routes/products/get';
-import {
-  products_fields,
-  product_nutrition_facts_fields,
-  product_misc_data_fields,
-} from '@/db/fields/products';
 import * as msg from '@/errors/message_errors.js';
+import Sequelize from 'sequelize';
+import models from '@/db/models';
+
+const Products = models.Products;
+// const Facts = models.Facts;
+// const MiscData = models.MiscData;
+const Op = Sequelize.Op;
 
 describe('PRODUCTS ROUTES -- GET', () => {
   afterEach(() => {
@@ -25,24 +26,21 @@ describe('PRODUCTS ROUTES -- GET', () => {
         offset: 0,
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
-        const expectedQuery = `SELECT ${products_fields.join(
-          ',',
-        )} FROM products ORDER BY id DESC LIMIT ${req.limit} OFFSET ${
-          req.offset
-        }`;
+      sinon.stub(Products, 'findAll').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          limit: req.limit,
+          offset: req.offset,
+          order: [['id', 'DESC']],
+        };
 
-        expect(query).toBe(expectedQuery);
-        expect(params).toEqual([]);
+        expect(query).toEqual(expectedQuery);
 
-        return Promise.resolve({
-          rows: [{ id: 1 }],
-        });
+        return Promise.resolve([{ id: 1 }, { id: 2 }]);
       });
 
       get.get_products(req, {}, (err) => {
-        expect(req.results).toEqual(1);
-        expect(req.return).toEqual([{ id: 1 }]);
+        expect(req.results).toEqual(2);
+        expect(req.return).toEqual([{ id: 1 }, { id: 2 }]);
         expect(err).toEqual(undefined);
       });
     });
@@ -56,18 +54,22 @@ describe('PRODUCTS ROUTES -- GET', () => {
         offset: 60,
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
-        const expectedQuery = `SELECT ${products_fields.join(
-          ',',
-        )} FROM products WHERE to_tsvector(product_name) @@ to_tsquery($1) LIMIT
-        ${req.limit} OFFSET ${req.offset}`;
+      sinon.stub(Products, 'findAll').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            [Op.or]: [
+              { product_name: { [Op.like]: `%${req.query.query}%` } },
+              { generic_name: { [Op.like]: `%${req.query.query}%` } },
+            ],
+          },
+          limit: req.limit,
+          offset: req.offset,
+          order: [['id', 'DESC']],
+        };
 
-        expect(query).toBe(expectedQuery);
-        expect(params).toEqual(['nutella']);
+        expect(query).toEqual(expectedQuery);
 
-        return Promise.resolve({
-          rows: [{ id: 1 }, { id: 2 }],
-        });
+        return Promise.resolve([{ id: 1 }, { id: 2 }]);
       });
 
       get.get_products(req, {}, (err) => {
@@ -84,12 +86,15 @@ describe('PRODUCTS ROUTES -- GET', () => {
         offset: 60,
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn() {
+      sinon.stub(Products, 'findAll').callsFake(function fakeFn() {
         return Promise.reject('test');
       });
 
       get.get_products(req, {}, (err) => {
-        expect(err).toEqual({ message: 'test', status: 500 });
+        expect(err).toEqual({
+          message: 'An internal error occured.',
+          status: 500,
+        });
       });
     });
   });
@@ -106,17 +111,16 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
-        const expectedQuery = `SELECT ${products_fields.join(
-          ',',
-        )} FROM products WHERE id = $1`;
+      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            id: req.params.productId,
+          },
+        };
 
-        expect(query).toBe(expectedQuery);
-        expect(params).toEqual([req.params.productId]);
+        expect(query).toEqual(expectedQuery);
 
-        return Promise.resolve({
-          rows: [{ id: 1 }],
-        });
+        return Promise.resolve({ id: 1 });
       });
 
       get.get_one_product(req, {}, (err) => {
@@ -132,17 +136,16 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
-        const expectedQuery = `SELECT ${products_fields.join(
-          ',',
-        )} FROM products WHERE id = $1`;
+      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            id: req.params.productId,
+          },
+        };
 
-        expect(query).toBe(expectedQuery);
-        expect(params).toEqual([req.params.productId]);
+        expect(query).toEqual(expectedQuery);
 
-        return Promise.resolve({
-          rows: [],
-        });
+        return Promise.resolve();
       });
 
       get.get_one_product(req, {}, (err) => {
@@ -157,7 +160,7 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn() {
+      sinon.stub(Products, 'findOne').callsFake(function fakeFn() {
         return Promise.reject();
       });
 
@@ -179,17 +182,16 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
-        const expectedQuery = `SELECT ${product_nutrition_facts_fields.join(
-          ',',
-        )} FROM product_nutrition_facts WHERE product_id = $1`;
+      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            productId: req.params.productId,
+          },
+        };
 
         expect(query).toBe(expectedQuery);
-        expect(params).toEqual([req.params.productId]);
 
-        return Promise.resolve({
-          rows: [{ product_id: 1 }],
-        });
+        return Promise.resolve({ product_id: 1 });
       });
 
       get.get_one_product_facts(req, {}, (err) => {
@@ -205,17 +207,16 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
-        const expectedQuery = `SELECT ${product_nutrition_facts_fields.join(
-          ',',
-        )} FROM product_nutrition_facts WHERE product_id = $1`;
+      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            productId: req.params.productId,
+          },
+        };
 
         expect(query).toBe(expectedQuery);
-        expect(params).toEqual([req.params.productId]);
 
-        return Promise.resolve({
-          rows: [],
-        });
+        return Promise.resolve();
       });
 
       get.get_one_product_facts(req, {}, (err) => {
@@ -230,7 +231,7 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn() {
+      sinon.stub(Products, 'findOne').callsFake(function fakeFn() {
         return Promise.reject();
       });
 
@@ -252,17 +253,16 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
-        const expectedQuery = `SELECT ${product_misc_data_fields.join(
-          ',',
-        )} FROM product_misc_data WHERE product_id = $1`;
+      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            productId: req.params.productId,
+          },
+        };
 
         expect(query).toBe(expectedQuery);
-        expect(params).toEqual([req.params.productId]);
 
-        return Promise.resolve({
-          rows: [{ product_id: 1 }],
-        });
+        return Promise.resolve({ product_id: 1 });
       });
 
       get.get_one_product_misc_data(req, {}, (err) => {
@@ -278,17 +278,16 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn(query, params) {
-        const expectedQuery = `SELECT ${product_misc_data_fields.join(
-          ',',
-        )} FROM product_misc_data WHERE product_id = $1`;
+      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+        const expectedQuery = {
+          where: {
+            productId: req.params.productId,
+          },
+        };
 
         expect(query).toBe(expectedQuery);
-        expect(params).toEqual([req.params.productId]);
 
-        return Promise.resolve({
-          rows: [],
-        });
+        return Promise.resolve();
       });
 
       get.get_one_product_misc_data(req, {}, (err) => {
@@ -303,7 +302,7 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(client, 'query').callsFake(function fakeFn() {
+      sinon.stub(Products, 'findOne').callsFake(function fakeFn() {
         return Promise.reject();
       });
 

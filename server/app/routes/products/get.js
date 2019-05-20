@@ -68,12 +68,12 @@ export const get_one_product_facts = (req, res, next) => {
   };
 
   Facts.findOne(query)
-    .then((documents) => {
-      if (!documents) {
+    .then((document) => {
+      if (!document) {
         return next(msg.productNotFound());
       }
 
-      req.return = documents;
+      req.return = document;
 
       return next();
     })
@@ -88,12 +88,12 @@ export const get_one_product_misc_data = (req, res, next) => {
   };
 
   MiscData.findOne(query)
-    .then((documents) => {
-      if (!documents) {
+    .then((document) => {
+      if (!document) {
         return next(msg.productNotFound());
       }
 
-      req.return = documents;
+      req.return = document;
 
       return next();
     })
