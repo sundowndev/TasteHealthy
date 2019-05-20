@@ -53,7 +53,7 @@ export const get_product_misc_data = (req, res, next) => {
       productId: Joi.number()
         .integer()
         .min(1)
-        .max(Number.MAX_SAFE_INTEGER)
+        .max(postgresSerialMaxRange)
         .required(),
     }),
     req.params,
