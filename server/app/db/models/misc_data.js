@@ -12,7 +12,7 @@ export default (sequelize/* , DataTypes*/) => {
     },
     additives: {
       type: Sequelize.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     ingredients_from_palm_oil_n: {
       type: Sequelize.INTEGER,
@@ -20,7 +20,7 @@ export default (sequelize/* , DataTypes*/) => {
     },
     ingredients_from_palm_oil: {
       type: Sequelize.TEXT,
-      allowNull: false,
+      allowNull: true,
     },
     nutrition_grade_fr: {
       type: Sequelize.STRING,
@@ -32,7 +32,7 @@ export default (sequelize/* , DataTypes*/) => {
     },
     carbon_footprint_100g: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     nutrition_score_fr_100g: {
       type: Sequelize.DECIMAL,
