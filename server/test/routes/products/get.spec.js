@@ -9,8 +9,8 @@ import Sequelize from 'sequelize';
 import models from '@/db/models';
 
 const Products = models.Products;
-// const Facts = models.Facts;
-// const MiscData = models.MiscData;
+const Facts = models.Facts;
+const MiscData = models.MiscData;
 const Op = Sequelize.Op;
 
 describe('PRODUCTS ROUTES -- GET', () => {
@@ -91,10 +91,7 @@ describe('PRODUCTS ROUTES -- GET', () => {
       });
 
       get.get_products(req, {}, (err) => {
-        expect(err).toEqual({
-          message: 'An internal error occured.',
-          status: 500,
-        });
+        expect(err).toEqual(msg.errorApi());
       });
     });
   });
@@ -182,14 +179,14 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+      sinon.stub(Facts, 'findOne').callsFake(function fakeFn(query) {
         const expectedQuery = {
           where: {
             productId: req.params.productId,
           },
         };
 
-        expect(query).toBe(expectedQuery);
+        expect(query).toEqual(expectedQuery);
 
         return Promise.resolve({ product_id: 1 });
       });
@@ -207,14 +204,14 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+      sinon.stub(Facts, 'findOne').callsFake(function fakeFn(query) {
         const expectedQuery = {
           where: {
             productId: req.params.productId,
           },
         };
 
-        expect(query).toBe(expectedQuery);
+        expect(query).toEqual(expectedQuery);
 
         return Promise.resolve();
       });
@@ -231,7 +228,7 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(Products, 'findOne').callsFake(function fakeFn() {
+      sinon.stub(Facts, 'findOne').callsFake(function fakeFn() {
         return Promise.reject();
       });
 
@@ -253,14 +250,14 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+      sinon.stub(MiscData, 'findOne').callsFake(function fakeFn(query) {
         const expectedQuery = {
           where: {
             productId: req.params.productId,
           },
         };
 
-        expect(query).toBe(expectedQuery);
+        expect(query).toEqual(expectedQuery);
 
         return Promise.resolve({ product_id: 1 });
       });
@@ -278,14 +275,14 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(Products, 'findOne').callsFake(function fakeFn(query) {
+      sinon.stub(MiscData, 'findOne').callsFake(function fakeFn(query) {
         const expectedQuery = {
           where: {
             productId: req.params.productId,
           },
         };
 
-        expect(query).toBe(expectedQuery);
+        expect(query).toEqual(expectedQuery);
 
         return Promise.resolve();
       });
@@ -302,7 +299,7 @@ describe('PRODUCTS ROUTES -- GET', () => {
         },
       };
 
-      sinon.stub(Products, 'findOne').callsFake(function fakeFn() {
+      sinon.stub(MiscData, 'findOne').callsFake(function fakeFn() {
         return Promise.reject();
       });
 
