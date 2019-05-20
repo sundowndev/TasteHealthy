@@ -40,31 +40,34 @@ async function main() {
     .fromFile(csvFilePath)
     .subscribe(
       (doc, lineNumber) =>
-        new Promise((resolve, reject) => {
+        new Promise(async (resolve, reject) => {
           const promises = [];
 
-          Object.keys(doc).map(k => {
-            doc[k] = doc[k] !== '' || doc[k] !== undefined ? doc[k] : null;
+          await Object.keys(doc).map(k => {
+            doc[k] =
+              doc[k] === '' || doc[k] === ' ' || doc[k] === undefined
+                ? null
+                : doc[k];
           });
 
           if (
             !doc['product_name'] ||
             !doc['main_category_fr'] ||
             // doc['main_category_fr'].indexOf(':') === 2 ||
-            !doc['countries_fr'] ||
-            // !doc['labels_fr']' ||
+            // !doc['countries_fr'] ||
+            !doc['labels_fr'] ||
             // !doc['origins'] ||
             !doc['manufacturing_places'] ||
-            // !doc['purchase_places']' ||
+            !doc['purchase_places'] ||
             !doc['energy_100g'] ||
             !doc['serving_size'] ||
-            // !doc['no_nutriments']' ||
-            !doc['additives_n'] ||
-            !doc['additives'] ||
-            // !doc['ingredients_from_palm_oil_n']' ||
+            !doc['packaging'] ||
+            // !doc['additives_n'] ||
+            // !doc['additives'] ||
+            !doc['quantity'] ||
             // !doc['ingredients_from_palm_oil']' ||
             !doc['nutrition_grade_fr'] ||
-            // !doc['carbon-footprint_100g']' ||
+            // !doc['carbon-footprint_100g'] ||
             !doc['nutrition-score-fr_100g'] ||
             !doc['nutrition-score-uk_100g']
           ) {
@@ -122,12 +125,28 @@ async function main() {
               // doc['ingredients_text'],
               // );
 
+              let quantity = doc['quantity'].replace(',', '.');
+              let quantity_unity = doc['quantity'].replace(/([0-9])\w+ /, '');
+
+              if (doc['quantity'].indexOf('g') > -1) quantity_unity = 'g';
+              else if (doc['quantity'].indexOf('l') > -1) quantity_unity = 'L';
+              else if (doc['quantity'].indexOf('cl') > -1)
+                quantity_unity = 'cl';
+              else if (doc['quantity'].indexOf('ml') > -1)
+                quantity_unity = 'ml';
+              else if (doc['quantity'].indexOf('oz') > -1)
+                quantity_unity = 'OZ';
+              else quantity_unity = 'g';
+
+              // if (quantity_unity === null) console.log(doc['quantity']);
+
               promises.push(
                 models.Products.create({
                   categoryId: doc['categoryId'] || defaultCategoryId,
                   product_name: doc['product_name'],
                   generic_name: doc['generic_name'],
-                  quantity: doc['quantity'],
+                  quantity: parseFloat(quantity, 100),
+                  quantity_unity: quantity_unity,
                   image_url: doc['image_url'],
                   origins: doc['origins'] || 'unknown',
                   packaging: doc['packaging_tags'],
@@ -212,11 +231,10 @@ async function main() {
                     models.MiscData.create({
                       productId,
                       serving_size_g: doc['serving_size'],
-                      additives_n: parseInt(doc['additives_n'], 10),
+                      additives_n: parseInt(doc['additives_n'], 10) || 0,
                       additives: doc['additives'],
-                      ingredients_from_palm_oil_n: parseInt(
-                        doc['ingredients_from_palm_oil_n'],
-                      ),
+                      ingredients_from_palm_oil_n:
+                        parseInt(doc['ingredients_from_palm_oil_n']) || 0,
                       ingredients_from_palm_oil:
                         doc['ingredients_from_palm_oil'],
                       nutrition_grade_fr: doc['nutrition_grade_fr'],
