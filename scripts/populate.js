@@ -138,8 +138,6 @@ async function main() {
                 quantity_unity = 'OZ';
               else quantity_unity = 'g';
 
-              // if (quantity_unity === null) console.log(doc['quantity']);
-
               promises.push(
                 models.Products.create({
                   categoryId: doc['categoryId'] || defaultCategoryId,
