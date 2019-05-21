@@ -4,6 +4,12 @@ export const paginate = (limit) => {
     req.page = parseInt(req.query.page, 10) || 1;
     req.offset = (req.page - 1) * req.limit;
 
+    req.opts_return = {
+      limit: req.limit,
+      page: req.page,
+      offset: req.offset,
+    };
+
     return next();
   };
 };

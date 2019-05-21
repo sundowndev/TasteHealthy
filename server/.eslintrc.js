@@ -71,7 +71,6 @@ module.exports = {
       'after': true,
     }],
     'max-lines': [ERROR, {
-      'max': 200,
       'skipComments': true,
       'skipBlankLines': true,
     }],
@@ -128,7 +127,7 @@ module.exports = {
     'arrow-parens': [ERROR, 'always'],
     'space-infix-ops': ERROR,
     'wrap-regex': ERROR,
-    'guard-for-in': ERROR,
+    // 'guard-for-in': ERROR,
     'no-extra-bind': ERROR,
     'no-invalid-this': ERROR,
     'no-multi-str': ERROR,
