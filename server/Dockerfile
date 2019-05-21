@@ -1,7 +1,5 @@
 FROM node:8
 
-# ARG BRANCH
-
 ENV API_DB_HOST=db
 ENV API_DB_USER=postgres
 ENV API_DB=tastehealthy
@@ -18,8 +16,6 @@ COPY ./server ./server
 
 # Build
 RUN npm install --prefix /api
-RUN ls -la
 RUN npm run server:build
-# RUN node ./server/build/server.js
 
 EXPOSE 3000

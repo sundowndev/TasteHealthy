@@ -34,7 +34,6 @@ services:
       context: .
       dockerfile: ./server/Dockerfile
       args:
-        BRANCH: 'develop'
         API_DB_USER: postgres
         API_DB_HOST: db
         API_DB: tastehealthy
