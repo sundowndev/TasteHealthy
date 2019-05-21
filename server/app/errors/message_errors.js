@@ -1,5 +1,7 @@
 export const errorApi = (err) => {
-  console.error(err);
+  if (process.env.NODE_ENV !== 'test') {
+    console.error(err);
+  }
 
   return { status: 500, message: 'An internal error occured.' };
 };
