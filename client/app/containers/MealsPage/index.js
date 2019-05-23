@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 // @flow
 
@@ -58,7 +60,7 @@ const SearchBar = () => {
   );
 };
 
-const ModalComponent = ({ mealsData }) => {
+const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
   const [consummedAliments, changeConsumedAliments] = useState([]);
   const [meals, setMeals] = useState(mealsData);
   return (
@@ -111,13 +113,13 @@ const ModalComponent = ({ mealsData }) => {
           </h1>
           <p
             onClick={() => {
-              const tt = consummedAliments.map(ll => {
-                if (ll.id === el.id) {
+              const tt = consummedAliments.map(aliment => {
+                if (aliment.id === el.id) {
                   if (el.quantity > 100) {
-                    ll.quantity -= 100;
+                    aliment.quantity -= 100;
                   }
                 }
-                return ll;
+                return aliment;
               });
               changeConsumedAliments(tt);
             }}
@@ -126,11 +128,11 @@ const ModalComponent = ({ mealsData }) => {
           </p>
           <p
             onClick={() => {
-              const tt = consummedAliments.map(ll => {
-                if (ll.id === el.id) {
-                  ll.quantity += 100;
+              const tt = consummedAliments.map(aliment => {
+                if (aliment.id === el.id) {
+                  aliment.quantity += 100;
                 }
-                return ll;
+                return aliment;
               });
               changeConsumedAliments(tt);
             }}

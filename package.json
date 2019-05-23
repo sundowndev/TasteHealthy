@@ -28,6 +28,11 @@
     "client:prettify": "prettier --write",
     "client:flow": "flow"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "<rootDir>/client/__mocks__/styleMock.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sundowndev/TasteHealthy.git"

@@ -8,12 +8,22 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
   <button
     type="button"
   >
-    TTTTT
+    Breakfast
   </button>
   <button
     type="button"
   >
-    -
+    Lunch
+  </button>
+  <button
+    type="button"
+  >
+    Dinner
+  </button>
+  <button
+    type="button"
+  >
+    Snack
   </button>
 </h1>
 `;
