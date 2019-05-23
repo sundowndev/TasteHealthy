@@ -1,77 +1,56 @@
-import { client } from '@/db/db.connect';
 import * as msg from '@/errors/message_errors.js';
+import models from '@/db/models';
 
-const categories_fields = ['id', 'name'];
-const products_fields = [
-  'id',
-  'url',
-  'created_datetime',
-  'last_modified_datetime',
-  'product_name',
-  'generic_name',
-  'quantity',
-  'image_url',
-  'category',
-  'origins',
-  'packaging',
-  'manufacturing_places',
-  'traces',
-  'countries',
-  'labels',
-  'purchase_places',
-  'stores',
-  'ingredients_text',
-];
+const Categories = models.Categories;
+const Products = models.Products;
 
 export const get_categories = (req, res, next) => {
-  let query = null;
-  let params = [];
+  let query = {
+    limit: req.limit,
+    offset: req.offset,
+    order: [['id', 'DESC']],
+  };
 
-  query = `SELECT
-    ${categories_fields.join(',')}
-    FROM categories ORDER BY id DESC LIMIT ${req.limit} OFFSET ${req.offset}`;
+  Categories.findAll(query)
+    .then((documents) => {
+      req.results = documents.length;
+      req.return = documents;
 
-  client
-    .query(query, params)
-    .then((res) => {
-      req.results = res.rows.length;
-      req.return = res.rows || [];
+      return next();
     })
-    .then(next)
     .catch((error) => next(msg.errorApi(error)));
 };
 
 export const get_one_category = (req, res, next) => {
-  client
-    .query(
-      `SELECT ${categories_fields.join(',')} FROM categories WHERE id = $1`,
-      [req.params.categoryId],
-    )
-    .then((res) => {
-      if (!res.rows[0]) {
-        return next(msg.categoryNotFound());
-      }
+  let query = {
+    where: {
+      id: req.params.categoryId,
+    },
+  };
 
-      req.return = res.rows[0] || {};
+  Categories.findOne(query)
+    .then((document) => {
+      if (!document) return next(msg.categoryNotFound());
+
+      req.return = document;
+
+      return next();
     })
-    .then(next)
     .catch((error) => next(msg.errorApi(error)));
 };
 
 export const get_products_by_category = (req, res, next) => {
-  client
-    .query(
-      `SELECT ${products_fields.join(
-        ',',
-      )} FROM products WHERE category = $1 ORDER BY id DESC LIMIT ${
-        req.limit
-      } OFFSET ${req.offset}`,
-      [req.params.categoryId],
-    )
-    .then((res) => {
-      req.results = res.rows.length;
-      req.return = res.rows || [];
+  let query = {
+    where: {
+      categoryId: req.params.categoryId,
+    },
+  };
+
+  Products.findAll(query)
+    .then((documents) => {
+      req.return = documents;
+
+      return next();
     })
-    .then(next)
     .catch((error) => next(msg.errorApi(error)));
 };

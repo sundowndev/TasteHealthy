@@ -33,20 +33,6 @@ router.route('/').get(schemas.get_products, paginate(20), get.get_products);
 router.route('/:productId').get(schemas.get_one_product, get.get_one_product);
 
 /**
- * @api {get} /products/:id/misc_data Fetch misc data of product
- * @apiName GetProductMiscData
- * @apiGroup Products
- *
- * @apiParam  {Integer} id  Product id
- *
- * @apiSuccess {Boolean} success Request status
- * @apiSuccess {Object} item  Misc data of product.
- */
-router
-  .route('/:productId/misc_data')
-  .get(schemas.get_one_product, get.get_one_product_misc_data);
-
-/**
  * @api {get} /products/:id/nutrition_facts Fetch nutrition facts of product
  * @apiName GetProductNutritionFacts
  * @apiGroup Products
@@ -59,5 +45,19 @@ router
 router
   .route('/:productId/nutrition_facts')
   .get(schemas.get_product_nutrition_facts, get.get_one_product_facts);
+
+// /**
+//  * @api {get} /products/:id/misc_data Fetch misc data of product
+//  * @apiName GetProductMiscData
+//  * @apiGroup Products
+//  *
+//  * @apiParam  {Integer} id  Product id
+//  *
+//  * @apiSuccess {Boolean} success Request status
+//  * @apiSuccess {Object} item  Misc data of product.
+//  */
+router
+  .route('/:productId/misc_data')
+  .get(schemas.get_product_misc_data, get.get_one_product_misc_data);
 
 export default router;

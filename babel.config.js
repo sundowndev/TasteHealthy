@@ -7,13 +7,22 @@ module.exports = {
       },
     ],
     '@babel/preset-react',
-    "@babel/preset-flow"
+    '@babel/preset-flow',
   ],
   plugins: [
     'styled-components',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-syntax-dynamic-import',
-    'transform-async-to-generator'
+    'transform-async-to-generator',
+    [
+      'module-resolver',
+      {
+        root: ['./'],
+        alias: {
+          '@': './server/app',
+        },
+      },
+    ],
   ],
   env: {
     production: {
@@ -22,7 +31,7 @@ module.exports = {
         'transform-react-remove-prop-types',
         '@babel/plugin-transform-react-inline-elements',
         '@babel/plugin-transform-react-constant-elements',
-        'transform-async-to-generator'
+        'transform-async-to-generator',
       ],
     },
     test: {
