@@ -33,12 +33,8 @@ services:
     build:
       context: .
       dockerfile: ./server/Dockerfile
-      args:
-        API_DB_USER: postgres
-        API_DB_HOST: db
-        API_DB: tastehealthy
-        API_DB_PWD: tastehealthy
-        API_DB_PORT: 3306
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
     ports:

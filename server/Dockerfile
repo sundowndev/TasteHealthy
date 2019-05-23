@@ -1,11 +1,5 @@
 FROM node:8
 
-ENV API_DB_HOST=db
-ENV API_DB_USER=postgres
-ENV API_DB=tastehealthy
-ENV API_DB_PWD=tastehealthy
-ENV API_DB_PORT=5432
-
 WORKDIR /api
 
 COPY ./package-lock.json .
