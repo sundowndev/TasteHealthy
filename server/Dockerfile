@@ -22,8 +22,6 @@ COPY ./server ./server
 
 # Build
 RUN npm install --prefix /api
-RUN ls -la
 RUN npm run server:build
-# RUN node ./server/build/server.js
 
 EXPOSE 3000
