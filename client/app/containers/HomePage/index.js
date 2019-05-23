@@ -8,6 +8,9 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import './HomePage.css';
+import HomeIcon from '/client/app/images/home-icon.png';
+
 
 type Props = {
   history: {
@@ -17,14 +20,25 @@ type Props = {
 
 export default function HomePage(props: Props) {
   return (
-    <div>
-      <h1>
-        <FormattedMessage {...messages.header} />
-        <FormattedMessage {...messages.content} />
-      </h1>
-      <button type="button" onClick={() => props.history.push('/meals')}>
-        {"commencer l'expérience".toUpperCase()}
-      </button>
+    <div className="homePage">
+      <div className="contentContainer">
+        <h1>
+          <FormattedMessage {...messages.header} />
+        </h1>
+        <input className="age" maxLength="3" pattern="\d*" type="text" placeholder="Votre age ?"></input>
+        <select className="gender">
+          <option disabled selected>Votre sexe ?</option>
+          <option>{"homme".toUpperCase()}</option>
+          <option>{"femme".toUpperCase()}</option>
+        </select>
+        <button className="startButton" type="button" onClick={() => props.history.push('/meals')}>
+          {"C'est parti !".toUpperCase()}
+        </button>
+      </div>
+
+      <div className="imgContainer">
+        <img src={HomeIcon} className="Background"/>
+      </div>
     </div>
   );
 }
