@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
+// import { withRouter } from 'react-router';
 import messages from './messages';
 
 import {

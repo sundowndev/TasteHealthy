@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 
 services:
   adminer:
@@ -26,31 +26,28 @@ services:
       - default
       - postgres
 
-  # client:
-  #   container_name: th_client
-  #   restart: on-failure
-  #   build:
-  #     context: './client'
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - NODE_ENV=production
-  #   volumes:
-  #     - client_data:/usr/app/client
-  # server:
-  #   container_name: th_server
-  #   restart: on-failure
-  #   image: node:latest
-  #   build:
-  #     context: './server'
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - NODE_ENV=production
-  #   ports:
-  #     - '3000:3000'
-  #   networks:
-  #     - default
-  #     - postgres
-  #     # - web
+  api:
+    container_name: th_api
+    restart: on-failure
+    image: node:8
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+      args:
+        API_DB_USER: postgres
+        API_DB_HOST: db
+        API_DB: tastehealthy
+        API_DB_PWD: tastehealthy
+        API_DB_PORT: 3306
+    environment:
+      - NODE_ENV=production
+    ports:
+      - '3000:3000'
+    networks:
+      - default
+      - postgres
+    command: ['node', '/api/server/build/server.js']
+
   # nginx:
   #   container_name: th_nginx
   #   image: nginx:latest
@@ -61,10 +58,17 @@ services:
   #   networks:
   #     - default
   #     # - web
+  # client:
+  #   container_name: th_client
+  #   restart: on-failure
+  #   build:
+  #     context: './client'
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - NODE_ENV=production
 
 volumes:
   db_data:
-#   client_data:
 
 networks:
   # web:

@@ -7,6 +7,7 @@ module.exports = {
     '!client/app/global-styles.js',
     '!client/app/*/*/Loadable.{js,jsx}',
   ],
+  coverageDirectory: './coverage',
   coverageThreshold: {
     global: {
       statements: 98,
