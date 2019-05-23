@@ -14,6 +14,7 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
+import axios from 'axios';
 // import { withRouter } from 'react-router';
 import messages from './messages';
 
@@ -50,11 +51,22 @@ const customStyles = {
 
 const SearchBar = () => {
   const [valueSearch, handleChange] = useState('');
+
+  const handleValueChange = (name: string) => {
+    handleChange(name);
+
+    if (name.length >= 3) {
+      axios
+        .post(`localhost:3000/products?query=${name}`)
+        .then(data => console.log(data));
+    }
+  };
+
   return (
     <input
       type="text"
       value={valueSearch}
-      onChange={e => handleChange(e.target.value)}
+      onChange={e => handleValueChange(e.target.value)}
       placeholder="Search..."
     />
   );
@@ -149,6 +161,11 @@ export const HomePage = (props: propsType) => {
   const [modalIsOpen, toggleModal] = useState(false);
   const [currentModalName, changeModalName] = useState(null);
 
+  const openModal = (name: string) => {
+    toggleModal(true);
+    changeModalName(name);
+  };
+
   const afterOpenModal = () => {};
 
   // const changeBreakfast = data => props.changeBreakfast(data);
@@ -177,40 +194,16 @@ export const HomePage = (props: propsType) => {
       {/**  */}
 
       <FormattedMessage {...messages.header} />
-      <button
-        type="button"
-        onClick={() => {
-          toggleModal(true);
-          changeModalName('Breakfast');
-        }}
-      >
+      <button type="button" onClick={() => openModal('Breakfast')}>
         Breakfast
       </button>
-      <button
-        type="button"
-        onClick={() => {
-          toggleModal(true);
-          changeModalName('Lunch');
-        }}
-      >
+      <button type="button" onClick={() => openModal('Lunch')}>
         Lunch
       </button>
-      <button
-        type="button"
-        onClick={() => {
-          toggleModal(true);
-          changeModalName('Dinner');
-        }}
-      >
+      <button type="button" onClick={() => openModal('Dinner')}>
         Dinner
       </button>
-      <button
-        type="button"
-        onClick={() => {
-          toggleModal(true);
-          changeModalName('Snack');
-        }}
-      >
+      <button type="button" onClick={() => openModal('Snack')}>
         Snack
       </button>
     </h1>
