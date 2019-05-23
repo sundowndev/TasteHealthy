@@ -11,6 +11,7 @@ import messages from './messages';
 import './HomePage.css';
 import HomeIcon from '/client/app/images/home-icon.png';
 
+import '../../styles/index.css';
 
 type Props = {
   history: {
