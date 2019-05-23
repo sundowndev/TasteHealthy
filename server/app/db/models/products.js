@@ -58,25 +58,15 @@ export default (sequelize /* , DataTypes*/) => {
       type: Sequelize.TEXT,
       allowNull: true,
     },
+    nutrition_facts: {
+      type: Sequelize.JSON,
+      allowNull: true,
+    },
+    misc_data: {
+      type: Sequelize.JSON,
+      allowNull: true,
+    },
   });
-
-  Products.associate = (models) => {
-    models.Facts.belongsTo(models.Products, {
-      as: 'product',
-      onDelete: 'CASCADE',
-      foreignKey: {
-        allowNull: false,
-      },
-    });
-
-    models.MiscData.belongsTo(models.Products, {
-      as: 'product',
-      onDelete: 'CASCADE',
-      foreignKey: {
-        allowNull: false,
-      },
-    });
-  };
 
   return Products;
 };

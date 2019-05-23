@@ -3,14 +3,10 @@ import Sequelize from 'sequelize';
 // Models
 import products from './products';
 import categories from './categories';
-import facts from './nutrition_facts';
-import miscData from './misc_data';
 
 const models = {
   Products: products,
   Categories: categories,
-  Facts: facts,
-  MiscData: miscData,
 };
 const db = {};
 const dbDns = {
