@@ -9,8 +9,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
 import '../../styles/HomePage.css';
-import HomeIcon from '/client/app/images/home-icon.png';
-
+import HomeIcon from '../../images/home-icon.png';
 
 type Props = {
   history: {
@@ -31,7 +30,7 @@ export default function HomePage(props: Props) {
           pattern="\d*"
           type="text"
           placeholder="Votre age ?"
-        ></input>
+        />
         <select className="gender">
           <option disabled selected>
             Votre sexe ?
@@ -49,7 +48,7 @@ export default function HomePage(props: Props) {
       </div>
 
       <div className="imgContainer">
-        <img src={HomeIcon} className="Background" alt="homePageIllustration" />
+        <img alt="home-icon" src={HomeIcon} className="Background" />
       </div>
     </div>
   );
