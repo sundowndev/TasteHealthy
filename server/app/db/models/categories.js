@@ -1,9 +1,7 @@
-import Sequelize from 'sequelize';
-
-export default (sequelize /* , DataTypes*/) => {
+export default (sequelize, DataTypes) => {
   const Categories = sequelize.define('Categories', {
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
   });
