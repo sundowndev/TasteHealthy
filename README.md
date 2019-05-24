@@ -16,7 +16,7 @@ Taste Healthy est un projet de data journalisme destiné à analyser l’aliment
 <img src="https://i.imgur.com/0p32ghH.png" align="left" height="184px"/>
 <h3 align="left">Données</h3>
 <p align="left">
-Cette application repose sur les données d'[Open Food Facts](https://fr.openfoodfacts.org/), une initiative collective proposant, grâce aux nombreuses collaborations des internautes, une très grande base de données collaborative, libre et ouverte sur des produits alimentaires du monde entier.</p>
+  Cette application repose sur les données d'<a href="https://fr.openfoodfacts.org/">Open Food Facts</a>, une initiative collective proposant, grâce aux nombreuses collaborations des internautes, une très grande base de données collaborative, libre et ouverte sur des produits alimentaires du monde entier.</p>
 
 ## Documentation
 
@@ -24,6 +24,6 @@ La documentation de l'API est [disponible ici](https://sundowndev.github.io/Tast
 
 ## Licence
 
-Ce projet est libre et open source, distribué sous la licence [MPL (Mozilla Public License Version 2.0)](LICENSE).
+Ce projet est libre et open source, distribué sous la licence [MPL v2.0](LICENSE) (Mozilla Public License Version 2.0).
 
 Ce qui signifie -en bref- que vous avez tous les droits sur le code source, pour une utilisation commerciale ou privée. Vous n'avez cependant pas de droit sur l'identité visuelle du projet, en particulier le nom et le logo TasteHealthy.
