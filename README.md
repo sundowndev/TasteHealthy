@@ -13,10 +13,12 @@ Taste Healthy est un projet de data journalisme destiné à analyser l’aliment
 <h3 align="left">Impact écologique et sur la santé</h3>
 <p align="left">Depuis de nombreuses années, l’impact écologique pèse de plus en plus lourd sur la société de consommation et le grand public n’y est que très peu sensibilisé. Les sucres ajoutés par exemple, font partie d’environ 80% de nos produits de consommation quotidienne. Alors comment savoir ce que représente vraiment ce que nous mangeons au quotidien ?</p>
 
+<div>
 <img src="https://i.imgur.com/0p32ghH.png" align="left" height="184px"/>
 <h3 align="left">Données</h3>
 <p align="left">
-  Cette application repose sur les données d'<a href="https://fr.openfoodfacts.org/">Open Food Facts</a>, une initiative collective proposant, grâce aux nombreuses collaborations des internautes, une très grande base de données collaborative, libre et ouverte sur des produits alimentaires du monde entier.</p>
+  Cette application repose sur les données d'<a href="https://fr.openfoodfacts.org/">Open Food Facts</a>, une initiative collective proposant, grâce aux nombreuses collaborations des internautes, une très grande base de données collaborative, libre et ouverte sur des produits alimentaires du monde entier. Les données ont été formatées et certains produits retirés car incomplets.</p>
+</div>
 
 ## Documentation
 
