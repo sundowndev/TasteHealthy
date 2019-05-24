@@ -3,69 +3,27 @@
   <a href="https://travis-ci.org/sundowndev/TasteHealthy"><img src="https://travis-ci.org/sundowndev/TasteHealthy.svg?branch=master" alt="Build Status"></a>
 </div>
 
-Taste Healthy est un projet de data journalisme destiné à analyser l’alimentation et la consommation journalière d'un individu. Grâce à des données ouvertes, nous sômmes en mesure de d’analyser la consommation de n’importe quel individu et de vulgariser sur ce que représente son alimentation, en visualisant la quantité de sucre ajoutés, les additifs ou encore la répartition des emballages. Le sucre par exemple, fait partie d’environ 80% de nos produits de consommation quotidienne. Depuis de nombreuses années, l’impact écologique pèse de plus en plus lourd sur la société de consommation et le grand public n’y est que très peu sensibilisé. Alors comment savoir ce que représente vraiment ce que nous mangeons au quotidien ?
+## Qu'est-ce que c'est ?
 
-<p align="center">
-  <img src="https://i.imgur.com/kZxBjvD.png" alt="">
-</p>
+<img src="https://i.imgur.com/kZxBjvD.png" align="right" height="184px"/>
+<h3 align="left">Le projet</h3>
+<p align="left">
+Taste Healthy est un projet de data journalisme destiné à analyser l’alimentation et la consommation journalière d'un individu. Grâce à des données ouvertes, nous sômmes en mesure de d’analyser la consommation de n’importe quel individu et de vulgariser sur ce que représente son alimentation, en visualisant la quantité de sucre ajoutés, les additifs ou encore la répartition des emballages.</p>
 
-### Données
+<h3 align="left">Impact écologique et sur la santé</h3>
+<p align="left">Depuis de nombreuses années, l’impact écologique pèse de plus en plus lourd sur la société de consommation et le grand public n’y est que très peu sensibilisé. Les sucres ajoutés par exemple, font partie d’environ 80% de nos produits de consommation quotidienne. Alors comment savoir ce que représente vraiment ce que nous mangeons au quotidien ?</p>
 
-Cette application repose sur les données d'[Open Food Facts](https://fr.openfoodfacts.org/), une initiative collective proposant, grâce aux nombreuses collaborations des internautes, une très grande base de données collaborative, libre et ouverte sur des produits alimentaires du monde entier.
+<img src="https://i.imgur.com/0p32ghH.png" align="left" height="184px"/>
+<h3 align="left">Données</h3>
+<p align="left">
+Cette application repose sur les données d'[Open Food Facts](https://fr.openfoodfacts.org/), une initiative collective proposant, grâce aux nombreuses collaborations des internautes, une très grande base de données collaborative, libre et ouverte sur des produits alimentaires du monde entier.</p>
 
-<p align="center">
-  <img src="https://i.imgur.com/0p32ghH.png" alt="">
-</p>
+## Documentation
 
----
+La documentation de l'API est [disponible ici](https://sundowndev.github.io/TasteHealthy/api/).
 
-### Processing CSV to SQL
+## Licence
 
-```shell
-# Copy the first 10000 lines (example)
-head -10000 ~/Téléchargements/fr.openfoodfacts.org.products.csv > ./scripts/test2.csv
+Ce projet est libre et open source, distribué sous la licence [MPL (Mozilla Public License Version 2.0)](LICENSE).
 
-# Fix delimiter char if needed (e.g replace tab with comma)
-# sed -i -- 's/ /,/g' ./scripts/test2.csv
-
-# Run script
-node scripts/populate.js
-```
-
-### API response
-
-Here is an example of response returned by the the server side.
-
-```json
-{
-  "success": true,
-  "limit": 20,
-  "page": 1,
-  "offset": 0,
-  "results": 1,
-  "items": [
-    { ... }
-  ]
-}
-```
-
-In some cases, the API returns an error.
-
-```json
-{
-  "success": false,
-  "errorMessage": "\"query\" length must be at least 3 characters long"
-}
-```
-
-#### Searching products
-
-```
-curl -X GET http://localhost:3000/products?query=nut
-```
-
-#### Pagination
-
-```
-curl -X GET http://localhost:3000/products?query=nut&page=2
-```
+Ce qui signifie -en bref- que vous avez tous les droits sur le code source, pour une utilisation commerciale ou privée. Vous n'avez cependant pas de droit sur l'identité visuelle du projet, en particulier le nom et le logo TasteHealthy.
