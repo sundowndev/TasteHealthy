@@ -8,9 +8,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import '../../styles/HomePage.scss';
-import HomeIcon from '/client/app/images/home-icon.png';
-
+import '../../styles/HomePage.css';
+import HomeIcon from '../../images/home-icon.png';
 
 type Props = {
   history: {
@@ -25,19 +24,31 @@ export default function HomePage(props: Props) {
         <h1>
           <FormattedMessage {...messages.header} />
         </h1>
-        <input className="age" maxLength="3" pattern="\d*" type="text" placeholder="Votre age ?"></input>
+        <input
+          className="age"
+          maxLength="3"
+          pattern="\d*"
+          type="text"
+          placeholder="Votre age ?"
+        />
         <select className="gender">
-          <option disabled selected>Votre sexe ?</option>
-          <option>{"homme".toUpperCase()}</option>
-          <option>{"femme".toUpperCase()}</option>
+          <option disabled selected>
+            Votre sexe ?
+          </option>
+          <option>{'homme'.toUpperCase()}</option>
+          <option>{'femme'.toUpperCase()}</option>
         </select>
-        <button className="startButton" type="button" onClick={() => props.history.push('/meals')}>
+        <button
+          className="startButton"
+          type="button"
+          onClick={() => props.history.push('/meals')}
+        >
           {"C'est parti !".toUpperCase()}
         </button>
       </div>
 
       <div className="imgContainer">
-        <img src={HomeIcon} className="Background"/>
+        <img alt="home-icon" src={HomeIcon} className="Background" />
       </div>
     </div>
   );
