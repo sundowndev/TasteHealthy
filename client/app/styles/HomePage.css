@@ -1,0 +1,37 @@
+h1 {
+  color: blue;
+  font-size: 65px;
+  font-weight: 500;
+  line-height: 75px; }
+
+.homePage {
+  display: flex;
+  align-items: center;
+  height: 90vh;
+  padding: 60px;
+  justify-content: space-between; }
+
+.contentContainer {
+  width: 70%; }
+
+.age {
+  border: #33176E solid 2px;
+  border-radius: 10px;
+  width: 132px;
+  height: 50px; }
+
+.gender {
+  border: #33176E solid 2px;
+  border-radius: 10px;
+  width: 183px;
+  height: 50px; }
+
+.startButton {
+  background-color: #D9C5F4;
+  width: 118px;
+  height: 50px;
+  border-radius: 10px;
+  color: #33176E; }
+
+.imgContainer {
+  width: 30%; }
