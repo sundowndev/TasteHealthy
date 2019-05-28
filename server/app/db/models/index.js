@@ -14,7 +14,7 @@ const dbDns = {
   host: process.env.API_DB_HOST || '127.0.0.1',
   database: process.env.API_DB || 'tastehealthy',
   password: process.env.API_DB_PWD || 'tastehealthy',
-  port: process.env.API_DB_PORT || 3306,
+  port: process.env.API_DB_PORT || 5432,
 };
 
 // Init DB connection
