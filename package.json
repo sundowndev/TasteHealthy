@@ -27,7 +27,8 @@
     "client:test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "client:coveralls": "cat ./coverage/lcov.info | coveralls",
     "client:prettify": "prettier --write",
-    "client:flow": "flow"
+    "client:flow": "flow",
+    "build:svg": "svgr -d client/app/svg/ client/app/components/"
   },
   "jest": {
     "moduleNameMapper": {
@@ -153,6 +154,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "7.4.3",
+    "axios": "^0.18.0",
     "body-parser": "^1.19.0",
     "chalk": "^2.4.2",
     "compression": "1.7.4",
@@ -178,6 +180,7 @@
     "pg": "^7.11.0",
     "pg-hstore": "^2.3.2",
     "prop-types": "15.7.2",
+    "ramda": "^0.26.1",
     "react": "16.8.6",
     "react-dom": "16.8.6",
     "react-helmet": "6.0.0-beta",
