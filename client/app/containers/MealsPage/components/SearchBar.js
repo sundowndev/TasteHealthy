@@ -18,12 +18,12 @@ const SearchBar = (props: Props) => {
 
     if (name.length >= 3) {
       const products = await axios
-        .post(`http://localhost:3000/products?query=${name}`)
+        .get(`http://localhost:3000/products?query=${name}`)
         .then(data => data);
       props.sendProducts(products);
     } else {
       const products = await axios
-        .post(`http://localhost:3000/products`)
+        .get(`http://localhost:3000/products`)
         .then(data => combine(data));
       props.sendProducts(products);
     }
