@@ -64,11 +64,6 @@ export const HomePage = (props: propsType) => {
 
   const afterOpenModal = () => {};
 
-  // const changeBreakfast = data => props.changeBreakfast(data);
-  // const changeLunch = data => props.changeLunch(data);
-  // const changeDinner = data => props.changeDinner(data);
-  // const changeSnack = data => props.changeSnack(data);
-
   return (
     <h1>
       {/**
