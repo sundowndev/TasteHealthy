@@ -4,14 +4,22 @@
 // @flow
 
 /*
- * HomePage
+ * ModalComponent
  *
- * This is the first thing users see of our App, at the '/' route
+ * This is the modal which shows the available products
  *
  */
 
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
+
+import {
+  changeLunch,
+  changeBreakfast,
+  changeSnack,
+  changeDinner,
+} from '../actions';
 
 type mealsType = {
   breakfast: any,
@@ -25,6 +33,10 @@ type Props = {
     push: string => void,
   },
   mealsData: mealsType,
+  changeBreakfast: mealsType => any,
+  changeLunch: mealsType => any,
+  changeSnack: mealsType => any,
+  changeDinner: mealsType => any,
 };
 
 const ModalComponent = ({
@@ -41,9 +53,57 @@ const ModalComponent = ({
     { product_name: '', id: 132, quantity: 100 },
   ]);
   const [meals, setMeals] = useState(mealsData);
+  const { changeBreakfast, changeLunch, changeDinner, changeSnack } = props;
 
   const getProducts = products => {
-    changeNotConsumedAliments(products);
+    changeNotConsumedAliments(products.data.items);
+  };
+
+  const changeBreakfastData = data => changeBreakfast(data);
+  const changeLunchData = data => changeLunch(data);
+  const changeDinnerData = data => changeDinner(data);
+  const changeSnackData = data => changeSnack(data);
+
+  const updateStore = (mealType: string) => {
+    switch (mealType) {
+      case 'breakfast':
+        changeBreakfastData({
+          ...meals,
+          [mealType]: {
+            consummedAliments,
+          },
+        });
+        break;
+      case 'dinner':
+        changeDinnerData(consummedAliments);
+        changeDinnerData({
+          ...meals,
+          [mealType]: {
+            consummedAliments,
+          },
+        });
+        break;
+      case 'snack':
+        changeSnackData(consummedAliments);
+        changeSnackData({
+          ...meals,
+          [mealType]: {
+            consummedAliments,
+          },
+        });
+        break;
+      case 'lunch':
+        changeLunchData(consummedAliments);
+        changeLunchData({
+          ...meals,
+          [mealType]: {
+            consummedAliments,
+          },
+        });
+        break;
+      default:
+        console.error('The meal type does not match anything ! ');
+    }
   };
 
   return (
@@ -72,8 +132,9 @@ const ModalComponent = ({
               consummedAliments,
             },
           });
+          updateStore(currentModalName);
           // eslint-disable-next-line react/prop-types
-          return props.history.push('/result');
+          // return props.history.push('/result');
         }}
       >
         Valider
@@ -127,4 +188,12 @@ const ModalComponent = ({
   );
 };
 
-export default ModalComponent;
+function mapStateToProps(state) {
+  const { meals } = state;
+  return { mealsData: meals };
+}
+
+export default connect(
+  mapStateToProps,
+  { changeBreakfast, changeLunch, changeDinner, changeSnack },
+)(ModalComponent);
