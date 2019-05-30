@@ -76,11 +76,10 @@ body {
 *::after {
   box-sizing: border-box; }
 
-.app {
+.app_container {
   padding: calc(50px + 40px) calc(50px + 35px);
   background-color: #FBFBFB;
-  position: relative;
-  z-index: -1; }
+  position: relative; }
   .app__top {
     position: absolute;
     top: 0;

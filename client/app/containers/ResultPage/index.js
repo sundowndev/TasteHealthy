@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import '../../styles/ResultPage.css';
 
 // Components
-import { forEachObjIndexed } from 'ramda';
+import { forEachObjIndexed, mean } from 'ramda';
 import SidebarComponent from './components/SideBarComponent';
 import NutriscoreComponent from './components/NutriscoreComponent';
 import OriginComponent from './components/OriginComponent';
@@ -48,20 +48,19 @@ const ResultPage = props => {
   };
 
   const getMealsNutriScore = mealsElements => {
-    const counts = {};
+    const scores = ['a', 'b', 'c', 'd', 'e'];
+    const counts = [];
 
     for (let i = 0; i < mealsElements.length; i++) {
-      const num = mealsElements[i].misc_data.nutrition_grade_fr;
-      counts[num] = counts[num] ? counts[num] + 1 : 1;
+      const num = scores.indexOf(mealsElements[i].misc_data.nutrition_grade_fr);
+      counts.push(num);
     }
 
-    return counts;
+    return scores[Math.round(mean(counts))];
   };
 
-  getMealsNutriScore(mealsElements);
-
   return (
-    <div className="app">
+    <div className="app_container">
       <div className="app__top" />
       <div className="app__right" />
       <div className="app__bottom" />
@@ -70,14 +69,14 @@ const ResultPage = props => {
       <div className="app__logo" />
 
       <div className="app__container">
-        <SidebarComponent />
+        <SidebarComponent props={props} />
 
         <div className="app__content">
           <p className="app__content__title">Produits consommés</p>
           <div className="app__content__block" />
 
           <div className="app__content__blocks app__content__blocks--three">
-            <NutriscoreComponent />
+            <NutriscoreComponent letter={getMealsNutriScore(mealsElements)} />
 
             <OriginComponent origin={getMealsOrigin(mealsElements)} />
 
