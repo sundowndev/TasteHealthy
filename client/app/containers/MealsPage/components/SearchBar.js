@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import { curry, assoc, map } from 'ramda';
+import { assoc, map } from 'ramda';
 
 type Props = {
   sendProducts: any => any,

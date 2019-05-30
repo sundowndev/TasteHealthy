@@ -14,7 +14,6 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import axios from 'axios';
 import ModalComponent from './components/ModalComponent';
 // import { withRouter } from 'react-router';
 import messages from './messages';
