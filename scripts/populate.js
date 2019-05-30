@@ -5,9 +5,9 @@ import csv from 'csvtojson';
 import models from '../server/app/db/models';
 
 // ---------------- Variables ----------------
-// const csvFilePath = path.join(process.cwd(), './scripts/fixtures/data.csv');
-const csvFilePath =
-  '/home/sundowndev/Téléchargements/fr.openfoodfacts.org.products.csv';
+const csvFilePath = path.join(process.cwd(), './scripts/test2.csv');
+// const csvFilePath =
+//   '/home/sundowndev/Téléchargements/fr.openfoodfacts.org.products.csv';
 
 // ---------------- Functions & script ----------------
 const logger = (...args) => console.log(...args);

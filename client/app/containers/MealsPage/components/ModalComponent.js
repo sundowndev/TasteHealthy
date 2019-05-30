@@ -134,7 +134,7 @@ const ModalComponent = ({
           });
           updateStore(currentModalName);
           // eslint-disable-next-line react/prop-types
-          // return props.history.push('/result');
+          return props.history.push(`/result/${currentModalName}`);
         }}
       >
         Valider
