@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import '../../styles/ResultPage.css';
 
 // Components
-import { forEachObjIndexed, mean } from 'ramda';
 import SidebarComponent from './components/SideBarComponent';
 import NutriscoreComponent from './components/NutriscoreComponent';
 import OriginComponent from './components/OriginComponent';
@@ -18,46 +17,27 @@ import PackagingComponent from './components/PackagingComponent';
 import ProductComponent from './components/ProductComponent';
 import SubstituteProductComponent from './components/SubstituteProductComponent';
 
-import mode from './utils/mode';
+import {
+  getMealsNutriScore,
+  getMealsOrigin,
+  getMealsPackaging,
+  getCalories,
+  getSodium,
+  getSalt,
+} from './utils/getFoodData';
 
-const ResultPage = props => {
+type Props = {
+  match: {
+    params: {
+      mealType: string,
+    },
+  },
+  mealsData: Array<string>,
+};
+
+const ResultPage = (props: Props) => {
   const { mealType } = props.match.params;
   const mealsElements = props.mealsData[mealType].consummedAliments;
-
-  const getMealsOrigin = mealsElements => {
-    const result = 'Inconnu';
-    const arrayResult = mealsElements.map(el =>
-      el.countries.match(/\S+(?=,)/) ? el.countries.match(/\S+(?=,)/)[0] : null,
-    );
-    const filtered = arrayResult.filter(el => el != null);
-    return mode(filtered) || result;
-  };
-
-  const getMealsPackaging = mealsElements => {
-    const resultArray = mealsElements.map(el => el.packaging.split(','));
-    const flattenArray = resultArray.flat();
-
-    const counts = {};
-
-    for (let i = 0; i < flattenArray.length; i++) {
-      const num = flattenArray[i];
-      counts[num] = counts[num] ? counts[num] + 1 : 1;
-    }
-
-    return counts;
-  };
-
-  const getMealsNutriScore = mealsElements => {
-    const scores = ['a', 'b', 'c', 'd', 'e'];
-    const counts = [];
-
-    for (let i = 0; i < mealsElements.length; i++) {
-      const num = scores.indexOf(mealsElements[i].misc_data.nutrition_grade_fr);
-      counts.push(num);
-    }
-
-    return scores[Math.round(mean(counts))];
-  };
 
   return (
     <div className="app_container">
