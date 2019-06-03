@@ -1,9 +1,343 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<HomePage /> should render and match the snapshot 1`] = `
-<h1>
-  <span>
-    This is the ResultPage container!
-  </span>
-</h1>
+<div
+  class="app_container"
+>
+  <div
+    class="app__top"
+  />
+  <div
+    class="app__right"
+  />
+  <div
+    class="app__bottom"
+  />
+  <div
+    class="app__left"
+  />
+  <div
+    class="app__logo"
+  />
+  <div
+    class="app__container"
+  >
+    <div
+      class="app__sidebar"
+    >
+      <p
+        class="app__sidebar__title"
+      >
+        Ma consommation
+      </p>
+      <div
+        class="app__sidebar__content"
+      >
+        <div
+          class="app__sidebar__content__block"
+        >
+          <div
+            class="app__sidebar__content__block__left"
+          >
+            <p>
+              Petit Déjeuner
+            </p>
+          </div>
+          <div
+            class="app__sidebar__content__block__right"
+          />
+        </div>
+        <div
+          class="app__sidebar__content__block"
+        >
+          <div
+            class="app__sidebar__content__block__left"
+          >
+            <p>
+              Déjeuner
+            </p>
+          </div>
+          <div
+            class="app__sidebar__content__block__right"
+          />
+        </div>
+        <div
+          class="app__sidebar__content__block"
+        >
+          <div
+            class="app__sidebar__content__block__left"
+          >
+            <p>
+              Goûter
+            </p>
+          </div>
+          <div
+            class="app__sidebar__content__block__right"
+          />
+        </div>
+        <div
+          class="app__sidebar__content__block"
+        >
+          <div
+            class="app__sidebar__content__block__left"
+          >
+            <p>
+              Dinner
+            </p>
+          </div>
+          <div
+            class="app__sidebar__content__block__right"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="app__content"
+    >
+      <p
+        class="app__content__title"
+      >
+        Produits consommés
+      </p>
+      <div
+        class="app__content__block"
+      />
+      <div
+        class="app__content__blocks app__content__blocks--three"
+      >
+        <div>
+          <p
+            class="app__content__title app__content__title--md"
+          >
+            Nutriscore moyen
+          </p>
+          <div
+            class="app__content__block"
+          >
+            <img
+              alt=""
+              src="[object Object]"
+              style="width: 150px;"
+            />
+          </div>
+        </div>
+        <div>
+          <p
+            class="app__content__title app__content__title--md"
+          >
+            Origine du produit
+          </p>
+          <div
+            class="app__content__block"
+          >
+            <p
+              class="app__content__block__text__origin"
+            >
+              France
+            </p>
+          </div>
+        </div>
+        <div>
+          <p
+            class="app__content__title app__content__title--md"
+          >
+            Emballage
+          </p>
+          <div
+            class="app__content__block app__content__block--packaging"
+          >
+            <div
+              class="app__content__block--packaging__content"
+            >
+              <div
+                class="app__content__block--packaging__content__column"
+              >
+                <div>
+                  <div
+                    class="app__content__block--packaging__circle"
+                  />
+                  <p>
+                    <strong>
+                      34%
+                    </strong>
+                     Plastique
+                  </p>
+                </div>
+                <div>
+                  <div
+                    class="app__content__block--packaging__circle"
+                  />
+                  <p>
+                    <strong>
+                      45%
+                    </strong>
+                     Conserve
+                  </p>
+                </div>
+              </div>
+              <div
+                class="app__content__block--packaging__content__column"
+              >
+                <div>
+                  <div
+                    class="app__content__block--packaging__circle"
+                  />
+                  <p>
+                    <strong>
+                      23%
+                    </strong>
+                     Canette
+                  </p>
+                </div>
+                <div>
+                  <div
+                    class="app__content__block--packaging__circle"
+                  />
+                  <p>
+                    <strong>
+                      0%
+                    </strong>
+                     Cassette
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="app__content__substitute-products"
+      >
+        <p
+          class="app__content__title"
+        >
+          Produits de substitutions
+        </p>
+        <div
+          class="app__content__block"
+        >
+          <div
+            class="app__content__blocks"
+          >
+            <div
+              class="app__content__substitute-products__content"
+            >
+              <p
+                class="app__content__substitute-products__content__title"
+              >
+                Mes produits
+              </p>
+              <div
+                class="app__content__substitute-products__block"
+              >
+                <div>
+                  <strong>
+                    All Butter Fruity Flapjack Cookies
+                  </strong>
+                  <p>
+                    225
+                    g
+                  </p>
+                </div>
+                <div
+                  class="app__content__substitute-products__block__check"
+                />
+              </div>
+            </div>
+            <div
+              class="app__content__substitute-products__content app__content__substitute-products__content--reverse"
+            >
+              <p
+                class="app__content__substitute-products__content__title"
+              >
+                Les produits conseillés
+              </p>
+              <div
+                class="app__content__substitute-products__block"
+              >
+                <div
+                  class="app__content__substitute-products__block__check is-checked"
+                />
+                <div>
+                  <strong>
+                    Riz Blanc
+                  </strong>
+                  <p>
+                    100g
+                  </p>
+                </div>
+              </div>
+              <div
+                class="app__content__substitute-products__block"
+              >
+                <div
+                  class="app__content__substitute-products__block__check is-checked"
+                />
+                <div>
+                  <strong>
+                    Riz Blanc
+                  </strong>
+                  <p>
+                    100g
+                  </p>
+                </div>
+              </div>
+              <div
+                class="app__content__substitute-products__block"
+              >
+                <div
+                  class="app__content__substitute-products__block__check is-checked"
+                />
+                <div>
+                  <strong>
+                    Riz Blanc
+                  </strong>
+                  <p>
+                    100g
+                  </p>
+                </div>
+              </div>
+              <div
+                class="app__content__substitute-products__block"
+              >
+                <div
+                  class="app__content__substitute-products__block__check is-checked"
+                />
+                <div>
+                  <strong>
+                    Riz Blanc
+                  </strong>
+                  <p>
+                    100g
+                  </p>
+                </div>
+              </div>
+              <div
+                class="app__content__substitute-products__block"
+              >
+                <div
+                  class="app__content__substitute-products__block__check is-checked"
+                />
+                <div>
+                  <strong>
+                    Riz Blanc
+                  </strong>
+                  <p>
+                    100g
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a
+            class="app__content__block__button"
+            href="#"
+          >
+            Visualiser avec les nouveaux produits
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
