@@ -1,12 +1,12 @@
 import React from 'react';
 import '../../../styles/ResultPage.css';
 
-const SubstituteProductComponent = () => (
+const SubstituteProductComponent = ({ mealProps }: { mealProps: any }) => (
   <div className="app__content__substitute-products__block">
     <div className="app__content__substitute-products__block__check is-checked" />
     <div>
-      <strong>Riz Blanc</strong>
-      <p>100g</p>
+      <strong>{mealProps.product_name}</strong>
+      <p>{mealProps.quantity}g</p>
     </div>
   </div>
 );

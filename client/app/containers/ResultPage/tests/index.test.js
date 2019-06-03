@@ -74,11 +74,7 @@ describe('<HomePage />', () => {
       container: { firstChild },
     } = render(
       <IntlProvider locale="en">
-        <ResultPage
-          blou="zefze"
-          match={match}
-          store={mockStore(initialState)}
-        />
+        <ResultPage match={match} store={mockStore(initialState)} />
       </IntlProvider>,
     );
     expect(firstChild).toMatchSnapshot();

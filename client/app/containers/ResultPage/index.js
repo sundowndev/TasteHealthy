@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /*
  * ResultPage
  *
@@ -8,6 +9,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import '../../styles/ResultPage.css';
+
+// CircularProgressBar
+import ProgressBar from './utils/ProgressBar';
 
 // Components
 import SidebarComponent from './components/SideBarComponent';
@@ -36,6 +40,29 @@ type Props = {
   mealsData: any,
 };
 
+const progressBar = (percentage: number) => (
+  <ProgressBar
+    percentage={percentage}
+    startColor="#FF0A0A"
+    endColor="#FFBE0D"
+    gradientId="progress"
+  >
+    <p
+      style={{
+        fontFamily: 'Apercu',
+        color: '#33176E',
+        fontSize: '20px',
+        letterSpacing: '0',
+        fontWeight: '600',
+        textAlign: 'center',
+      }}
+    >
+      {' '}
+      {percentage}{' '}
+    </p>
+  </ProgressBar>
+);
+
 const ResultPage = (props: Props) => {
   const { mealType } = props.match.params;
   const mealsElements = props.mealsData[mealType].consummedAliments;
@@ -54,14 +81,23 @@ const ResultPage = (props: Props) => {
 
         <div className="app__content">
           <p className="app__content__title">Produits consommés</p>
-          <div className="app__content__block" />
+          <div className="app__content__block">
+            <div style={{ width: '50px' }}>Sodium {progressBar(30)}</div>
+            {/* <div style={{ width: '50px' }}>{progressBar(30)}</div>
+            <div style={{ width: '50px' }}>{progressBar(50)}</div>
+            <div style={{ width: '50px' }}>{progressBar(60)}</div>
+            <div style={{ width: '50px' }}>{progressBar(80)}</div>
+            <div style={{ width: '50px' }}>{progressBar(100)}</div> */}
+          </div>
 
           <div className="app__content__blocks app__content__blocks--three">
             <NutriscoreComponent letter={getMealsNutriScore(mealsElements)} />
 
             <OriginComponent origin={getMealsOrigin(mealsElements)} />
 
-            <PackagingComponent />
+            <PackagingComponent
+              data={Object.values(getMealsPackaging(mealsElements))}
+            />
           </div>
 
           <div className="app__content__substitute-products">
@@ -81,13 +117,16 @@ const ResultPage = (props: Props) => {
                   <p className="app__content__substitute-products__content__title">
                     Les produits conseillés
                   </p>
-                  {[1, 1, 1, 1, 1].map(_ => (
-                    <SubstituteProductComponent />
+                  {mealsElements.map(meal => (
+                    <SubstituteProductComponent mealProps={meal} />
                   ))}
                 </div>
               </div>
-
-              <a href="#" className="app__content__block__button">
+              <a
+                href="#"
+                onClick={() => window.scrollTo(0, 0)}
+                className="app__content__block__button"
+              >
                 Visualiser avec les nouveaux produits
               </a>
             </div>
