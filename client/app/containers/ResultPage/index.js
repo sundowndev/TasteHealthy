@@ -17,6 +17,7 @@ import PackagingComponent from './components/PackagingComponent';
 import ProductComponent from './components/ProductComponent';
 import SubstituteProductComponent from './components/SubstituteProductComponent';
 
+// Food data
 import {
   getMealsNutriScore,
   getMealsOrigin,
@@ -32,7 +33,7 @@ type Props = {
       mealType: string,
     },
   },
-  mealsData: Array<string>,
+  mealsData: any,
 };
 
 const ResultPage = (props: Props) => {
