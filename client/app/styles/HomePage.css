@@ -1,37 +1,41 @@
-h1 {
-  color: blue;
-  font-size: 65px;
-  font-weight: 500;
-  line-height: 75px; }
-
 .homePage {
   display: flex;
   align-items: center;
-  height: 90vh;
-  padding: 60px;
-  justify-content: space-between; }
+  height: 90vh; }
 
-.contentContainer {
-  width: 70%; }
+.homePage .ho {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  margin: 0 auto; }
 
-.age {
-  border: #33176E solid 2px;
-  border-radius: 10px;
-  width: 132px;
-  height: 50px; }
+.homePage .ho .contentContainer h1 {
+  font-size: 50px;
+  line-height: 55px;
+  margin-bottom: 31px; }
 
-.gender {
+.homePage .ho .contentContainer p {
+  font-size: 15px;
+  font-weight: light;
+  line-height: 24px;
+  margin-bottom: 36px; }
+
+.homePage .ho .contentContainer select {
   border: #33176E solid 2px;
   border-radius: 10px;
   width: 183px;
-  height: 50px; }
+  height: 50px;
+  margin-right: 20px;
+  font-weight: bold;
+  padding-left: 17px; }
 
-.startButton {
-  background-color: #D9C5F4;
+.homePage .ho .contentContainer .startButton {
   width: 118px;
   height: 50px;
   border-radius: 10px;
-  color: #33176E; }
+  font-size: 13px;
+  font-weight: bold; }
 
-.imgContainer {
-  width: 30%; }
+.homePage .ho .imgContainer img {
+  width: 554px;
+  height: 492px; }

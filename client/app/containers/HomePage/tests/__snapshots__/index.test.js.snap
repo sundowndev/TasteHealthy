@@ -5,50 +5,60 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
   class="homePage"
 >
   <div
-    class="contentContainer"
+    class="ho"
   >
-    <h1>
-      <span>
-        Evaluez la qualité de ce que vous mangez
-      </span>
-    </h1>
-    <input
-      class="age"
-      maxlength="3"
-      pattern="\\\\d*"
-      placeholder="Votre age ?"
-      type="text"
-    />
-    <select
-      class="gender"
+    <div
+      class="contentContainer"
     >
-      <option
-        disabled=""
+      <h1>
+        Évaluez la qualité 
+        <br />
+         de ce que vous mangez
+      </h1>
+      <p>
+        Saisissez votre consommation journalière, que ce soit le petit déjeuner, le déjeuner, le 
+        <br />
+         goûter ou le dinner, afin d’avoir une vue détaillée et davantage 
+        <br />
+         d’informations sur ce que vous mangez.
+      </p>
+      <select>
+        <option>
+          Sportif ?
+        </option>
+        <option>
+          modéré
+        </option>
+        <option>
+          intense
+        </option>
+      </select>
+      <select>
+        <option>
+          Votre sexe ?
+        </option>
+        <option>
+          HOMME
+        </option>
+        <option>
+          FEMME
+        </option>
+      </select>
+      <button
+        class="startButton"
+        type="button"
       >
-        Votre sexe ?
-      </option>
-      <option>
-        HOMME
-      </option>
-      <option>
-        FEMME
-      </option>
-    </select>
-    <button
-      class="startButton"
-      type="button"
+        C'est parti !
+      </button>
+    </div>
+    <div
+      class="imgContainer"
     >
-      C'EST PARTI !
-    </button>
-  </div>
-  <div
-    class="imgContainer"
-  >
-    <img
-      alt="home-icon"
-      class="Background"
-      src="[object Object]"
-    />
+      <img
+        alt="home-icon"
+        src="[object Object]"
+      />
+    </div>
   </div>
 </div>
 `;
