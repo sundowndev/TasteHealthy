@@ -11,7 +11,7 @@
     "server:build:dev": "cross-env NODE_ENV=development webpack --config ./server/webpack.config.js",
     "server:test": "cross-env NODE_ENV=test jest ./server/test --config ./server/jest.config.js --coverage --useStderr --forceExit --detectOpenHandles",
     "server:docs": "apidoc -i ./server/app/routes -o ./docs/api -f '.*\\.js$'",
-    "client:build": "cross-env NODE_ENV=production webpack --config client/internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
+    "client:build": "cross-env NODE_ENV=production webpack --config client/internals/webpack/webpack.dev.babel.js --color -p --progress --hide-modules --display-optimization-bailout",
     "client:build:clean": "rimraf ./client/build",
     "client:build:css": "node-sass client/app/ -o client/app/",
     "client:watch:sass": "npm run client:build:css && npm run client:build:css -- -w",
