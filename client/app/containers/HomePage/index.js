@@ -8,10 +8,7 @@
 import React from 'react';
 import HomeIcon from '../../images/home-icon.png';
 
-import messages from './messages';
 import '../../styles/HomePage.css';
-import { FormattedMessage } from 'react-intl';
-import Arrow from '../../images/arrow.png';
 
 type Props = {
   history: {
@@ -26,19 +23,19 @@ export default function HomePage(props: Props) {
         <div className="contentContainer">
           <h1>
             {/* <FormattedMessage {...messages.header} /> */}
-            Évaluez la qualité <br/> de ce que vous mangez
+            Évaluez la qualité <br /> de ce que vous mangez
           </h1>
           <p>
-            Saisissez votre consommation journalière,
-            que ce soit le petit déjeuner, le déjeuner,
-            le <br/> goûter ou le dinner, afin d’avoir une vue
-            détaillée et davantage <br/> d’informations sur ce que vous mangez.
+            Saisissez votre consommation journalière, que ce soit le petit
+            déjeuner, le déjeuner, le <br /> goûter ou le dinner, afin d’avoir
+            une vue détaillée et davantage <br /> d’informations sur ce que vous
+            mangez.
           </p>
 
           <select>
             <option selected="selected">Sportif ?</option>
-            <option>{'modéré'}</option>
-            <option>{'intense'}</option>
+            <option>modéré</option>
+            <option>intense</option>
           </select>
           {/* <img alt="home-icon" src={Arrow}/> */}
 
@@ -58,7 +55,7 @@ export default function HomePage(props: Props) {
         </div>
 
         <div className="imgContainer">
-          <img alt="home-icon" src={HomeIcon}/>
+          <img alt="home-icon" src={HomeIcon} />
         </div>
       </div>
     </div>
