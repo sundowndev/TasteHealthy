@@ -3,8 +3,6 @@ import * as msg from '@/errors/message_errors.js';
 import models from '@/db/models';
 
 const Products = models.Products;
-const Facts = models.Facts;
-const MiscData = models.MiscData;
 const Op = Sequelize.Op;
 
 export const get_products = (req, res, next) => {
@@ -63,17 +61,18 @@ export const get_one_product = (req, res, next) => {
 export const get_one_product_facts = (req, res, next) => {
   let query = {
     where: {
-      productId: req.params.productId,
+      id: req.params.productId,
     },
+    attributes: ['nutrition_facts'],
   };
 
-  Facts.findOne(query)
+  Products.findOne(query)
     .then((document) => {
       if (!document) {
         return next(msg.productNotFound());
       }
 
-      req.return = document;
+      req.return = document['nutrition_facts'];
 
       return next();
     })
@@ -83,17 +82,18 @@ export const get_one_product_facts = (req, res, next) => {
 export const get_one_product_misc_data = (req, res, next) => {
   let query = {
     where: {
-      productId: req.params.productId,
+      id: req.params.productId,
     },
+    attributes: ['misc_data'],
   };
 
-  MiscData.findOne(query)
+  Products.findOne(query)
     .then((document) => {
       if (!document) {
         return next(msg.productNotFound());
       }
 
-      req.return = document;
+      req.return = document['misc_data'];
 
       return next();
     })
