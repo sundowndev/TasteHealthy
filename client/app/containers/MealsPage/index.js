@@ -16,6 +16,8 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 // import { withRouter } from 'react-router';
 import messages from './messages';
+import '../../styles/mealsPage.scss';
+import close from '../../images/close.png';
 
 import {
   changeLunch,
@@ -96,7 +98,6 @@ const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
       >
         Valider
       </button>
-      <h1>Aliments consommés</h1>
       {consummedAliments.map(el => (
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <div>
@@ -171,6 +172,11 @@ export const HomePage = (props: propsType) => {
         <button type="button" onClick={() => toggleModal(false)}>
           close
         </button>
+        <img
+          className="closeModal"
+          src={close}
+          alt="close"
+        />
         <div>{currentModalName}</div>
         <ModalComponent mealsData={props.mealsData} />
       </Modal>
