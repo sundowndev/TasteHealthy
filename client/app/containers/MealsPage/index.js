@@ -14,9 +14,8 @@ import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-// import { withRouter } from 'react-router';
 import messages from './messages';
-import '../../styles/mealsPage.scss';
+import '../../styles/mealsPage.css';
 import close from '../../images/close.png';
 
 import {
@@ -43,10 +42,13 @@ type propsType = {
 
 const customStyles = {
   content: {
-    top: '5%',
-    left: '5%',
-    right: '5%',
-    bottom: '5%',
+    top: '0%',
+    left: '0%',
+    right: '0%',
+    bottom: '0%',
+    width: '100%',
+    height: '100%',
+    border: 'none',
   },
 };
 
@@ -58,6 +60,7 @@ const SearchBar = () => {
       value={valueSearch}
       onChange={e => handleChange(e.target.value)}
       placeholder="Search..."
+      className="searchBar"
     />
   );
 };
@@ -66,7 +69,7 @@ const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
   const [consummedAliments, changeConsumedAliments] = useState([]);
   const [meals, setMeals] = useState(mealsData);
   return (
-    <div>
+    <div className="modalContent">
       <SearchBar />
       {[
         { name: 'ZAEAZZE', id: 132, quantity: 100 },
@@ -169,16 +172,22 @@ export const HomePage = (props: propsType) => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <button type="button" onClick={() => toggleModal(false)}>
-          close
-        </button>
-        <img
-          className="closeModal"
-          src={close}
-          alt="close"
-        />
-        <div>{currentModalName}</div>
-        <ModalComponent mealsData={props.mealsData} />
+        <div className="mealsPage">
+          <div className="modalContainer">
+            <div className="searchContainer">
+              <ModalComponent mealsData={props.mealsData}/>
+            </div>
+            <div className="summaryContainer">
+              <img
+                className="closeModal"
+                onClick={() => toggleModal(false)}
+                src={close}
+                alt="close"
+              />
+              <h1>{currentModalName}</h1>
+            </div>
+          </div>
+        </div>
       </Modal>
       {/**  */}
 

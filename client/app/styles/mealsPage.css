@@ -1,0 +1,42 @@
+.mealsPage {
+  height: 90vh;
+  width: 94vw;
+  margin: auto;
+  transform: translateY(1.5vw); }
+
+.mealsPage .closeModal {
+  width: 32px;
+  height: 32px;
+  float: right;
+  margin-top: 40px;
+  margin-right: 44px; }
+
+.mealsPage .modalContainer {
+  height: 100%;
+  width: 100%;
+  display: flex; }
+
+.mealsPage .modalContainer .searchContainer {
+  width: 50%;
+  height: 100%;
+  background-color: #F5F5F5;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; }
+
+.mealsPage .modalContainer .searchContainer .modalContent {
+  width: 469px;
+  background-color: green;
+  height: auto;
+  margin: 0 auto; }
+
+.mealsPage .modalContainer .searchContainer .modalContent .searchBar {
+  width: 412px;
+  height: 50px;
+  border: 2px solid #33176E;
+  border-radius: 10px; }
+
+.mealsPage .modalContainer .summaryContainer {
+  width: 50%;
+  height: 100%;
+  background-color: white; }
