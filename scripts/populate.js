@@ -57,10 +57,10 @@ async function main() {
             // !doc['countries_fr'] ||
             !doc['labels_fr'] ||
             // !doc['origins'] ||
-            !doc['manufacturing_places'] ||
-            !doc['purchase_places'] ||
+            // !doc['manufacturing_places'] ||
+            // !doc['purchase_places'] ||
             !doc['energy_100g'] ||
-            !doc['serving_size'] ||
+            // !doc['serving_size'] ||
             !doc['packaging'] ||
             // !doc['additives_n'] ||
             // !doc['additives'] ||
@@ -106,24 +106,20 @@ async function main() {
             new Promise((resolve, reject) => {
               const promises = [];
 
-              // console.log(
-              //   1111111111,
-              //   doc['serving_size'],
-              //   doc['carbon_footprint_100g'],
-              //   doc['nutrition_score_fr_100g'],
-              // doc['nutrition_score_uk_100g'],
-              // doc['quantity'],
-              // doc['image_url'],
-              // doc['origins'],
-              // doc['packaging'],
-              // doc['manufacturing_places'],
-              // doc['traces_fr'],
-              // doc['countries_fr'],
-              // doc['labels_fr'],
-              // doc['purchase_places'],
-              // doc['stores'],
-              // doc['ingredients_text'],
-              // );
+              // console.log(1111111111, {
+              //   categoryId: doc['categoryId'] || defaultCategoryId,
+              //   product_name: doc['product_name'],
+              //   generic_name: doc['generic_name'],
+              //   origins: doc['origins'] || 'unknown',
+              //   packaging: doc['packaging_tags'],
+              //   manufacturing_places: doc['manufacturing_places'],
+              //   countries: doc['countries_fr'],
+              //   labels: doc['labels_fr'],
+              //   purchase_places: doc['purchase_places'],
+              //   stores: doc['stores'],
+              //   // nutrition_facts,
+              //   // misc_data,
+              // });
 
               let quantity = doc['quantity'].replace(',', '.');
               let quantity_unity = doc['quantity'].replace(/([0-9])\w+ /, '');
@@ -210,6 +206,7 @@ async function main() {
                 carbon_footprint_100g: doc['carbon-footprint_100g'],
                 nutrition_score_fr_100g: doc['nutrition-score-fr_100g'],
                 nutrition_score_uk_100g: doc['nutrition-score-uk_100g'],
+                ingredients_text: doc['ingredients_text'],
               };
 
               Object.keys(nutrition_facts).forEach(k => {
@@ -224,19 +221,20 @@ async function main() {
                 models.Products.create({
                   categoryId: doc['categoryId'] || defaultCategoryId,
                   product_name: doc['product_name'],
-                  generic_name: doc['generic_name'],
+                  generic_name:
+                    doc['generic_name'] && doc['generic_name'].length < 250
+                      ? doc['generic_name']
+                      : null,
                   quantity: parseFloat(quantity, 100),
                   quantity_unity: quantity_unity,
                   image_url: doc['image_url'],
                   origins: doc['origins'] || 'unknown',
                   packaging: doc['packaging_tags'],
                   manufacturing_places: doc['manufacturing_places'],
-                  traces: doc['traces_fr'],
                   countries: doc['countries_fr'],
                   labels: doc['labels_fr'],
                   purchase_places: doc['purchase_places'],
                   stores: doc['stores'],
-                  ingredients_text: doc['ingredients_text'],
                   nutrition_facts,
                   misc_data,
                 })

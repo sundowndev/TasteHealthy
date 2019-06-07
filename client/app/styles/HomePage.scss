@@ -1,0 +1,53 @@
+.homePage {
+  display: flex;
+  align-items: center;
+  height: 90vh;
+
+  .ho {
+    display: flex;
+    width:  80%;
+    justify-content: space-between;
+    margin: 0 auto;
+
+    .contentContainer {
+
+      h1 {
+        font-size: 50px;
+        line-height: 55px;
+        margin-bottom: 31px;
+      }
+
+      p {
+        font-size: 15px;
+        font-weight: light;
+        line-height: 24px;
+        margin-bottom: 36px;
+      }
+
+      select {
+        border: #33176E solid 2px;
+        border-radius: 10px;
+        width: 183px;
+        height: 50px;
+        margin-right: 20px;
+        font-weight: bold;
+        padding-left: 17px;
+      }
+
+      .startButton {
+        width: 118px;
+        height: 50px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: bold;
+      }
+    }
+
+    .imgContainer {
+      img {
+        width:554px;
+        height:492px;
+      }
+    }
+  }
+}

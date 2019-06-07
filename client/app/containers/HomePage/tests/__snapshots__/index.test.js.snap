@@ -1,19 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<HomePage /> should render and match the snapshot 1`] = `
-<div>
-  <h1>
-    <span>
-      Evaluez la qualité de ce que vous mangez
-    </span>
-    <span>
-      Savez-vous vraiment ce que vous mangez ? Nous oui ! En un clin d’oeil, visualisez les produits qui sont bons et ceux qu’il vaut mieux éviter.
-    </span>
-  </h1>
-  <button
-    type="button"
+<div
+  class="homePage"
+>
+  <div
+    class="ho"
   >
-    COMMENCER L'EXPÉRIENCE
-  </button>
+    <div
+      class="contentContainer"
+    >
+      <h1>
+        Évaluez la qualité 
+        <br />
+         de ce que vous mangez
+      </h1>
+      <p>
+        Saisissez votre consommation journalière, que ce soit le petit déjeuner, le déjeuner, le 
+        <br />
+         goûter ou le dinner, afin d’avoir une vue détaillée et davantage 
+        <br />
+         d’informations sur ce que vous mangez.
+      </p>
+      <select>
+        <option>
+          Sportif ?
+        </option>
+        <option>
+          modéré
+        </option>
+        <option>
+          intense
+        </option>
+      </select>
+      <select>
+        <option>
+          Votre sexe ?
+        </option>
+        <option>
+          HOMME
+        </option>
+        <option>
+          FEMME
+        </option>
+      </select>
+      <button
+        class="startButton"
+        type="button"
+      >
+        C'est parti !
+      </button>
+    </div>
+    <div
+      class="imgContainer"
+    >
+      <img
+        alt="home-icon"
+        src="[object Object]"
+      />
+    </div>
+  </div>
 </div>
 `;

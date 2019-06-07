@@ -6,6 +6,7 @@ import http from 'http';
 import logger from 'morgan';
 import * as path from 'path';
 import { config as env_config } from 'dotenv';
+import cors from 'cors';
 
 // Internals libraries
 import api_response from '@/response/api_response';
@@ -23,7 +24,13 @@ env_config({
   path: path.join(process.cwd(), '.env'),
 });
 
-// ---------- INITIALIZE DATABASE ----------
+const corsOptions = {
+  origin: process.env.BASE_URL || 'http://localhost',
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+// ---------- INITIALIZE LIBRARIES ----------
+app.use(cors(corsOptions));
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

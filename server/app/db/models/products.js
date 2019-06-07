@@ -1,69 +1,59 @@
-import Sequelize from 'sequelize';
-
-export default (sequelize /* , DataTypes*/) => {
+export default (sequelize, DataTypes) => {
   const Products = sequelize.define('Products', {
     product_name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     generic_name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     quantity: {
-      type: Sequelize.FLOAT,
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     quantity_unity: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     image_url: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     origins: {
-      type: Sequelize.TEXT,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     packaging: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     manufacturing_places: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-    },
-    traces: {
-      type: Sequelize.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     countries: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     labels: {
-      type: Sequelize.TEXT,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     purchase_places: {
-      type: Sequelize.STRING,
-      allowNull: false,
-    },
-    stores: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: true,
     },
-    ingredients_text: {
-      type: Sequelize.TEXT,
+    stores: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
     nutrition_facts: {
-      type: Sequelize.JSON,
+      type: DataTypes.JSON,
       allowNull: true,
     },
     misc_data: {
-      type: Sequelize.JSON,
+      type: DataTypes.JSON,
       allowNull: true,
     },
   });
