@@ -59,7 +59,7 @@ const SearchBar = () => {
       type="text"
       value={valueSearch}
       onChange={e => handleChange(e.target.value)}
-      placeholder="Search..."
+      placeholder="Saisissez votre aliment ?"
       className="searchBar"
     />
   );
@@ -71,80 +71,99 @@ const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
   return (
     <div className="modalContent">
       <SearchBar />
-      {[
-        { name: 'ZAEAZZE', id: 132, quantity: 100 },
-        { name: 'fsddsfsd', id: 341, quantity: 100 },
-      ].map(_ => (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-        <div
-          onClick={() => {
-            if (!consummedAliments.some(e => e.id === _.id)) {
-              changeConsumedAliments(consummedAliments.concat([_]));
-            }
-          }}
-          key={_.id}
-        >
-          {_.name}
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={() =>
-          setMeals({
-            ...meals,
-            breakfast: {
-              test: 'OK',
-            },
-          })
-        }
-      >
-        Valider
-      </button>
-      {consummedAliments.map(el => (
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
         <div>
-          <h1
-            key={el.id}
-            onClick={() =>
-              changeConsumedAliments(
-                consummedAliments.filter(ll => ll.id !== el.id),
-              )
-            }
-          >
-            {el.name}
-            {el.quantity} gr
-          </h1>
-          <p
+        {[
+          { name: 'Riz Blanc', id: 132, quantity: 100 },
+          { name: 'Riz complet', id: 341, quantity: 100 },
+          { name: 'ddddlsls', id: 122, quantity: 100 },
+          { name: 'lslsmdmdpdpdpd', id: 333, quantity: 100 },
+          { name: 'ccccvvvbb', id: 156, quantity: 100 },
+          { name: 'wwwwwcccccsq', id: 378, quantity: 100 },
+          { name: 'pppppppppp', id: 199, quantity: 100 },
+          { name: 'Raaaaaaaaaaaa', id: 312, quantity: 100 },
+        ].map(_ => (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+          // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+
+          <div
             onClick={() => {
-              const tt = consummedAliments.map(aliment => {
-                if (aliment.id === el.id) {
-                  if (el.quantity > 100) {
-                    aliment.quantity -= 100;
+              if (!consummedAliments.some(e => e.id === _.id)) {
+                changeConsumedAliments(consummedAliments.concat([_]));
+              }
+            }}
+            key={_.id}
+          >
+            {_.name}
+          </div>
+        ))}
+
+        {consummedAliments.map(el => (
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+          <div>
+            <div className="foodItemContainer">
+              <div className="foodItemContent">
+                <p
+                  key={el.id}
+                  onClick={() =>
+                    changeConsumedAliments(
+                      consummedAliments.filter(ll => ll.id !== el.id),
+                    )
                   }
+                >
+                  {el.name}
+                  <br/>
+                  {el.quantity} gr
+                </p>
+                <p
+                  className="operations"
+                  onClick={() => {
+                    const tt = consummedAliments.map(aliment => {
+                      if (aliment.id === el.id) {
+                        if (el.quantity > 100) {
+                          aliment.quantity -= 100;
+                        }
+                      }
+                      return aliment;
+                    });
+                    changeConsumedAliments(tt);
+                  }}
+                >
+                  -
+                </p>
+                <p
+                  className="operations"
+                  onClick={() => {
+                    const tt = consummedAliments.map(aliment => {
+                      if (aliment.id === el.id) {
+                        aliment.quantity += 100;
+                      }
+                      return aliment;
+                    });
+                    changeConsumedAliments(tt);
+                  }}
+                >
+                  +
+                </p>
+              </div>
+              <button
+                type="button"
+                className="addFood"
+                onClick={() =>
+                  setMeals({
+                    ...meals,
+                    breakfast: {
+                      test: 'OK',
+                    },
+                  })
                 }
-                return aliment;
-              });
-              changeConsumedAliments(tt);
-            }}
-          >
-            -
-          </p>
-          <p
-            onClick={() => {
-              const tt = consummedAliments.map(aliment => {
-                if (aliment.id === el.id) {
-                  aliment.quantity += 100;
-                }
-                return aliment;
-              });
-              changeConsumedAliments(tt);
-            }}
-          >
-            +
-          </p>
+              >
+                Ajouter
+              </button>
+            </div>
+            <div className="line"></div>
+          </div>
+        ))}
         </div>
-      ))}
     </div>
   );
 };
