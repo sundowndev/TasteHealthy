@@ -76,7 +76,7 @@
     box-sizing: border-box;
   }
   
-  .app_container {
+  .app {
     padding: calc(50px + 40px) calc(50px + 35px);
     background-color: #FBFBFB;
     position: relative;
@@ -155,6 +155,9 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
+          &:hover {
+            cursor: pointer;
+          }
           &:not(:first-child) {
             margin-top: 15px;
           }
@@ -237,7 +240,7 @@
   
       &__blocks {
         display: grid;
-        margin-top: 50px;
+        margin-top: 70px;
         position: relative;
         &--three {
           grid-template-columns: repeat(3, 1fr);
@@ -254,6 +257,35 @@
           position: absolute;
           top: -30px;
         }
+      }
+      .app__content__block__flex {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #FFF;
+        padding: 50px 35px;
+        border-radius: 5px;
+        box-shadow: 0 6px 13px 0 rgba(21, 33, 56, 0.05);
+        position: relative;
+      }
+      .app__content__block__flex__left {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .app__content__block__flex__component {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .app__content__block__flex__right {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .app__content__block__flex__middle {
       }
   
       .app__content__block__text__origin {
