@@ -168,6 +168,27 @@ const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
   );
 };
 
+const SummaryComponent = () => {
+  return (
+    <div>
+      <div className="validateFood">
+        <div>
+          <p>
+            Riz Blanc
+          </p>
+          <p className="weight">
+            100gr
+          </p>
+        </div>
+        <img
+          src={close}
+          alt="close"
+        />
+      </div>
+    </div>
+  );
+};
+
 export const HomePage = (props: propsType) => {
   const [modalIsOpen, toggleModal] = useState(false);
   const [currentModalName, changeModalName] = useState(null);
@@ -193,17 +214,20 @@ export const HomePage = (props: propsType) => {
       >
         <div className="mealsPage">
           <div className="modalContainer">
+            <img
+              className="closeModal"
+              onClick={() => toggleModal(false)}
+              src={close}
+              alt="close"
+            />
             <div className="searchContainer">
               <ModalComponent mealsData={props.mealsData}/>
             </div>
             <div className="summaryContainer">
-              <img
-                className="closeModal"
-                onClick={() => toggleModal(false)}
-                src={close}
-                alt="close"
-              />
-              <h1>{currentModalName}</h1>
+              <div className="modalContent">
+                <h1>{currentModalName}</h1>
+                <SummaryComponent/>
+              </div>
             </div>
           </div>
         </div>
