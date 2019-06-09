@@ -25,6 +25,8 @@ import {
   changeDinner,
 } from './actions';
 
+Modal.setAppElement('#app');
+
 type mealsType = {
   breakfast: any,
   dinner: any,

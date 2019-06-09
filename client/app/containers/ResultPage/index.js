@@ -10,9 +10,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import '../../styles/ResultPage.css';
 
-// CircularProgressBar
-import ProgressBar from './utils/ProgressBar';
-
 // Components
 import SidebarComponent from './components/SideBarComponent';
 import NutriscoreComponent from './components/NutriscoreComponent';
@@ -31,6 +28,8 @@ import {
   getSalt,
 } from './utils/getFoodData';
 
+import progressBar from './components/ProgressBarComponent';
+
 type Props = {
   match: {
     params: {
@@ -39,29 +38,6 @@ type Props = {
   },
   mealsData: any,
 };
-
-const progressBar = (percentage: number) => (
-  <ProgressBar
-    percentage={percentage}
-    startColor="#FF0A0A"
-    endColor="#FFBE0D"
-    gradientId="progress"
-  >
-    <p
-      style={{
-        fontFamily: 'Apercu',
-        color: '#33176E',
-        fontSize: '20px',
-        letterSpacing: '0',
-        fontWeight: '600',
-        textAlign: 'center',
-      }}
-    >
-      {' '}
-      {percentage}{' '}
-    </p>
-  </ProgressBar>
-);
 
 const ResultPage = (props: Props) => {
   const { mealType } = props.match.params;
@@ -82,12 +58,15 @@ const ResultPage = (props: Props) => {
         <div className="app__content">
           <p className="app__content__title">Produits consommés</p>
           <div className="app__content__block">
-            <div style={{ width: '50px' }}>Sodium {progressBar(30)}</div>
-            {/* <div style={{ width: '50px' }}>{progressBar(30)}</div>
-            <div style={{ width: '50px' }}>{progressBar(50)}</div>
-            <div style={{ width: '50px' }}>{progressBar(60)}</div>
-            <div style={{ width: '50px' }}>{progressBar(80)}</div>
-            <div style={{ width: '50px' }}>{progressBar(100)}</div> */}
+            <div style={{ width: '50px' }}>
+              Calories {progressBar(getCalories(mealsElements))}
+            </div>
+            <div style={{ width: '50px' }}>
+              Sodium {progressBar(getSodium(mealsElements))}
+            </div>
+            <div style={{ width: '50px' }}>
+              Salt {progressBar(getSalt(mealsElements))}
+            </div>
           </div>
 
           <div className="app__content__blocks app__content__blocks--three">
@@ -95,9 +74,7 @@ const ResultPage = (props: Props) => {
 
             <OriginComponent origin={getMealsOrigin(mealsElements)} />
 
-            <PackagingComponent
-              data={Object.values(getMealsPackaging(mealsElements))}
-            />
+            <PackagingComponent data={getMealsPackaging(mealsElements)} />
           </div>
 
           <div className="app__content__substitute-products">

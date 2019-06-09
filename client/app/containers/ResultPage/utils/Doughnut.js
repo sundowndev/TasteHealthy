@@ -3,7 +3,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 const DoughnutComponent = ({ elements }) => {
   const dataProps = {
-    labels: ['Boîte', 'Carton', 'Sachet', 'Plastique'],
+    labels: Object.keys(elements),
     options: {
       legend: {
         display: true,
@@ -16,9 +16,25 @@ const DoughnutComponent = ({ elements }) => {
     },
     datasets: [
       {
-        data: elements,
-        backgroundColor: ['#414A5A', '#C1D0D9', '#F1F4F7', '#A8C7D8'],
-        hoverBackgroundColor: ['#C1D0D9', '#414A5A', '#A8C7D8', '#F1F4F7'],
+        data: Object.values(elements),
+        backgroundColor: [
+          '#414A5A',
+          '#C1D0D9',
+          '#F1F4F7',
+          '#F1F4G8',
+          '#U4U7U5',
+          '#000000',
+          '#111111',
+        ],
+        hoverBackgroundColor: [
+          '#C1D0D9',
+          '#414A5A',
+          '#A8C7D8',
+          '#F1F4F7',
+          '#F1F4G8',
+          '#111111',
+          '#000000',
+        ],
       },
     ],
   };

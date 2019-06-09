@@ -17,7 +17,7 @@ export const getMealsPackaging = mealsElements => {
   const counts = {};
 
   for (let i = 0; i < flattenArray.length; i += 1) {
-    const num = flattenArray[i];
+    const num = flattenArray[i] === undefined ? 'Inconnu' : flattenArray[i];
     counts[num] = counts[num] ? counts[num] + 1 : 1;
   }
   return counts;
