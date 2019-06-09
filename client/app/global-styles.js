@@ -38,7 +38,6 @@ const GlobalStyle = createGlobalStyle`
     transform: translateY(3vw);
     margin: auto;
     position: relative;
-    z-index: 1;
   }
 
   select {
@@ -56,7 +55,7 @@ const GlobalStyle = createGlobalStyle`
   .logo {
     position: absolute !important;
     top: 0px !important;
-    z-index: 999;
+    z-index: 2;
     width: 137px;
     height: 120px;
   }
