@@ -71,7 +71,7 @@ const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
   return (
     <div className="modalContent">
       <SearchBar />
-        <div>
+      <div>
         {[
           { name: 'Riz Blanc', id: 132, quantity: 100 },
           { name: 'Riz complet', id: 341, quantity: 100 },
@@ -86,6 +86,8 @@ const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
           // eslint-disable-next-line jsx-a11y/no-static-element-interactions
 
           <div
+            role="button"
+            tabIndex={0}
             onClick={() => {
               if (!consummedAliments.some(e => e.id === _.id)) {
                 changeConsumedAliments(consummedAliments.concat([_]));
@@ -111,7 +113,7 @@ const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
                   }
                 >
                   {el.name}
-                  <br/>
+                  <br />
                   {el.quantity} gr
                 </p>
                 <p
@@ -160,34 +162,25 @@ const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
                 Ajouter
               </button>
             </div>
-            <div className="line"></div>
+            <div className="line" />
           </div>
         ))}
-        </div>
-    </div>
-  );
-};
-
-const SummaryComponent = () => {
-  return (
-    <div>
-      <div className="validateFood">
-        <div>
-          <p>
-            Riz Blanc
-          </p>
-          <p className="weight">
-            100gr
-          </p>
-        </div>
-        <img
-          src={close}
-          alt="close"
-        />
       </div>
     </div>
   );
 };
+
+const SummaryComponent = () => (
+  <div>
+    <div className="validateFood">
+      <div>
+        <p>Riz Blanc</p>
+        <p className="weight">100gr</p>
+      </div>
+      <img src={close} alt="close" />
+    </div>
+  </div>
+);
 
 export const HomePage = (props: propsType) => {
   const [modalIsOpen, toggleModal] = useState(false);
@@ -221,24 +214,17 @@ export const HomePage = (props: propsType) => {
               alt="close"
             />
             <div className="searchContainer">
-              <ModalComponent mealsData={props.mealsData}/>
+              <ModalComponent mealsData={props.mealsData} />
             </div>
             <div className="summaryContainer">
               <div className="modalContent">
                 <h1>{currentModalName}</h1>
-                <SummaryComponent/>
+                <SummaryComponent />
                 <div className="buttonsContainer">
-                  <button
-                  type="button"
-                  className="resetButton"
-                  >
+                  <button type="button" className="resetButton">
                     Vider
                   </button>
-                  <button
-                  type="button"
-                  >
-                    Valider
-                  </button>
+                  <button type="button">Valider</button>
                 </div>
               </div>
             </div>
