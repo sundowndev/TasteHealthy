@@ -91,8 +91,7 @@ class HomePage extends Component {
               className="startButton"
               type="button"
               onClick={() => {
-                // this.props.history.push('/meals');
-                console.log(this.state);
+                this.props.history.push('/meals');
               }}
             >
               {"C'est parti !"}

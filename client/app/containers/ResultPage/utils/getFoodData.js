@@ -41,7 +41,7 @@ export const getCalories = mealsElements => {
     const nutrition = mealsElements[i].nutrition_facts.energy_100g;
     calories += (mealsElements[i].quantity * 100) / nutrition;
   }
-  return calories;
+  return Math.floor(calories);
 };
 
 export const getSodium = mealsElements => {
@@ -50,7 +50,7 @@ export const getSodium = mealsElements => {
     const nutrition = mealsElements[i].nutrition_facts.sodium_100g;
     sodium += (mealsElements[i].quantity * 100) / nutrition;
   }
-  return sodium;
+  return Math.floor(sodium);
 };
 
 export const getSalt = mealsElements => {
@@ -59,5 +59,5 @@ export const getSalt = mealsElements => {
     const nutrition = mealsElements[i].nutrition_facts.salt_100g;
     salt += (mealsElements[i].quantity * 100) / nutrition;
   }
-  return salt;
+  return Math.floor(salt);
 };

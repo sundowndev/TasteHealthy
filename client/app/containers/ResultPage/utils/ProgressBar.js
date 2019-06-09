@@ -42,14 +42,16 @@ class ProgressBar extends PureComponent {
       startColor,
       gradientId,
       children,
+      width,
+      height,
     } = this.props;
     const gradientTransform = `rotate(90)`;
     return (
       <div
         className="progress-bar"
         style={{
-          width: '100px',
-          height: '100px',
+          width: `${width}px`,
+          height: `${height}px`,
         }}
       >
         <svg style={{ height: 0, width: 0 }}>

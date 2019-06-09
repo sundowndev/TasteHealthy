@@ -41,10 +41,11 @@ type Props = {
 
 const ResultPage = (props: Props) => {
   const { mealType } = props.match.params;
+  const { mealsData } = props;
   const mealsElements = props.mealsData[mealType].consummedAliments;
 
   return (
-    <div className="app_container">
+    <div className="app">
       <div className="app__top" />
       <div className="app__right" />
       <div className="app__bottom" />
@@ -53,19 +54,48 @@ const ResultPage = (props: Props) => {
       <div className="app__logo" />
 
       <div className="app__container">
-        <SidebarComponent props={props} />
+        <SidebarComponent props={props} mealsData={mealsData} />
 
         <div className="app__content">
           <p className="app__content__title">Produits consommés</p>
-          <div className="app__content__block">
-            <div style={{ width: '50px' }}>
-              Calories {progressBar(getCalories(mealsElements))}
+          <div className="app__content__block__flex">
+            <div
+              className="app__content__block__flex__left"
+              style={{ alignItems: 'baseline' }}
+            >
+              <div className="app__content__block__flex__component">
+                {progressBar(getCalories(mealsElements), 70, 70)}
+                Calories
+              </div>
+              <div className="app__content__block__flex__component">
+                {progressBar(getSodium(mealsElements), 70, 70)}
+                Sodium
+              </div>
+              <div className="app__content__block__flex__component">
+                {progressBar(getSalt(mealsElements), 70, 70)}
+                Salt
+              </div>
             </div>
-            <div style={{ width: '50px' }}>
-              Sodium {progressBar(getSodium(mealsElements))}
+            <div className="app__content__block__flex__middle">
+              <div>{progressBar(getSalt(mealsElements), 280, 280, 40)}</div>
             </div>
-            <div style={{ width: '50px' }}>
-              Salt {progressBar(getSalt(mealsElements))}
+
+            <div
+              style={{ alignItems: 'flex-end' }}
+              className="app__content__block__flex__right"
+            >
+              <div className="app__content__block__flex__component">
+                Calories
+                {progressBar(getCalories(mealsElements), 70, 70)}
+              </div>
+              <div className="app__content__block__flex__component">
+                Sodium
+                {progressBar(getSodium(mealsElements), 70, 70)}
+              </div>
+              <div className="app__content__block__flex__component">
+                Salt
+                {progressBar(getSalt(mealsElements), 70, 70)}
+              </div>
             </div>
           </div>
 
