@@ -96,6 +96,11 @@
         height: 80%;
         margin: 0 auto;
         overflow: scroll;
+        position: relative;
+
+        h1 {
+          margin: 0px 0px 28px 0px;
+        }
 
         .validateFood {
           width: 100%;
@@ -105,7 +110,7 @@
           justify-content: space-between;
           align-items: center;
           padding: 0px 15px 0px 15px;
-          box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 12);
+          box-shadow: 1px 1px 5px 1px #F5F5F5;
 
           p {
             font-size: 15px;
@@ -122,6 +127,27 @@
             align-self: center;
             width: 11px;
             height: 11px;
+          }
+        }
+
+        .buttonsContainer {
+          position: fixed;
+          bottom: 0px;
+          padding-bottom: 33px;
+          width: 469px;
+          display: flex;
+          justify-content: center;
+
+          .resetButton {
+            border: solid 2px #33176E;
+            background-color: white;
+          }
+
+          button {
+            width: 92px;
+            height: 50px;
+            border-radius: 10px;
+            margin-right: 10px;
           }
         }
       }

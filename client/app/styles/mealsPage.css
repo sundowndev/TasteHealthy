@@ -81,7 +81,11 @@
   background-color: white;
   height: 80%;
   margin: 0 auto;
-  overflow: scroll; }
+  overflow: scroll;
+  position: relative; }
+
+.mealsPage .modalContainer .summaryContainer .modalContent h1 {
+  margin: 0px 0px 28px 0px; }
 
 .mealsPage .modalContainer .summaryContainer .modalContent .validateFood {
   width: 100%;
@@ -91,7 +95,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0px 15px 0px 15px;
-  box-shadow: 1px 1px 5px 1px black; }
+  box-shadow: 1px 1px 5px 1px #F5F5F5; }
 
 .mealsPage .modalContainer .summaryContainer .modalContent .validateFood p {
   font-size: 15px;
@@ -106,3 +110,21 @@
   align-self: center;
   width: 11px;
   height: 11px; }
+
+.mealsPage .modalContainer .summaryContainer .modalContent .buttonsContainer {
+  position: fixed;
+  bottom: 0px;
+  padding-bottom: 33px;
+  width: 469px;
+  display: flex;
+  justify-content: center; }
+
+.mealsPage .modalContainer .summaryContainer .modalContent .buttonsContainer .resetButton {
+  border: solid 2px #33176E;
+  background-color: white; }
+
+.mealsPage .modalContainer .summaryContainer .modalContent .buttonsContainer button {
+  width: 92px;
+  height: 50px;
+  border-radius: 10px;
+  margin-right: 10px; }

@@ -227,6 +227,19 @@ export const HomePage = (props: propsType) => {
               <div className="modalContent">
                 <h1>{currentModalName}</h1>
                 <SummaryComponent/>
+                <div className="buttonsContainer">
+                  <button
+                  type="button"
+                  className="resetButton"
+                  >
+                    Vider
+                  </button>
+                  <button
+                  type="button"
+                  >
+                    Valider
+                  </button>
+                </div>
               </div>
             </div>
           </div>
