@@ -77,10 +77,9 @@
   }
   
   .app {
-    padding: calc(50px + 40px) calc(50px + 35px);
+    padding: calc(45px + 40px) calc(50px + 35px);
     background-color: #FBFBFB;
     position: relative;
-    z-index: -1;
   
     &__top {
       position: absolute;
@@ -265,7 +264,7 @@
         justify-content: space-between;
         align-items: center;
         background-color: #FFF;
-        padding: 50px 35px;
+        padding: 50px 35px 70px 35px;
         border-radius: 5px;
         box-shadow: 0 6px 13px 0 rgba(21, 33, 56, 0.05);
         position: relative;
@@ -273,6 +272,13 @@
       .app__content__block__flex__left {
         display: flex;
         flex-direction: column;
+        align-items: baseline;
+        height: 270px;
+        justify-content: space-around;
+        &__detail {
+          margin: 30px 0px 0px 20px;
+          font-family: Apercu;
+        }
       }
 
       .app__content__block__flex__component {
@@ -284,6 +290,13 @@
       .app__content__block__flex__right {
         display: flex;
         flex-direction: column;
+        align-items: baseline;
+        height: 270px;
+        justify-content: space-around;
+        &__detail {
+          margin: 30px 20px 0px 0px;
+          font-family: Apercu;
+        }
       }
 
       .app__content__block__flex__middle {
