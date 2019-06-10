@@ -14,6 +14,7 @@ const rightComponent = () => (
 
 const SidebarComponent = ({ props }: { props: any }) => (
   <div className="app__sidebar">
+    <img alt="avatar" src={require('../../../images/avatar.svg')} />
     <p className="app__sidebar__title">Ma consommation</p>
     <div className="app__sidebar__content">
       <div
