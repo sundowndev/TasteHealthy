@@ -10,6 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import '../../styles/ResultPage.css';
 import axios from 'axios';
+import { map, assoc } from 'ramda';
 
 // Components
 import SidebarComponent from './components/SideBarComponent';
@@ -27,6 +28,10 @@ import {
   getCalories,
   getSodium,
   getSalt,
+  getProteins,
+  getFat,
+  getSugar,
+  getAdditives,
 } from './utils/getFoodData';
 
 import progressBar from './components/ProgressBarComponent';
@@ -43,7 +48,10 @@ type Props = {
 const ResultPage = (props: Props) => {
   const { mealType } = props.match.params;
   const { mealsData } = props;
-  const mealsElements = props.mealsData[mealType].consummedAliments;
+  const [mealsElements, setMealsElements] = useState(
+    props.mealsData[mealType].consummedAliments,
+  );
+  const [usedMealsElements, setUsedMealsElements] = useState(mealsElements);
   const [arrayIndex, setArrayIndex] = useState(
     new Array(mealsElements.length).fill(true),
   );
@@ -59,21 +67,31 @@ const ResultPage = (props: Props) => {
         }
         return el;
       });
-      // console.log(newMealsElements);
+      setUsedMealsElements(newMealsElements);
     }, 500);
   };
 
-  const getData = async () => {
-    const products = await mealsElements.map(async element =>
-      axios
-        .get(`http://localhost:3000/categories/${element.categoryId}/products`)
-        .then(data => data.data.items[0]),
-    );
-    return products;
-  };
-
   useEffect(() => {
-    console.log(getData());
+    const promises = [];
+    for (let i = 0; i < mealsElements.length; i++) {
+      promises.push(
+        axios
+          .get(
+            `http://localhost:3000/categories/${
+              mealsElements[i].categoryId
+            }/products`,
+          )
+          .then(data => data.data.items[0]),
+      );
+    }
+
+    Promise.all(promises)
+      .then(rr => {
+        setSubstitute(map(assoc('quantity', 100), rr));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }, []);
 
   const toggleCheck = index => {
@@ -111,20 +129,30 @@ const ResultPage = (props: Props) => {
               style={{ alignItems: 'baseline' }}
             >
               <div className="app__content__block__flex__component">
-                {progressBar(getCalories(mealsElements), 70, 70)}
-                Calories
+                {progressBar(getSugar(usedMealsElements), 70, 70)}
+                <p className="app__content__block__flex__left__detail">Sucre</p>
               </div>
               <div className="app__content__block__flex__component">
-                {progressBar(getSodium(mealsElements), 70, 70)}
-                Sodium
+                {progressBar(getSodium(usedMealsElements), 70, 70)}
+                <p className="app__content__block__flex__left__detail">
+                  Sodium
+                </p>
               </div>
               <div className="app__content__block__flex__component">
-                {progressBar(getSalt(mealsElements), 70, 70)}
-                Salt
+                {progressBar(getSalt(usedMealsElements), 70, 70)}
+                <p className="app__content__block__flex__left__detail">Sel</p>
               </div>
             </div>
             <div className="app__content__block__flex__middle">
-              <div>{progressBar(getCalories(mealsElements), 280, 280, 40)}</div>
+              <div>
+                {progressBar(
+                  getCalories(usedMealsElements),
+                  280,
+                  280,
+                  40,
+                  'kcal',
+                )}
+              </div>
             </div>
 
             <div
@@ -132,26 +160,34 @@ const ResultPage = (props: Props) => {
               className="app__content__block__flex__right"
             >
               <div className="app__content__block__flex__component">
-                Calories
-                {progressBar(getCalories(mealsElements), 70, 70)}
+                <p className="app__content__block__flex__right__detail">
+                  Protéines
+                </p>
+                {progressBar(getProteins(usedMealsElements), 70, 70)}
               </div>
               <div className="app__content__block__flex__component">
-                Sodium
-                {progressBar(getSodium(mealsElements), 70, 70)}
+                <p className="app__content__block__flex__right__detail">
+                  Graisses
+                </p>
+                {progressBar(getFat(usedMealsElements), 70, 70)}
               </div>
               <div className="app__content__block__flex__component">
-                Salt
-                {progressBar(getSalt(mealsElements), 70, 70)}
+                <p className="app__content__block__flex__right__detail">
+                  Additifs
+                </p>
+                {progressBar(getAdditives(usedMealsElements), 70, 70)}
               </div>
             </div>
           </div>
 
           <div className="app__content__blocks app__content__blocks--three">
-            <NutriscoreComponent letter={getMealsNutriScore(mealsElements)} />
+            <NutriscoreComponent
+              letter={getMealsNutriScore(usedMealsElements)}
+            />
 
-            <OriginComponent origin={getMealsOrigin(mealsElements)} />
+            <OriginComponent origin={getMealsOrigin(usedMealsElements)} />
 
-            <PackagingComponent data={getMealsPackaging(mealsElements)} />
+            <PackagingComponent data={getMealsPackaging(usedMealsElements)} />
           </div>
 
           <div className="app__content__substitute-products">
@@ -182,7 +218,7 @@ const ResultPage = (props: Props) => {
                   <p className="app__content__substitute-products__content__title">
                     Les produits conseillés
                   </p>
-                  {mealsElements.map((meal, index) => (
+                  {substitute.map((meal, index) => (
                     <SubstituteProductComponent
                       key={meal.id}
                       mealProps={meal}
