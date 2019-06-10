@@ -80,6 +80,7 @@
     padding: calc(50px + 40px) calc(50px + 35px);
     background-color: #FBFBFB;
     position: relative;
+    z-index: -1;
   
     &__top {
       position: absolute;
@@ -382,6 +383,9 @@
           .app__content__substitute-products__block {
             display: flex;
             align-items: center;
+            &:hover {
+              cursor: pointer;
+            }
             &:not(:first-child) {
               margin-top: 10px;
             }
@@ -427,6 +431,9 @@
           .app__content__substitute-products__block {
             display: flex;
             align-items: center;
+            &:hover {
+              cursor: pointer;
+            }
             &:not(:first-child) {
               margin-top: 10px;
             }
