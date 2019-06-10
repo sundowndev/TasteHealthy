@@ -41,23 +41,59 @@ export const getCalories = mealsElements => {
     const nutrition = mealsElements[i].nutrition_facts.energy_100g;
     calories += (mealsElements[i].quantity * 100) / nutrition;
   }
-  return Math.floor(calories) * 10;
+  return Math.floor(calories);
+};
+
+export const getProteins = mealsElements => {
+  let proteines = 0;
+  for (let i = 0; i < mealsElements.length; i += 1) {
+    const nutrition = mealsElements[i].nutrition_facts.proteins_100g;
+    proteines += (mealsElements[i].quantity * nutrition) / 100;
+  }
+  return Math.floor(proteines);
+};
+
+export const getFat = mealsElements => {
+  let fat = 0;
+  for (let i = 0; i < mealsElements.length; i += 1) {
+    const nutrition = mealsElements[i].nutrition_facts.fat_100g;
+    fat += (mealsElements[i].quantity * nutrition) / 100;
+  }
+  return Math.floor(fat);
 };
 
 export const getSodium = mealsElements => {
   let sodium = 0;
   for (let i = 0; i < mealsElements.length; i += 1) {
     const nutrition = mealsElements[i].nutrition_facts.sodium_100g;
-    sodium += (mealsElements[i].quantity * 100) / nutrition;
+    sodium += (mealsElements[i].quantity * nutrition) / 100;
   }
   return Math.floor(sodium);
+};
+
+export const getSugar = mealsElements => {
+  let sugar = 0;
+  for (let i = 0; i < mealsElements.length; i += 1) {
+    const nutrition = mealsElements[i].nutrition_facts.sugars_100g;
+    sugar += (mealsElements[i].quantity * nutrition) / 100;
+  }
+  return Math.floor(sugar);
+};
+
+export const getAdditives = mealsElements => {
+  let additives = 0;
+  for (let i = 0; i < mealsElements.length; i += 1) {
+    const nutrition = mealsElements[i].misc_data.additives_n;
+    additives += nutrition;
+  }
+  return Math.floor(additives);
 };
 
 export const getSalt = mealsElements => {
   let salt = 0;
   for (let i = 0; i < mealsElements.length; i += 1) {
     const nutrition = mealsElements[i].nutrition_facts.salt_100g;
-    salt += (mealsElements[i].quantity * 100) / nutrition;
+    salt += (mealsElements[i].quantity * nutrition) / 100;
   }
   return Math.floor(salt);
 };
