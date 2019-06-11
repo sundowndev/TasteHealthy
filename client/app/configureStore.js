@@ -49,6 +49,7 @@ export default function configureStore(initialState = {}, history) {
   store.subscribe(() => {
     saveState({
       meals: store.getState().meals,
+      calories: store.getState().calories,
     });
   });
 
