@@ -73,7 +73,6 @@ const ResultPage = (props: Props) => {
 
   useEffect(() => {
     const promises = [];
-    console.log('pass');
     for (let i = 0; i < mealsElements.length; i++) {
       promises.push(
         axios
@@ -306,13 +305,12 @@ const ResultPage = (props: Props) => {
                   ))}
                 </div>
               </div>
-              <a
-                href="#"
+              <button
                 onClick={() => updateMeals()}
                 className="app__content__block__button"
               >
                 Visualiser avec les nouveaux produits
-              </a>
+              </button>
             </div>
           </div>
         </div>

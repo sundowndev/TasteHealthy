@@ -29,7 +29,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
           <p>Petit Déjeuner</p>
         </div>
         <div className="app__sidebar__content__block__right">
-          {props.mealsData.breakfast.consummedAliments ? (
+          {props.mealsData.breakfast.consummedAliments.length > 0 ? (
             rightComponent()
           ) : (
             <img alt="add" src={require('../../../images/add.svg')} />
@@ -49,7 +49,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
           <p>Déjeuner</p>
         </div>
         <div className="app__sidebar__content__block__right">
-          {props.mealsData.lunch.consummedAliments ? (
+          {props.mealsData.lunch.consummedAliments.length > 0 ? (
             rightComponent()
           ) : (
             <img alt="add" src={require('../../../images/add.svg')} />
@@ -69,7 +69,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
           <p>Goûter</p>
         </div>
         <div className="app__sidebar__content__block__right">
-          {props.mealsData.snack.consummedAliments ? (
+          {props.mealsData.snack.consummedAliments.length > 0 ? (
             rightComponent()
           ) : (
             <img alt="add" src={require('../../../images/add.svg')} />
@@ -89,7 +89,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
           <p>Dinner</p>
         </div>
         <div className="app__sidebar__content__block__right">
-          {props.mealsData.dinner.consummedAliments ? (
+          {props.mealsData.dinner.consummedAliments.length > 0 ? (
             rightComponent()
           ) : (
             <img alt="add" src={require('../../../images/add.svg')} />
