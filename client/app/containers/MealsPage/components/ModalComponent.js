@@ -48,10 +48,10 @@ const ModalComponent = ({
 }) => {
   // eslint-disable-next-line react/prop-types
   const { mealsData }: { mealsData: mealsType } = props;
-  const [consummedAliments, changeConsumedAliments] = useState([]);
-  const [notConsummedAliments, changeNotConsumedAliments] = useState([
-    { product_name: '', id: 132, quantity: 100 },
-  ]);
+  const [consummedAliments, changeConsumedAliments] = useState(
+    mealsData[currentModalName].consummedAliments,
+  );
+  const [notConsummedAliments, changeNotConsumedAliments] = useState([]);
   const [meals, setMeals] = useState(mealsData);
   const { changeBreakfast, changeLunch, changeDinner, changeSnack } = props;
 
@@ -64,7 +64,7 @@ const ModalComponent = ({
   const changeDinnerData = data => changeDinner(data);
   const changeSnackData = data => changeSnack(data);
 
-  const updateStore = (mealType: string) => {
+  const updateStore = (mealType: string, consummedAliments: any) => {
     switch (mealType) {
       case 'breakfast':
         changeBreakfastData({
@@ -107,23 +107,77 @@ const ModalComponent = ({
   };
 
   return (
-    <div>
+    <div className="modalContent">
       <SearchBar sendProducts={getProducts} />
-      {notConsummedAliments.map(_ => (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-        <div
-          onClick={() => {
-            if (!consummedAliments.some(e => e.id === _.id)) {
-              changeConsumedAliments(consummedAliments.concat([_]));
-            }
-          }}
-          key={_.id}
-        >
-          {_.product_name}
-        </div>
-      ))}
-      <button
+      {notConsummedAliments !== [] &&
+        notConsummedAliments.map(el => (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+          // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+          <div role="button" tabIndex={0} key={el.id}>
+            <div>
+              <div className="foodItemContainer">
+                <div className="foodItemContent">
+                  <p key={el.id}>
+                    {el.product_name}
+                    <br />
+                    {el.quantity} gr
+                  </p>
+                  <p
+                    className="operations"
+                    onClick={() => {
+                      const tt = notConsummedAliments.map(aliment => {
+                        if (aliment.id === el.id) {
+                          if (el.quantity > 100) {
+                            aliment.quantity -= 100;
+                          }
+                        }
+                        return aliment;
+                      });
+                      changeNotConsumedAliments(tt);
+                    }}
+                  >
+                    -
+                  </p>
+                  <p
+                    className="operations"
+                    onClick={() => {
+                      const tt = notConsummedAliments.map(aliment => {
+                        if (aliment.id === el.id) {
+                          aliment.quantity += 100;
+                        }
+                        return aliment;
+                      });
+                      changeNotConsumedAliments(tt);
+                    }}
+                  >
+                    +
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="addFood"
+                  onClick={async () => {
+                    if (!consummedAliments.some(e => e.id === el.id)) {
+                      const test = consummedAliments.concat(el);
+                      changeConsumedAliments(test);
+                      await setMeals({
+                        ...meals,
+                        [currentModalName]: {
+                          consummedAliments: test,
+                        },
+                      });
+                      updateStore(currentModalName, test);
+                    }
+                  }}
+                >
+                  Ajouter
+                </button>
+              </div>
+              <div className="line" />
+            </div>
+          </div>
+        ))}
+      {/* <button
         type="button"
         onClick={async () => {
           await setMeals({
@@ -138,52 +192,11 @@ const ModalComponent = ({
         }}
       >
         Valider
-      </button>
-      <h1>Aliments consommés</h1>
-      {consummedAliments.map(el => (
+      </button> */}
+      {/* {consummedAliments.map(el => (
         // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-        <div>
-          <h1
-            key={el.id}
-            onClick={() =>
-              changeConsumedAliments(
-                consummedAliments.filter(ll => ll.id !== el.id),
-              )
-            }
-          >
-            {el.product_name}
-            {el.quantity} gr
-          </h1>
-          <p
-            onClick={() => {
-              const tt = consummedAliments.map(aliment => {
-                if (aliment.id === el.id) {
-                  if (el.quantity > 100) {
-                    aliment.quantity -= 100;
-                  }
-                }
-                return aliment;
-              });
-              changeConsumedAliments(tt);
-            }}
-          >
-            -
-          </p>
-          <p
-            onClick={() => {
-              const tt = consummedAliments.map(aliment => {
-                if (aliment.id === el.id) {
-                  aliment.quantity += 100;
-                }
-                return aliment;
-              });
-              changeConsumedAliments(tt);
-            }}
-          >
-            +
-          </p>
-        </div>
-      ))}
+
+      ))} */}
     </div>
   );
 };

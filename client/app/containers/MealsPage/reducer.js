@@ -12,10 +12,10 @@ import {
 } from './constants';
 
 export const initialState = {
-  breakfast: {},
-  lunch: {},
-  dinner: {},
-  snack: {},
+  breakfast: { consummedAliments: [] },
+  lunch: { consummedAliments: [] },
+  dinner: { consummedAliments: [] },
+  snack: { consummedAliments: [] },
 };
 
 /* eslint-disable default-case, no-param-reassign */

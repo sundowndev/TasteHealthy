@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { assoc, map } from 'ramda';
+import '../../../styles/mealsPage.css';
 
 type Props = {
   sendProducts: any => any,
@@ -32,6 +33,7 @@ const SearchBar = (props: Props) => {
   return (
     <input
       type="text"
+      className="searchBar"
       value={valueSearch}
       onChange={e => handleValueChange(e.target.value)}
       placeholder="Search..."
