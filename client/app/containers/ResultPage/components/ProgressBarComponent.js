@@ -34,9 +34,12 @@ const progressBar = (
   height: number,
   fontSize: number = 16,
   unit: string = 'g',
+  percentage2: number,
+  calories: ?number = null,
 ) => (
   <ProgressBar
     percentage={percentage}
+    percentage2={percentage2}
     startColor={
       percentage >= 100
         ? getColorForPercentage(100)
@@ -48,6 +51,7 @@ const progressBar = (
     height={height}
     fontSize={fontSize}
     unit={unit}
+    calories={calories}
   >
     <p
       style={{

@@ -4,7 +4,15 @@ import 'react-circular-progressbar/dist/styles.css';
 
 // this is the inner circle with whatever you want inside
 const CustomProgressBar = props => {
-  const { children, ...propsProgress } = props;
+  const {
+    children,
+    percentage,
+    percentage2,
+    unit,
+    calories,
+    ...propsProgress
+  } = props;
+  console.log('cc', unit, calories / 1000);
   return (
     <div
       style={{
@@ -14,8 +22,21 @@ const CustomProgressBar = props => {
       }}
     >
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
-        <CircularProgressbar {...propsProgress} />
+        <CircularProgressbar
+          maxValue={unit === 'g' ? 500 : calories / 1000}
+          value={percentage}
+          {...propsProgress}
+        />
       </div>
+      {percentage2 === null ? null : (
+        <div style={{ position: 'absolute', width: '80%%', height: '80%%' }}>
+          <CircularProgressbar
+            maxValue={unit === 'g' ? 800 : calories / 1000}
+            value={percentage2}
+            strokeWidth={5}
+          />
+        </div>
+      )}
       <div
         style={{
           position: 'absolute',
@@ -38,12 +59,15 @@ class ProgressBar extends PureComponent {
   render() {
     const {
       percentage,
+      percentage2,
       endColor,
       startColor,
       gradientId,
       children,
       width,
       height,
+      unit,
+      calories,
     } = this.props;
     const gradientTransform = `rotate(90)`;
     return (
@@ -66,8 +90,11 @@ class ProgressBar extends PureComponent {
           </defs>
         </svg>
         <CustomProgressBar
-          value={percentage}
+          percentage={percentage}
+          percentage2={percentage2}
           strokeWidth="10"
+          unit={unit}
+          calories={calories}
           styles={{ path: { stroke: `url(#${gradientId})`, height: '100%' } }}
         >
           {children}
