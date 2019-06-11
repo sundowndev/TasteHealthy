@@ -88,7 +88,20 @@ export const HomePage = (props: propsType) => {
 
   const afterOpenModal = () => {};
 
-  console.log(props);
+  const getMeal = () => {
+    switch (currentModalName) {
+      case 'breakfast':
+        return 'Petit Déjeuner';
+      case 'lunch':
+        return 'Déjeuner';
+      case 'snack':
+        return 'Goûter';
+      case 'dinner':
+        return 'Dîner';
+      default:
+        return null;
+    }
+  };
 
   return (
     <h1>
@@ -118,7 +131,7 @@ export const HomePage = (props: propsType) => {
             </div>
             <div className="summaryContainer">
               <div className="modalContent">
-                <h1>{currentModalName}</h1>
+                <h1>{getMeal()}</h1>
                 {currentModalName &&
                   props.mealsData[currentModalName].consummedAliments.map(
                     el => (

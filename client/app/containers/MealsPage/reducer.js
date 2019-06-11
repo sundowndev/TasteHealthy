@@ -13,9 +13,9 @@ import {
 
 export const initialState = {
   breakfast: { consummedAliments: [] },
-  lunch: { consummedAliments: [] },
   dinner: { consummedAliments: [] },
   snack: { consummedAliments: [] },
+  lunch: { consummedAliments: [] },
 };
 
 /* eslint-disable default-case, no-param-reassign */

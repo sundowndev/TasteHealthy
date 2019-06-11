@@ -75,7 +75,6 @@ const ModalComponent = ({
         });
         break;
       case 'dinner':
-        changeDinnerData(consummedAliments);
         changeDinnerData({
           ...meals,
           [mealType]: {
@@ -84,7 +83,6 @@ const ModalComponent = ({
         });
         break;
       case 'snack':
-        changeSnackData(consummedAliments);
         changeSnackData({
           ...meals,
           [mealType]: {
@@ -93,7 +91,6 @@ const ModalComponent = ({
         });
         break;
       case 'lunch':
-        changeLunchData(consummedAliments);
         changeLunchData({
           ...meals,
           [mealType]: {
