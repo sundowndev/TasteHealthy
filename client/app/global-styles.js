@@ -38,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
     transform: translateY(3vw);
     margin: auto;
     position: relative;
-    z-index: 1;
+    z-index: 0;
   }
 
   select {
