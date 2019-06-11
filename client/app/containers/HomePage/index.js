@@ -6,26 +6,16 @@
  */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import HomeIcon from '../../images/home-icon.png';
-
 import '../../styles/HomePage.css';
+
+import { changeCalories } from './actions';
 
 type Props = {
   history: {
     push: string => any,
   },
-};
-
-const base = {
-  energy: '1887',
-  fat: '70',
-  saturated_fat: '20',
-  carbohydrates: '59.3',
-  sugars: '90',
-  fiber: '4.2',
-  proteins: '50',
-  salt: '6',
-  sodium: '1.5',
 };
 
 const maleCalc = sport => (66.5 + 13.8 * 77.4 + 5 * 175.6 - 6.8 * 35) * sport;
@@ -36,9 +26,9 @@ const femaleCalc = sport =>
 const calc = (sport, sexe) => {
   const sportValue = sport === 'modéré' ? 1.5 : 1.7;
   if (sexe === 'male') {
-    return maleCalc(sportValue);
+    return Math.floor(maleCalc(sportValue));
   }
-  return femaleCalc(sportValue);
+  return Math.floor(femaleCalc(sportValue));
 };
 
 class HomePage extends Component {
@@ -91,7 +81,15 @@ class HomePage extends Component {
               className="startButton"
               type="button"
               onClick={() => {
-                this.props.history.push('/meals');
+                if (
+                  this.state.sport !== 'Sportif ?' &&
+                  this.state.sexe !== 'Votre sexe ?'
+                ) {
+                  this.props.changeCalories({
+                    calories: calc(this.state.sport, this.state.sexe),
+                  });
+                  this.props.history.push('/meals');
+                }
               }}
             >
               {"C'est parti !"}
@@ -106,5 +104,12 @@ class HomePage extends Component {
     );
   }
 }
+function mapStateToProps(state) {
+  const { calories } = state;
+  return { caloriesData: calories };
+}
 
-export default HomePage;
+export default connect(
+  mapStateToProps,
+  { changeCalories },
+)(HomePage);

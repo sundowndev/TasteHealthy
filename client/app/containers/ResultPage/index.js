@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import '../../styles/ResultPage.css';
 import axios from 'axios';
-import { map, assoc } from 'ramda';
+import { map, assoc, prop } from 'ramda';
 
 // Components
 import SidebarComponent from './components/SideBarComponent';
@@ -73,6 +73,7 @@ const ResultPage = (props: Props) => {
 
   useEffect(() => {
     const promises = [];
+    console.log('pass');
     for (let i = 0; i < mealsElements.length; i++) {
       promises.push(
         axios
@@ -101,6 +102,35 @@ const ResultPage = (props: Props) => {
     setArrayIndex(newArray);
   };
 
+  const checkReRender = () => {
+    const array1 = map(prop('id'), mealsElements);
+    const array2 = map(prop('id'), usedMealsElements);
+    const quantity1 = map(prop('quantity'), mealsElements);
+    const quantity2 = map(prop('quantity'), usedMealsElements);
+    if (
+      JSON.stringify(quantity1) !== JSON.stringify(quantity2) ||
+      JSON.stringify(array1) !== JSON.stringify(array2)
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const getMeal = () => {
+    switch (mealType) {
+      case 'breakfast':
+        return 'Petit Déjeuner';
+      case 'lunch':
+        return 'Déjeuner';
+      case 'snack':
+        return 'Goûter';
+      case 'dinner':
+        return 'Dîner';
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="app">
       <div className="app__top" />
@@ -114,7 +144,9 @@ const ResultPage = (props: Props) => {
         <SidebarComponent props={props} mealsData={mealsData} />
 
         <div className="app__content">
-          <p className="app__content__title">Produits consommés</p>
+          <p className="app__content__title">
+            Produits consommés - {getMeal()}
+          </p>
           <img
             className="app__content__block__svg__half-circle"
             src={require('../../images/1.svg')}
@@ -129,17 +161,38 @@ const ResultPage = (props: Props) => {
               style={{ alignItems: 'baseline' }}
             >
               <div className="app__content__block__flex__component">
-                {progressBar(getSugar(usedMealsElements), 70, 70)}
+                {progressBar(
+                  getSugar(usedMealsElements),
+                  70,
+                  70,
+                  16,
+                  'g',
+                  checkReRender() ? getSugar(mealsElements) : null,
+                )}
                 <p className="app__content__block__flex__left__detail">Sucre</p>
               </div>
               <div className="app__content__block__flex__component">
-                {progressBar(getSodium(usedMealsElements), 70, 70)}
+                {progressBar(
+                  getSodium(usedMealsElements),
+                  70,
+                  70,
+                  16,
+                  'g',
+                  checkReRender() ? getSodium(mealsElements) : null,
+                )}
                 <p className="app__content__block__flex__left__detail">
                   Sodium
                 </p>
               </div>
               <div className="app__content__block__flex__component">
-                {progressBar(getSalt(usedMealsElements), 70, 70)}
+                {progressBar(
+                  getSalt(usedMealsElements),
+                  70,
+                  70,
+                  16,
+                  'g',
+                  checkReRender() ? getSalt(mealsElements) : null,
+                )}
                 <p className="app__content__block__flex__left__detail">Sel</p>
               </div>
             </div>
@@ -151,6 +204,8 @@ const ResultPage = (props: Props) => {
                   280,
                   40,
                   'kcal',
+                  checkReRender() ? getCalories(mealsElements) : null,
+                  props.caloriesData.calories,
                 )}
               </div>
             </div>
@@ -163,19 +218,40 @@ const ResultPage = (props: Props) => {
                 <p className="app__content__block__flex__right__detail">
                   Protéines
                 </p>
-                {progressBar(getProteins(usedMealsElements), 70, 70)}
+                {progressBar(
+                  getProteins(usedMealsElements),
+                  70,
+                  70,
+                  16,
+                  'g',
+                  checkReRender() ? getProteins(mealsElements) : null,
+                )}
               </div>
               <div className="app__content__block__flex__component">
                 <p className="app__content__block__flex__right__detail">
                   Graisses
                 </p>
-                {progressBar(getFat(usedMealsElements), 70, 70)}
+                {progressBar(
+                  getFat(usedMealsElements),
+                  70,
+                  70,
+                  16,
+                  'g',
+                  checkReRender() ? getFat(mealsElements) : null,
+                )}
               </div>
               <div className="app__content__block__flex__component">
                 <p className="app__content__block__flex__right__detail">
                   Additifs
                 </p>
-                {progressBar(getAdditives(usedMealsElements), 70, 70)}
+                {progressBar(
+                  getAdditives(usedMealsElements),
+                  70,
+                  70,
+                  16,
+                  'g',
+                  checkReRender() ? getAdditives(mealsElements) : null,
+                )}
               </div>
             </div>
           </div>
@@ -204,7 +280,7 @@ const ResultPage = (props: Props) => {
                   </p>
                   {mealsElements.map((meal, index) => (
                     <ProductComponent
-                      key={meal.id}
+                      key={index}
                       mealProps={meal}
                       isChecked={arrayIndex[index]}
                       onClick={() =>
@@ -220,7 +296,7 @@ const ResultPage = (props: Props) => {
                   </p>
                   {substitute.map((meal, index) => (
                     <SubstituteProductComponent
-                      key={meal.id}
+                      key={index}
                       mealProps={meal}
                       isChecked={!arrayIndex[index]}
                       onClick={() =>
@@ -246,8 +322,8 @@ const ResultPage = (props: Props) => {
 };
 
 function mapStateToProps(state) {
-  const { meals } = state;
-  return { mealsData: meals };
+  const { meals, calories } = state;
+  return { mealsData: meals, caloriesData: calories };
 }
 
 export default connect(mapStateToProps)(ResultPage);

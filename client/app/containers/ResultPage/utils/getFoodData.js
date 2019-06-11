@@ -39,9 +39,9 @@ export const getCalories = mealsElements => {
   let calories = 0;
   for (let i = 0; i < mealsElements.length; i += 1) {
     const nutrition = mealsElements[i].nutrition_facts.energy_100g;
-    calories += (mealsElements[i].quantity * 100) / nutrition;
+    calories += (mealsElements[i].quantity * nutrition) / 100;
   }
-  return Math.floor(calories);
+  return Math.round((calories / 1000) * 0.23900573614 * 100) / 100;
 };
 
 export const getProteins = mealsElements => {
