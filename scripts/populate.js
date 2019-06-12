@@ -7,7 +7,7 @@ import models from '../server/app/db/models';
 // ---------------- Variables ----------------
 // const csvFilePath = path.join(process.cwd(), './scripts/test2.csv');
 const csvFilePath =
-  '/home/sundowndev/Téléchargements/fr.openfoodfacts.org.products.csv';
+  '/home/sundowndev/Downloads/fr.openfoodfacts.org.products.csv';
 
 // ---------------- Functions & script ----------------
 const logger = (...args) => console.log(...args);
