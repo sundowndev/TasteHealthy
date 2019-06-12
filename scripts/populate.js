@@ -74,6 +74,16 @@ async function main() {
             return reject();
           }
 
+          doc['quantity'] = doc['quantity'].replace(',', '.');
+          doc['quantity_unity'] = doc['quantity'].replace(/([0-9])\w+ /, '');
+
+          if (doc['quantity'].indexOf('g') > -1) doc['quantity_unity'] = 'g';
+          else if (doc['quantity'].indexOf('l') > -1) doc['quantity_unity'] = 'L';
+          else if (doc['quantity'].indexOf('cl') > -1) doc['quantity_unity'] = 'cl';
+          else if (doc['quantity'].indexOf('ml') > -1) doc['quantity_unity'] = 'ml';
+          else if (doc['quantity'].indexOf('oz') > -1) doc['quantity_unity'] = 'OZ';
+          else return reject();
+
           if (doc.main_category_fr.indexOf(':') < 0) {
             promises.push(
               models.Categories.findOrCreate({
@@ -105,34 +115,6 @@ async function main() {
           doc =>
             new Promise((resolve, reject) => {
               const promises = [];
-
-              // console.log(1111111111, {
-              //   categoryId: doc['categoryId'] || defaultCategoryId,
-              //   product_name: doc['product_name'],
-              //   generic_name: doc['generic_name'],
-              //   origins: doc['origins'] || 'unknown',
-              //   packaging: doc['packaging_tags'],
-              //   manufacturing_places: doc['manufacturing_places'],
-              //   countries: doc['countries_fr'],
-              //   labels: doc['labels_fr'],
-              //   purchase_places: doc['purchase_places'],
-              //   stores: doc['stores'],
-              //   // nutrition_facts,
-              //   // misc_data,
-              // });
-
-              let quantity = doc['quantity'].replace(',', '.');
-              let quantity_unity = doc['quantity'].replace(/([0-9])\w+ /, '');
-
-              if (doc['quantity'].indexOf('g') > -1) quantity_unity = 'g';
-              else if (doc['quantity'].indexOf('l') > -1) quantity_unity = 'L';
-              else if (doc['quantity'].indexOf('cl') > -1)
-                quantity_unity = 'cl';
-              else if (doc['quantity'].indexOf('ml') > -1)
-                quantity_unity = 'ml';
-              else if (doc['quantity'].indexOf('oz') > -1)
-                quantity_unity = 'OZ';
-              else return reject();
 
               let nutrition_facts = {
                 energy_100g: doc['energy_100g'],
@@ -223,8 +205,8 @@ async function main() {
                     doc['generic_name'] && doc['generic_name'].length < 250
                       ? doc['generic_name']
                       : null,
-                  quantity: parseFloat(quantity, 100),
-                  quantity_unity: quantity_unity,
+                  quantity: parseFloat(doc['quantity'], 100),
+                  quantity_unity: doc['quantity_unity'],
                   image_url: doc['image_url'],
                   origins: doc['origins'] || 'unknown',
                   packaging: doc['packaging_tags'],
