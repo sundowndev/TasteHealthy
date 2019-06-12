@@ -57,10 +57,8 @@ const progressBar = (
       style={{
         fontFamily: 'Apercu',
         color:
-          (calories / 1000 < percentage && unit === 'kcal') ||
-          (unit === 'g' && percentage > 500)
-            ? '#e03131'
-            : '#33176E',
+          // (calories / 1000 < percentage && unit === 'kcal') ||
+          unit === 'g' && percentage > 500 ? '#e03131' : '#33176E',
         fontSize: `${fontSize}px`,
         letterSpacing: '0',
         fontWeight: '600',
@@ -71,6 +69,12 @@ const progressBar = (
       {percentage}
       {unit === 'g' || <br />}
       {unit}
+      {unit === 'kcal' ? <br /> : null}
+      {unit === 'kcal' ? (
+        <p style={{ fontSize: '15px', color: '#e03131' }}>
+          +{Math.abs(calories / 1000 - percentage)} kcal
+        </p>
+      ) : null}
     </p>
   </ProgressBar>
 );
