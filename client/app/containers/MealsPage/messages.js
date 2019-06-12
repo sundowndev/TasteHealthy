@@ -10,6 +10,6 @@ export const scope = 'app.containers.MealsPage';
 export default defineMessages({
   header: {
     id: `${scope}.header`,
-    defaultMessage: 'This is the MealsPage container!',
+    defaultMessage: 'Remplissez le(s) repas de votre choix.',
   },
 });

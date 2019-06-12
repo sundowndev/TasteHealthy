@@ -40,6 +40,10 @@ const GlobalStyle = createGlobalStyle`
     position: relative;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   select {
     -webkit-appearance: none;
     color: #33176E;
