@@ -184,8 +184,6 @@ async function main() {
                 carbon_footprint_100g: doc['carbon-footprint_100g'],
                 carbon_footprint_from_meat_or_fish_100g:
                   doc['carbon-footprint-from-meat-or-fish_100g'],
-                nutrition_score_fr_100g: doc['nutrition-score-fr_100g'],
-                nutrition_score_uk_100g: doc['nutrition-score-uk_100g'],
                 glycemic_index_100g: doc['glycemic-index_100g'],
                 water_hardness_100g: doc['water-hardness_100g'],
                 choline_100g: doc['choline_100g'],
