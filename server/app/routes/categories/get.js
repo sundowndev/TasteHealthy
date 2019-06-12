@@ -1,8 +1,10 @@
+import Sequelize from 'sequelize';
 import * as msg from '@/errors/message_errors.js';
 import models from '@/db/models';
 
 const Categories = models.Categories;
 const Products = models.Products;
+const Op = Sequelize.Op;
 
 export const get_categories = (req, res, next) => {
   let query = {
@@ -43,7 +45,14 @@ export const get_products_by_category = (req, res, next) => {
   let query = {
     where: {
       categoryId: req.params.categoryId,
+      misc_data: { nutrition_score_fr_100g: { [Op.gt]: 0 } },
     },
+    limit: req.limit,
+    offset: req.offset,
+    order: [
+      ['misc_data.nutrition_grade_fr', 'ASC'],
+      ['misc_data.nutrition_score_fr_100g', 'DESC'],
+    ],
   };
 
   Products.findAll(query)

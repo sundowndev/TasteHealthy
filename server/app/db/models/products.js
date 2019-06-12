@@ -1,3 +1,5 @@
+import Sequelize from 'sequelize';
+
 export default (sequelize, DataTypes) => {
   const Products = sequelize.define('Products', {
     product_name: {
@@ -25,7 +27,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
     packaging: {
-      type: DataTypes.STRING,
+      type: Sequelize.ARRAY(Sequelize.TEXT),
       allowNull: false,
     },
     manufacturing_places: {
