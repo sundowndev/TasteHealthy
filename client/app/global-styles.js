@@ -41,6 +41,10 @@ const GlobalStyle = createGlobalStyle`
     z-index: 0;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   select {
     -webkit-appearance: none;
     color: #33176E;
