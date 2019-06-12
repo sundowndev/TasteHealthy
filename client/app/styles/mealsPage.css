@@ -158,6 +158,8 @@
     .choicePageContainer .mealsButtonsContainer .articlesContainer {
       width: 195px;
       margin-right: 63px; }
+      .choicePageContainer .mealsButtonsContainer .articlesContainer:hover {
+        cursor: pointer; }
       .choicePageContainer .mealsButtonsContainer .articlesContainer .mealsPictures {
         height: 202px;
         border-radius: 10px 10px 0px 0px; }

@@ -212,7 +212,9 @@
       .articlesContainer {
         width: 195px;
         margin-right: 63px;
-
+        &:hover {
+          cursor: pointer;
+        }
         .mealsPictures {
           height: 202px;
           border-radius: 10px 10px 0px 0px;
