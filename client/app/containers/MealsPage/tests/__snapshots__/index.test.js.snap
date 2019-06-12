@@ -13,6 +13,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
       href="/"
     >
       <img
+        alt="backArrow"
         class="backArrow"
         src="[object Object]"
       />
@@ -36,6 +37,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
         class="articlesContainer"
       >
         <img
+          alt="mealsPictures"
           class="mealsPictures"
           src="[object Object]"
         />
@@ -45,6 +47,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
         >
           Petit Déjeuner
           <img
+            alt="more"
             class="more"
             src="[object Object]"
           />
@@ -54,6 +57,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
         class="articlesContainer"
       >
         <img
+          alt="mealsPictures"
           class="mealsPictures"
           src="[object Object]"
         />
@@ -63,6 +67,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
         >
           Déjeuner
           <img
+            alt="more"
             class="more"
             src="[object Object]"
           />
@@ -72,6 +77,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
         class="articlesContainer"
       >
         <img
+          alt="mealsPictures"
           class="mealsPictures"
           src="[object Object]"
         />
@@ -81,6 +87,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
         >
           Goûter
           <img
+            alt="more"
             class="more"
             src="[object Object]"
           />
@@ -90,6 +97,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
         class="articlesContainer"
       >
         <img
+          alt="mealsPictures"
           class="mealsPictures"
           src="[object Object]"
         />
@@ -99,6 +107,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
         >
           Dinner
           <img
+            alt="more"
             class="more"
             src="[object Object]"
           />
@@ -117,6 +126,7 @@ exports[`<HomePage /> should render and match the snapshot 1`] = `
           Visualiser
         </p>
         <img
+          alt="rightArrow"
           class="rightArrow"
           src="[object Object]"
         />
