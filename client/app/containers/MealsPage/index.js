@@ -211,7 +211,7 @@ export const HomePage = (props: propsType) => {
             <div className="summaryContainer">
               <div className="modalContent">
                 <h1>{currentModalName}</h1>
-                <SummaryComponent/>
+                {/* <SummaryComponent/> */}
                 <div className="buttonsContainer">
                   <button
                   type="button"
