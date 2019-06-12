@@ -35,8 +35,8 @@ class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sport: 'Sportif ?',
-      sexe: 'Votre sexe ?',
+      sport: 'Activité sportive',
+      sexe: 'Votre sexe',
     };
   }
 
@@ -55,9 +55,9 @@ class HomePage extends Component {
             </h1>
             <p>
               Saisissez votre consommation journalière, que ce soit le petit
-              déjeuner, le déjeuner, le <br /> goûter ou le dinner, afin d’avoir
-              une vue détaillée et davantage <br /> d’informations sur ce que
-              vous mangez.
+              déjeuner, le déjeuner, le goûter ou le dîner, afin d’avoir une vue
+              détaillée
+              <br /> et davantage d’informations sur ce que vous mangez.
             </p>
 
             <select value={this.state.sport} onChange={this.handleSportChange}>
@@ -69,12 +69,8 @@ class HomePage extends Component {
 
             <select value={this.state.sexe} onChange={this.handleSexChange}>
               <option selected>{this.state.sexe} </option>
-              <option value={'homme'.toUpperCase()}>
-                {'homme'.toUpperCase()}
-              </option>
-              <option value={'femme'.toUpperCase()}>
-                {'femme'.toUpperCase()}
-              </option>
+              <option value="Homme">Homme</option>
+              <option value="Femme">Femmme</option>
             </select>
 
             <button
@@ -82,8 +78,8 @@ class HomePage extends Component {
               type="button"
               onClick={() => {
                 if (
-                  this.state.sport !== 'Sportif ?' &&
-                  this.state.sexe !== 'Votre sexe ?'
+                  this.state.sport !== 'Activité sportive' &&
+                  this.state.sexe !== 'Votre sexe'
                 ) {
                   this.props.changeCalories({
                     calories: calc(this.state.sport, this.state.sexe),

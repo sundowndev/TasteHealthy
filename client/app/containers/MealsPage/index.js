@@ -29,7 +29,7 @@ import lunch from '../../images/lunch.png';
 import snack from '../../images/snack.png';
 import dinner from '../../images/dinner.png';
 
-// import check from '../../images/check.png';
+import check from '../../images/check.png';
 // import pen from '../../images/pen.png';
 
 import {
@@ -49,10 +49,6 @@ type mealsType = {
 };
 
 type propsType = {
-  // changeBreakfast: mealsType => any,
-  // changeLunch: mealsType => any,
-  // changeSnack: mealsType => any,
-  // changeDinner: mealsType => any,
   mealsData: mealsType,
   history: {
     push: string => void,
@@ -93,6 +89,16 @@ export const HomePage = (props: propsType) => {
   const [modalIsOpen, toggleModal] = useState(false);
   const [currentModalName, changeModalName] = useState(null);
 
+  const getMealData = () => {
+    const keys = Object.keys(props.mealsData);
+    for (let i = 0; i < keys.length; i++) {
+      if (props.mealsData[keys[i]].consummedAliments.length > 0) {
+        return keys[i];
+      }
+    }
+    return null;
+  };
+
   const openModal = (name: string) => {
     toggleModal(true);
     changeModalName(name);
@@ -114,6 +120,8 @@ export const HomePage = (props: propsType) => {
         return null;
     }
   };
+
+  console.log(props.mealsData);
 
   return (
     <div
@@ -170,10 +178,7 @@ export const HomePage = (props: propsType) => {
                     Vider
                   </button>
                   <button
-                    onClick={() =>
-                      currentModalName &&
-                      props.history.push(`/result/${currentModalName}`)
-                    }
+                    onClick={() => currentModalName && toggleModal(false)}
                     type="button"
                   >
                     Valider
@@ -212,7 +217,15 @@ export const HomePage = (props: propsType) => {
               }}
             >
               Petit Déjeuner
-              <img alt="more" className="more" src={more} />
+              <img
+                alt="more"
+                className="more"
+                src={
+                  props.mealsData.breakfast.consummedAliments.length > 0
+                    ? check
+                    : more
+                }
+              />
             </button>
           </div>
 
@@ -226,7 +239,15 @@ export const HomePage = (props: propsType) => {
               }}
             >
               Déjeuner
-              <img alt="more" className="more" src={more} />
+              <img
+                alt="more"
+                className="more"
+                src={
+                  props.mealsData.lunch.consummedAliments.length > 0
+                    ? check
+                    : more
+                }
+              />
             </button>
           </div>
 
@@ -240,7 +261,15 @@ export const HomePage = (props: propsType) => {
               }}
             >
               Goûter
-              <img alt="more" className="more" src={more} />
+              <img
+                alt="more"
+                className="more"
+                src={
+                  props.mealsData.snack.consummedAliments.length > 0
+                    ? check
+                    : more
+                }
+              />
             </button>
           </div>
 
@@ -254,17 +283,30 @@ export const HomePage = (props: propsType) => {
               }}
             >
               Dinner
-              <img alt="more" className="more" src={more} />
+              <img
+                alt="more"
+                className="more"
+                src={
+                  props.mealsData.dinner.consummedAliments.length > 0
+                    ? check
+                    : more
+                }
+              />
             </button>
           </div>
         </div>
 
-        <a href="/">
+        <button
+          type="button"
+          onClick={() =>
+            getMealData() && props.history.push(`/result/${getMealData()}`)
+          }
+        >
           <div className="datavizLink">
             <p className="linkText">Visualiser</p>
             <img alt="rightArrow" className="rightArrow" src={rightArrow} />
           </div>
-        </a>
+        </button>
       </div>
     </div>
   );

@@ -174,26 +174,6 @@ const ModalComponent = ({
             </div>
           </div>
         ))}
-      {/* <button
-        type="button"
-        onClick={async () => {
-          await setMeals({
-            ...meals,
-            [currentModalName]: {
-              consummedAliments,
-            },
-          });
-          updateStore(currentModalName);
-          // eslint-disable-next-line react/prop-types
-          return props.history.push(`/result/${currentModalName}`);
-        }}
-      >
-        Valider
-      </button> */}
-      {/* {consummedAliments.map(el => (
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-
-      ))} */}
     </div>
   );
 };

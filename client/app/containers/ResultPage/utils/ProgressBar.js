@@ -2,6 +2,13 @@ import React, { PureComponent } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
+// opacité sidebar
+// max value 50% progress bar + couleurs
+// origine des produits camembert => pull modifs raphael
+// grossir dataviz
+// meals page
+// Pas de redirection "valider"
+
 // this is the inner circle with whatever you want inside
 const CustomProgressBar = props => {
   const {
@@ -23,7 +30,7 @@ const CustomProgressBar = props => {
     >
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
         <CircularProgressbar
-          maxValue={unit === 'g' ? 500 : calories / 1000}
+          maxValue={unit === 'g' ? 100 : calories / 1000}
           value={percentage}
           {...propsProgress}
         />
@@ -31,11 +38,11 @@ const CustomProgressBar = props => {
       {percentage2 === null ? null : (
         <div style={{ position: 'absolute', width: '80%%', height: '80%%' }}>
           <CircularProgressbar
-            maxValue={unit === 'g' ? 800 : calories / 1000}
+            maxValue={unit === 'g' ? 100 : calories / 1000}
             value={percentage2}
             styles={{
               path: {
-                stroke: `url(#${gradientId})`,
+                // stroke: `url(#${gradientId})`,
                 height: '100%',
                 opacity: 0.5,
               },

@@ -12,12 +12,19 @@ const rightComponent = () => (
   </div>
 );
 
-const SidebarComponent = ({ props }: { props: any }) => (
+const SidebarComponent = ({
+  props,
+  mealType,
+}: {
+  props: any,
+  mealType: any,
+}) => (
   <div className="app__sidebar">
     <img alt="avatar" src={require('../../../images/avatar.svg')} />
     <p className="app__sidebar__title">Ma consommation</p>
     <div className="app__sidebar__content">
       <div
+        style={mealType === 'breakfast' ? {} : { opacity: 0.5 }}
         onClick={() =>
           props.mealsData.breakfast.consummedAliments.length > 0
             ? props.history.push('/result/breakfast')
@@ -38,6 +45,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
       </div>
 
       <div
+        style={mealType === 'lunch' ? {} : { opacity: 0.5 }}
         onClick={() =>
           props.mealsData.lunch.consummedAliments.length > 0
             ? props.history.push('/result/lunch')
@@ -58,6 +66,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
       </div>
 
       <div
+        style={mealType === 'snack' ? {} : { opacity: 0.5 }}
         onClick={() =>
           props.mealsData.snack.consummedAliments.length > 0
             ? props.history.push('/result/snack')
@@ -78,6 +87,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
       </div>
 
       <div
+        style={mealType === 'dinner' ? {} : { opacity: 0.5 }}
         onClick={() =>
           props.mealsData.dinner.consummedAliments.length > 0
             ? props.history.push('/result/dinner')
@@ -98,6 +108,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
       </div>
 
       <div
+        style={mealType === 'total' ? {} : { opacity: 0.5 }}
         onClick={() =>
           props.mealsData.dinner.consummedAliments.length > 0 &&
           props.mealsData.snack.consummedAliments.length > 0 &&
@@ -116,10 +127,10 @@ const SidebarComponent = ({ props }: { props: any }) => (
           props.mealsData.snack.consummedAliments.length > 0 &&
           props.mealsData.lunch.consummedAliments.length > 0 &&
           props.mealsData.breakfast.consummedAliments.length > 0 ? (
-              rightComponent()
-          ) : (
-            <img alt="add" src={require('../../../images/add.svg')} />
-          )}
+            rightComponent()
+            ) : (
+              <img alt="add" src={require('../../../images/add.svg')} />
+            )}
         </div>
       </div>
     </div>
