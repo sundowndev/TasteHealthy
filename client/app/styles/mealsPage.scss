@@ -1,0 +1,250 @@
+.choiceContainer {
+ width: 94vw;
+ height: 90vh;
+
+  .mealsPage {
+    height: 90vh;
+    width: 94vw;
+    margin: auto;
+    transform: translateY(1.5vw);
+
+    .modalContainer {
+      height: 100%;
+      width:  100%;
+      display: flex;
+      position: relative;
+
+      .closeModal {
+        width: 32px;
+        height: 32px;
+        position: absolute;
+        top: 40px;
+        right: 40px;
+      }
+
+      .searchContainer {
+        width: 50%;
+        height: 100%;
+        background-color: #F5F5F5;
+        display: flex;
+        align-items: center;
+        // justify-content: center;
+        // flex-direction: column;
+
+        .modalContent {
+          width: 469px;
+          // background-color: green;
+          // height: auto;
+          height: 80%;
+          margin: 0 auto;
+          overflow: scroll;
+
+          .searchBar {
+            width: 90%;
+            height: 50px;
+            border: 2px solid #33176E;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+          }
+
+          .foodItemContainer {
+            display: flex;
+            width: 90%;
+            justify-content: space-between;
+
+            .foodItemContent {
+              display: flex;
+
+              p {
+                font-size: 15px;
+                font-weight: bold;
+              }
+
+              .operations {
+                align-self: flex-end;
+                height: 25px;
+                margin-left: 10px;
+              }
+            }
+          }
+
+          .addFood {
+            width: 65px;
+            height: 34px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 5px;
+            align-self: center;
+          }
+
+          .line {
+            width: 90%;
+            height: 1px;
+            background-color: #33176E;
+          }
+        }
+      }
+
+      .summaryContainer {
+        width: 50%;
+        height: 100%;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        .modalContent {
+          width: 469px;
+          background-color: white;
+          height: 80%;
+          margin: 0 auto;
+          overflow: scroll;
+          position: relative;
+
+          h1 {
+            margin: 0px 0px 28px 0px;
+          }
+
+          .validateFood {
+            width: 100%;
+            display: flex;
+            height: 50px;
+            border-radius: 5px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0px 15px 0px 15px;
+            box-shadow: 1px 1px 5px 1px #F5F5F5;
+
+            p {
+              font-size: 15px;
+              font-weight: bold;
+              margin: 0px;
+            }
+
+            .weight {
+              font-size: 13px;
+              font-weight: lighter;
+            }
+
+            img {
+              align-self: center;
+              width: 11px;
+              height: 11px;
+            }
+          }
+
+          .buttonsContainer {
+            position: fixed;
+            bottom: 0px;
+            padding-bottom: 33px;
+            width: 469px;
+            display: flex;
+            justify-content: center;
+
+            .resetButton {
+              border: solid 2px #33176E;
+              background-color: white;
+            }
+
+            button {
+              width: 92px;
+              height: 50px;
+              border-radius: 10px;
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .choicePageContainer {
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+    padding-top: 200px;
+    position: relative;
+
+    .backLink {
+      display: flex;
+
+      .backArrow {
+        width: 21px;
+        height: 21px;
+      }
+
+      .backText {
+        margin: 0px;
+        padding-left: 10px;
+        font-size: 15px;
+        font-weight: bold;
+      }
+    }
+
+    .choiceText {
+      font-size: 50px;
+      font-weight: bold;
+      margin-bottom: 58px !important;
+    }
+
+    .mealsButtonsContainer {
+      display: flex;
+
+      .articlesContainer {
+        width: 195px;
+        margin-right: 63px;
+
+        .mealsPictures {
+          height: 202px;
+          border-radius: 10px 10px 0px 0px;
+        }
+
+        .mealButtons {
+          height: 45px;
+          width: 195px;
+          background-color: white;
+          border: none;
+          box-shadow: 1px 1px 5px 1px #F5F5F5 ;
+          border-radius: 0px 0px 10px 10px;
+
+          .more {
+            width: 13px;
+            height: 13px;
+            float: right;
+            margin-right: 10px;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    .datavizLink {
+      display: flex;
+      position: absolute;
+      margin-right: 0px;
+      margin-top: 25px;
+      right: -160px;
+      width: 280px;
+      height: 147px;
+      background-color: white;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px 0px 0px 0px;
+      // border-top: solid 11px #FBFBFB;
+      // border-left: solid 11px #FBFBFB;
+
+      .linkText {
+        text-transform: uppercase;
+        height: 20px;
+        margin: 0px;
+      }
+
+      .rightArrow {
+        width: 21px;
+        height: 21px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
