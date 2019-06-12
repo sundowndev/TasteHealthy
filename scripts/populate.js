@@ -197,6 +197,8 @@ async function main() {
                 if (misc_data[k] === null) delete misc_data[k];
               });
 
+              doc['packaging_tags'] = doc['packaging_tags'].split(',')
+
               promises.push(
                 models.Products.create({
                   categoryId: doc['categoryId'] || defaultCategoryId,
