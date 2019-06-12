@@ -49,7 +49,17 @@ const ResultPage = (props: Props) => {
   const { mealType } = props.match.params;
   const { mealsData } = props;
   const [mealsElements, setMealsElements] = useState(
-    props.mealsData[mealType].consummedAliments,
+    mealType === 'total'
+      ? [].concat.apply(
+        [],
+        [
+          props.mealsData.breakfast.consummedAliments,
+          props.mealsData.lunch.consummedAliments,
+          props.mealsData.snack.consummedAliments,
+          props.mealsData.dinner.consummedAliments,
+        ],
+      )
+      : props.mealsData[mealType].consummedAliments,
   );
   const [usedMealsElements, setUsedMealsElements] = useState(mealsElements);
   const [arrayIndex, setArrayIndex] = useState(
@@ -72,18 +82,33 @@ const ResultPage = (props: Props) => {
   };
 
   useEffect(() => {
+    const mealsElements2 =
+      mealType === 'total'
+        ? [].concat.apply(
+          [],
+          [
+            props.mealsData.breakfast.consummedAliments,
+              props.mealsData.lunch.consummedAliments,
+            props.mealsData.snack.consummedAliments,
+            props.mealsData.dinner.consummedAliments,
+            ],
+        )
+        : props.mealsData[mealType].consummedAliments;
     const promises = [];
-    for (let i = 0; i < mealsElements.length; i++) {
+    for (let i = 0; i < mealsElements2.length; i++) {
       promises.push(
         axios
           .get(
             `http://localhost:3000/categories/${
-              mealsElements[i].categoryId
+              mealsElements2[i].categoryId
             }/products`,
           )
           .then(data => data.data.items[0]),
       );
     }
+    setMealsElements(mealsElements2);
+    setUsedMealsElements(mealsElements2);
+    // setArrayIndex(new Array(mealsElements.length).fill(true));
 
     Promise.all(promises)
       .then(rr => {
@@ -92,7 +117,7 @@ const ResultPage = (props: Props) => {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [mealType]);
 
   const toggleCheck = index => {
     const newArray = arrayIndex.map((el, indexEl) =>
@@ -126,7 +151,7 @@ const ResultPage = (props: Props) => {
       case 'dinner':
         return 'Dîner';
       default:
-        return null;
+        return 'Total';
     }
   };
 

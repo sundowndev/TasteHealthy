@@ -26,9 +26,9 @@ const femaleCalc = sport =>
 const calc = (sport, sexe) => {
   const sportValue = sport === 'modéré' ? 1.5 : 1.7;
   if (sexe === 'male') {
-    return Math.floor(maleCalc(sportValue));
+    return Math.round(maleCalc(sportValue));
   }
-  return Math.floor(femaleCalc(sportValue));
+  return Math.round(femaleCalc(sportValue));
 };
 
 class HomePage extends Component {

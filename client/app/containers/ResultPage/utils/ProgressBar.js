@@ -10,9 +10,9 @@ const CustomProgressBar = props => {
     percentage2,
     unit,
     calories,
+    gradientId,
     ...propsProgress
   } = props;
-  console.log('cc', unit, calories / 1000);
   return (
     <div
       style={{
@@ -33,6 +33,13 @@ const CustomProgressBar = props => {
           <CircularProgressbar
             maxValue={unit === 'g' ? 800 : calories / 1000}
             value={percentage2}
+            styles={{
+              path: {
+                stroke: `url(#${gradientId})`,
+                height: '100%',
+                opacity: 0.5,
+              },
+            }}
             strokeWidth={5}
           />
         </div>
@@ -69,7 +76,7 @@ class ProgressBar extends PureComponent {
       unit,
       calories,
     } = this.props;
-    const gradientTransform = `rotate(90)`;
+    const gradientTransform = `rotate(20)`;
     return (
       <div
         className="progress-bar"
@@ -84,8 +91,8 @@ class ProgressBar extends PureComponent {
               id={gradientId}
               gradientTransform={gradientTransform}
             >
-              <stop offset="0%" stopColor={startColor} />
-              <stop offset="100%" stopColor={endColor} />
+              <stop offset="0%" stopColor={endColor} />
+              <stop offset="100%" stopColor={startColor} />
             </linearGradient>
           </defs>
         </svg>
@@ -94,6 +101,7 @@ class ProgressBar extends PureComponent {
           percentage2={percentage2}
           strokeWidth="10"
           unit={unit}
+          gradientId={gradientId}
           calories={calories}
           styles={{ path: { stroke: `url(#${gradientId})`, height: '100%' } }}
         >

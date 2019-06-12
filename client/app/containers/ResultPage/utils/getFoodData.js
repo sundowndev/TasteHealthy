@@ -50,7 +50,7 @@ export const getProteins = mealsElements => {
     const nutrition = mealsElements[i].nutrition_facts.proteins_100g;
     proteines += (mealsElements[i].quantity * nutrition) / 100;
   }
-  return Math.floor(proteines);
+  return Math.round(proteines);
 };
 
 export const getFat = mealsElements => {
@@ -59,7 +59,7 @@ export const getFat = mealsElements => {
     const nutrition = mealsElements[i].nutrition_facts.fat_100g;
     fat += (mealsElements[i].quantity * nutrition) / 100;
   }
-  return Math.floor(fat);
+  return Math.round(fat);
 };
 
 export const getSodium = mealsElements => {
@@ -68,7 +68,7 @@ export const getSodium = mealsElements => {
     const nutrition = mealsElements[i].nutrition_facts.sodium_100g;
     sodium += (mealsElements[i].quantity * nutrition) / 100;
   }
-  return Math.floor(sodium);
+  return Math.round(sodium);
 };
 
 export const getSugar = mealsElements => {
@@ -77,7 +77,7 @@ export const getSugar = mealsElements => {
     const nutrition = mealsElements[i].nutrition_facts.sugars_100g;
     sugar += (mealsElements[i].quantity * nutrition) / 100;
   }
-  return Math.floor(sugar);
+  return Math.round(sugar);
 };
 
 export const getAdditives = mealsElements => {
@@ -86,7 +86,7 @@ export const getAdditives = mealsElements => {
     const nutrition = mealsElements[i].misc_data.additives_n;
     additives += nutrition;
   }
-  return Math.floor(additives);
+  return Math.round(additives);
 };
 
 export const getSalt = mealsElements => {
@@ -95,5 +95,5 @@ export const getSalt = mealsElements => {
     const nutrition = mealsElements[i].nutrition_facts.salt_100g;
     salt += (mealsElements[i].quantity * nutrition) / 100;
   }
-  return Math.floor(salt);
+  return Math.round(salt);
 };

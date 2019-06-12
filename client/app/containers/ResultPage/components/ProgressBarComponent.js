@@ -56,7 +56,11 @@ const progressBar = (
     <p
       style={{
         fontFamily: 'Apercu',
-        color: '#33176E',
+        color:
+          (calories / 1000 < percentage && unit === 'kcal') ||
+          (unit === 'g' && percentage > 500)
+            ? '#e03131'
+            : '#33176E',
         fontSize: `${fontSize}px`,
         letterSpacing: '0',
         fontWeight: '600',

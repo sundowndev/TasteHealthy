@@ -19,7 +19,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
     <div className="app__sidebar__content">
       <div
         onClick={() =>
-          props.mealsData.breakfast.consummedAliments
+          props.mealsData.breakfast.consummedAliments.length > 0
             ? props.history.push('/result/breakfast')
             : props.history.push('/meals')
         }
@@ -39,7 +39,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
 
       <div
         onClick={() =>
-          props.mealsData.lunch.consummedAliments
+          props.mealsData.lunch.consummedAliments.length > 0
             ? props.history.push('/result/lunch')
             : props.history.push('/meals')
         }
@@ -59,7 +59,7 @@ const SidebarComponent = ({ props }: { props: any }) => (
 
       <div
         onClick={() =>
-          props.mealsData.snack.consummedAliments
+          props.mealsData.snack.consummedAliments.length > 0
             ? props.history.push('/result/snack')
             : props.history.push('/meals')
         }
@@ -79,18 +79,44 @@ const SidebarComponent = ({ props }: { props: any }) => (
 
       <div
         onClick={() =>
-          props.mealsData.dinner.consummedAliments
+          props.mealsData.dinner.consummedAliments.length > 0
             ? props.history.push('/result/dinner')
             : props.history.push('/meals')
         }
         className="app__sidebar__content__block"
       >
         <div className="app__sidebar__content__block__left">
-          <p>Dinner</p>
+          <p>Dîner</p>
         </div>
         <div className="app__sidebar__content__block__right">
           {props.mealsData.dinner.consummedAliments.length > 0 ? (
             rightComponent()
+          ) : (
+            <img alt="add" src={require('../../../images/add.svg')} />
+          )}
+        </div>
+      </div>
+
+      <div
+        onClick={() =>
+          props.mealsData.dinner.consummedAliments.length > 0 &&
+          props.mealsData.snack.consummedAliments.length > 0 &&
+          props.mealsData.lunch.consummedAliments.length > 0 &&
+          props.mealsData.breakfast.consummedAliments.length > 0
+            ? props.history.push('/result/total')
+            : props.history.push('/meals')
+        }
+        className="app__sidebar__content__block"
+      >
+        <div className="app__sidebar__content__block__left">
+          <p>Total</p>
+        </div>
+        <div className="app__sidebar__content__block__right">
+          {props.mealsData.dinner.consummedAliments.length > 0 &&
+          props.mealsData.snack.consummedAliments.length > 0 &&
+          props.mealsData.lunch.consummedAliments.length > 0 &&
+          props.mealsData.breakfast.consummedAliments.length > 0 ? (
+              rightComponent()
           ) : (
             <img alt="add" src={require('../../../images/add.svg')} />
           )}
