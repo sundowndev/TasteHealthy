@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { PureComponent } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -21,6 +22,24 @@ const CustomProgressBar = props => {
     ...propsProgress
   } = props;
   const max = unit === 'g' ? 100 : calories * 2;
+  const color = percentageValue =>
+    (percentageValue * 100) / max > 75
+      ? 'red'
+      : (percentageValue * 100) / max > 50
+        ? 'orange'
+        : (percentageValue * 100) / max > 25
+          ? '#6edd61'
+          : 'green';
+
+  const newValuePV = percentageValue => {
+    if ((percentageValue * 100) / max > 50) {
+      const maxValue = unit === 'g' ? 3000 : 40000;
+      const newPercentage = Math.round(maxValue / 2 + percentageValue);
+      return { maxValue, newPercentage };
+    }
+    return { maxValue: max, newPercentage: percentageValue };
+  };
+
   return (
     <div
       style={{
@@ -31,11 +50,11 @@ const CustomProgressBar = props => {
     >
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
         <CircularProgressbar
-          maxValue={max}
-          value={percentage}
+          maxValue={newValuePV(percentage).maxValue}
+          value={newValuePV(percentage).newPercentage}
           styles={{
             path: {
-              stroke: (percentage * 100) / max > 50 ? 'red' : `#6edd61`,
+              stroke: color(percentage),
               height: '100%',
             },
           }}
@@ -45,17 +64,17 @@ const CustomProgressBar = props => {
       {percentage2 === null ? null : (
         <div style={{ position: 'absolute', width: '80%%', height: '80%%' }}>
           <CircularProgressbar
-            maxValue={unit === 'g' ? 100 : calories * 2}
-            value={percentage2}
+            maxValue={newValuePV(percentage2).maxValue}
+            value={newValuePV(percentage2).newPercentage}
             styles={{
               path: {
-                stroke: (percentage2 * 100) / max > 50 ? 'red' : `#6edd61`,
+                stroke: color(percentage2),
                 height: '100%',
 
-                opacity: 0.5,
+                opacity: 0.4,
               },
             }}
-            strokeWidth={3}
+            strokeWidth={percentage2 > 0 ? '8' : '5'}
           />
         </div>
       )}
@@ -103,7 +122,7 @@ class ProgressBar extends PureComponent {
         <CustomProgressBar
           percentage={percentage}
           percentage2={percentage2}
-          strokeWidth="8"
+          strokeWidth={percentage2 > 0 ? '14' : '8'}
           unit={unit}
           gradientId={gradientId}
           calories={calories}

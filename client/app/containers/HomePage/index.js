@@ -24,7 +24,7 @@ const femaleCalc = sport =>
   (655.1 + 9.563 * 62.4 + 1.85 * 162.5 - 4.676 * 35) * sport;
 
 const calc = (sport, sexe) => {
-  const sportValue = sport === 'modéré' ? 1.5 : 1.7;
+  const sportValue = sport === 'modéré' ? 1.6 : 1.8;
   if (sexe === 'male') {
     return Math.round(maleCalc(sportValue));
   }

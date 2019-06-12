@@ -230,12 +230,43 @@ const ResultPage = (props: Props) => {
                   getCalories(usedMealsElements),
                   280,
                   280,
-                  40,
+                  35,
                   'cal',
                   checkReRender() ? getCalories(mealsElements) : null,
                   props.caloriesData.calories,
                 )}
               </div>
+              <p
+                style={{
+                  fontFamily: 'Apercu',
+                  marginTop: '10px',
+                  textAlign: 'center',
+                  fontSize: '15px',
+                }}
+              >
+                | <br />
+                <br /> Consommation recommandée
+              </p>
+              {/* <p
+                style={{
+                  fontFamily: 'Apercu',
+                  marginTop: '20px',
+                  textAlign: 'center',
+                  fontSize: '15px',
+                }}
+              >
+                Consommation actuelle
+              </p>
+              <p
+                style={{
+                  fontFamily: 'Apercu',
+                  marginTop: '10px',
+                  textAlign: 'center',
+                  fontSize: '15px',
+                }}
+              >
+                Nouvelle consommation
+              </p> */}
             </div>
 
             <div

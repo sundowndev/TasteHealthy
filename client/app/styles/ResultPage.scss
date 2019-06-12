@@ -264,7 +264,7 @@
         justify-content: space-between;
         align-items: center;
         background-color: #FFF;
-        padding: 50px 35px 70px 35px;
+        padding: 50px 35px 50px 35px;
         border-radius: 5px;
         box-shadow: 0 6px 13px 0 rgba(21, 33, 56, 0.05);
         position: relative;
@@ -284,7 +284,6 @@
       .app__content__block__flex__component {
         display: flex;
         flex-direction: row;
-        align-items: center;
       }
 
       .app__content__block__flex__right {
