@@ -11,7 +11,7 @@ export const getMealsOrigin = mealsElements => {
 };
 
 export const getMealsPackaging = mealsElements => {
-  const resultArray = mealsElements.map(el => el.packaging.split(','));
+  const resultArray = mealsElements.map(el => el.packaging);
   const flattenArray = resultArray.flat();
 
   const counts = {};

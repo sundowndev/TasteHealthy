@@ -13,6 +13,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
+import { updateStore } from '../utils.js';
 
 import {
   changeLunch,
@@ -63,45 +64,6 @@ const ModalComponent = ({
   const changeLunchData = data => changeLunch(data);
   const changeDinnerData = data => changeDinner(data);
   const changeSnackData = data => changeSnack(data);
-
-  const updateStore = (mealType: string, consummedAliments: any) => {
-    switch (mealType) {
-      case 'breakfast':
-        changeBreakfastData({
-          ...meals,
-          [mealType]: {
-            consummedAliments,
-          },
-        });
-        break;
-      case 'dinner':
-        changeDinnerData({
-          ...meals,
-          [mealType]: {
-            consummedAliments,
-          },
-        });
-        break;
-      case 'snack':
-        changeSnackData({
-          ...meals,
-          [mealType]: {
-            consummedAliments,
-          },
-        });
-        break;
-      case 'lunch':
-        changeLunchData({
-          ...meals,
-          [mealType]: {
-            consummedAliments,
-          },
-        });
-        break;
-      default:
-        console.error('The meal type does not match anything ! ');
-    }
-  };
 
   return (
     <div className="modalContent">
@@ -163,7 +125,15 @@ const ModalComponent = ({
                           consummedAliments: test,
                         },
                       });
-                      updateStore(currentModalName, test);
+                      updateStore(
+                        currentModalName,
+                        test,
+                        meals,
+                        changeBreakfastData,
+                        changeDinnerData,
+                        changeSnackData,
+                        changeLunchData,
+                      );
                     }
                   }}
                 >

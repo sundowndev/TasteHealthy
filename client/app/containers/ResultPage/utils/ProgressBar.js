@@ -47,7 +47,7 @@ const CustomProgressBar = props => {
                 opacity: 0.5,
               },
             }}
-            strokeWidth={5}
+            strokeWidth={3}
           />
         </div>
       )}
@@ -92,25 +92,14 @@ class ProgressBar extends PureComponent {
           height: `${height}px`,
         }}
       >
-        <svg style={{ height: 0, width: 0 }}>
-          <defs>
-            <linearGradient
-              id={gradientId}
-              gradientTransform={gradientTransform}
-            >
-              <stop offset="0%" stopColor={endColor} />
-              <stop offset="100%" stopColor={startColor} />
-            </linearGradient>
-          </defs>
-        </svg>
         <CustomProgressBar
           percentage={percentage}
           percentage2={percentage2}
-          strokeWidth="10"
+          strokeWidth="8"
           unit={unit}
           gradientId={gradientId}
           calories={calories}
-          styles={{ path: { stroke: `url(#${gradientId})`, height: '100%' } }}
+          styles={{ path: { stroke: `#6edd61`, height: '100%' } }}
         >
           {children}
         </CustomProgressBar>

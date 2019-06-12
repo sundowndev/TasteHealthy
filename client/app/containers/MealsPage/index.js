@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import ModalComponent from './components/ModalComponent';
-// import { withRouter } from 'react-router';
+import { updateStore } from './utils';
 import messages from './messages';
 import '../../styles/mealsPage.css';
 import close from '../../images/close.png';
@@ -67,27 +67,10 @@ const customStyles = {
   },
 };
 
-const SummaryComponent = ({
-  name,
-  quantity,
-}: {
-  name: string,
-  quantity: number,
-}) => (
-  <div>
-    <div className="validateFood">
-      <div>
-        <p>{name}</p>
-        <p className="weight">{quantity}gr</p>
-      </div>
-      <img src={close} alt="close" />
-    </div>
-  </div>
-);
-
 export const HomePage = (props: propsType) => {
   const [modalIsOpen, toggleModal] = useState(false);
   const [currentModalName, changeModalName] = useState(null);
+  const { changeBreakfast, changeLunch, changeDinner, changeSnack } = props;
 
   const getMealData = () => {
     const keys = Object.keys(props.mealsData);
@@ -98,6 +81,45 @@ export const HomePage = (props: propsType) => {
     }
     return null;
   };
+
+  const SummaryComponent = ({
+    name,
+    quantity,
+    index,
+  }: {
+    name: string,
+    quantity: number,
+    index: number,
+  }) => (
+    <div>
+      <div className="validateFood">
+        <div>
+          <p>{name}</p>
+          <p className="weight">{quantity}gr</p>
+        </div>
+        <img
+          onClick={() => {
+            const consummedAliments = props.mealsData[
+              currentModalName
+            ].consummedAliments.filter(
+              (item, indexValue) => indexValue !== index,
+            );
+            updateStore(
+              currentModalName,
+              consummedAliments,
+              props.mealsData,
+              changeBreakfastData,
+              changeDinnerData,
+              changeSnackData,
+              changeLunchData,
+            );
+          }}
+          src={close}
+          alt="close"
+        />
+      </div>
+    </div>
+  );
 
   const openModal = (name: string) => {
     toggleModal(true);
@@ -121,7 +143,10 @@ export const HomePage = (props: propsType) => {
     }
   };
 
-  console.log(props.mealsData);
+  const changeBreakfastData = data => changeBreakfast(data);
+  const changeLunchData = data => changeLunch(data);
+  const changeDinnerData = data => changeDinner(data);
+  const changeSnackData = data => changeSnack(data);
 
   return (
     <div
@@ -166,15 +191,31 @@ export const HomePage = (props: propsType) => {
                 <h1>{getMeal()}</h1>
                 {currentModalName &&
                   props.mealsData[currentModalName].consummedAliments.map(
-                    el => (
+                    (el, index) => (
                       <SummaryComponent
                         name={el.product_name}
                         quantity={el.quantity}
+                        index={index}
                       />
                     ),
                   )}
                 <div className="buttonsContainer">
-                  <button type="button" className="resetButton">
+                  <button
+                    onClick={() => {
+                      const consummedAliments = [];
+                      updateStore(
+                        currentModalName,
+                        consummedAliments,
+                        props.mealsData,
+                        changeBreakfastData,
+                        changeDinnerData,
+                        changeSnackData,
+                        changeLunchData,
+                      );
+                    }}
+                    type="button"
+                    className="resetButton"
+                  >
                     Vider
                   </button>
                   <button
