@@ -71,7 +71,12 @@ const progressBar = (
       {unit}
       {unit === 'cal' ? <br /> : null}
       {unit === 'cal' ? (
-        <p style={{ fontSize: '15px', color: '#e03131' }}>
+        <p
+          style={{
+            fontSize: '15px',
+            color: calories < percentage ? '#e03131' : '#6edd61',
+          }}
+        >
           {calories < percentage ? '+' : '-'}{' '}
           {Math.round(Math.abs(calories - percentage) * 100) / 100} cal
         </p>
