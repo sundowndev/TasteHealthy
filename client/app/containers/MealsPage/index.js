@@ -11,16 +11,11 @@
  */
 
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-import messages from './messages';
 import '../../styles/mealsPage.css';
 import close from '../../images/close.png';
 
-import '../../styles/mealsPage.css';
-
-import close from '../../images/close.png';
 import leftArrow from '../../images/left-arrow.png';
 import rightArrow from '../../images/right-arrow.png';
 import choice from '../../images/choice.jpg';
@@ -31,9 +26,8 @@ import lunch from '../../images/lunch.png';
 import snack from '../../images/snack.png';
 import dinner from '../../images/dinner.png';
 
-import check from '../../images/check.png';
-import pen from '../../images/pen.png';
-
+// import check from '../../images/check.png';
+// import pen from '../../images/pen.png';
 
 import {
   changeLunch,
@@ -50,10 +44,10 @@ type mealsType = {
 };
 
 type propsType = {
-  changeBreakfast: mealsType => any,
-  changeLunch: mealsType => any,
-  changeSnack: mealsType => any,
-  changeDinner: mealsType => any,
+  // changeBreakfast: mealsType => any,
+  // changeLunch: mealsType => any,
+  // changeSnack: mealsType => any,
+  // changeDinner: mealsType => any,
   mealsData: mealsType,
 };
 
@@ -214,8 +208,8 @@ export const HomePage = (props: propsType) => {
     <div
       className="choiceContainer"
       style={{
-        backgroundImage: "url("+choice+")",
-        backgroundSize: "100% 100%",
+        backgroundImage: `url(${choice})`,
+        backgroundSize: '100% 100%',
       }}
     >
       {/**
@@ -239,11 +233,11 @@ export const HomePage = (props: propsType) => {
             <div
               className="searchContainer"
               style={{
-                backgroundImage: "url("+panier+")",
-                backgroundSize: "100% 100%",
+                backgroundImage: `url(${panier})`,
+                backgroundSize: '100% 100%',
               }}
             >
-              <ModalComponent mealsData={props.mealsData}/>
+              <ModalComponent mealsData={props.mealsData} />
             </div>
             <div className="summaryContainer">
               <div className="modalContent">
@@ -263,25 +257,20 @@ export const HomePage = (props: propsType) => {
       {/**  */}
 
       <div className="choicePageContainer">
-        <a
-        className="backLink"
-        href="/"
-        >
-          <img
-            className="backArrow"
-            src={leftArrow}
-          />
+        <a className="backLink" href="/">
+          <img alt="backArrow" className="backArrow" src={leftArrow} />
           <p className="backText">Retour</p>
         </a>
 
         <h1 className="choiceText">
           {/* <FormattedMessage {...messages.header} /> */}
-          Remplissez le(s) repas <br/> de votre choix.
+          Remplissez le(s) repas <br /> de votre choix.
         </h1>
 
         <div className="mealsButtonsContainer">
           <div className="articlesContainer">
             <img
+              alt="mealsPictures"
               className="mealsPictures"
               src={breakfast}
             />
@@ -294,19 +283,12 @@ export const HomePage = (props: propsType) => {
               }}
             >
               Petit Déjeuner
-
-              <img
-                className="more"
-                src={more}
-              />
+              <img alt="more" className="more" src={more} />
             </button>
           </div>
 
           <div className="articlesContainer">
-            <img
-              className="mealsPictures"
-              src={lunch}
-            />
+            <img alt="mealsPictures" className="mealsPictures" src={lunch} />
             <button
               className="mealButtons"
               type="button"
@@ -316,19 +298,12 @@ export const HomePage = (props: propsType) => {
               }}
             >
               Déjeuner
-
-              <img
-                className="more"
-                src={more}
-              />
+              <img alt="more" className="more" src={more} />
             </button>
           </div>
 
           <div className="articlesContainer">
-            <img
-              className="mealsPictures"
-              src={snack}
-            />
+            <img alt="mealsPictures" className="mealsPictures" src={snack} />
             <button
               className="mealButtons"
               type="button"
@@ -338,19 +313,12 @@ export const HomePage = (props: propsType) => {
               }}
             >
               Goûter
-
-              <img
-                className="more"
-                src={more}
-              />
+              <img alt="more" className="more" src={more} />
             </button>
           </div>
 
           <div className="articlesContainer">
-            <img
-              className="mealsPictures"
-              src={dinner}
-            />
+            <img alt="mealsPictures" className="mealsPictures" src={dinner} />
             <button
               className="mealButtons"
               type="button"
@@ -360,23 +328,15 @@ export const HomePage = (props: propsType) => {
               }}
             >
               Dinner
-              <img
-                className="more"
-                src={more}
-              />
+              <img alt="more" className="more" src={more} />
             </button>
           </div>
         </div>
 
         <a href="/">
           <div className="datavizLink">
-            <p className="linkText">
-              Visualiser
-            </p>
-            <img
-            className="rightArrow"
-            src={rightArrow}
-            />
+            <p className="linkText">Visualiser</p>
+            <img alt="rightArrow" className="rightArrow" src={rightArrow} />
           </div>
         </a>
       </div>

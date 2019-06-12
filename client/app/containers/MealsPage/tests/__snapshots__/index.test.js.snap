@@ -1,29 +1,127 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<HomePage /> should render and match the snapshot 1`] = `
-<h1>
-  <span>
-    This is the MealsPage container!
-  </span>
-  <button
-    type="button"
+<div
+  class="choiceContainer"
+  style="background-size: 100% 100%;"
+>
+  <div
+    class="choicePageContainer"
   >
-    Breakfast
-  </button>
-  <button
-    type="button"
-  >
-    Lunch
-  </button>
-  <button
-    type="button"
-  >
-    Dinner
-  </button>
-  <button
-    type="button"
-  >
-    Snack
-  </button>
-</h1>
+    <a
+      class="backLink"
+      href="/"
+    >
+      <img
+        class="backArrow"
+        src="[object Object]"
+      />
+      <p
+        class="backText"
+      >
+        Retour
+      </p>
+    </a>
+    <h1
+      class="choiceText"
+    >
+      Remplissez le(s) repas 
+      <br />
+       de votre choix.
+    </h1>
+    <div
+      class="mealsButtonsContainer"
+    >
+      <div
+        class="articlesContainer"
+      >
+        <img
+          class="mealsPictures"
+          src="[object Object]"
+        />
+        <button
+          class="mealButtons"
+          type="button"
+        >
+          Petit Déjeuner
+          <img
+            class="more"
+            src="[object Object]"
+          />
+        </button>
+      </div>
+      <div
+        class="articlesContainer"
+      >
+        <img
+          class="mealsPictures"
+          src="[object Object]"
+        />
+        <button
+          class="mealButtons"
+          type="button"
+        >
+          Déjeuner
+          <img
+            class="more"
+            src="[object Object]"
+          />
+        </button>
+      </div>
+      <div
+        class="articlesContainer"
+      >
+        <img
+          class="mealsPictures"
+          src="[object Object]"
+        />
+        <button
+          class="mealButtons"
+          type="button"
+        >
+          Goûter
+          <img
+            class="more"
+            src="[object Object]"
+          />
+        </button>
+      </div>
+      <div
+        class="articlesContainer"
+      >
+        <img
+          class="mealsPictures"
+          src="[object Object]"
+        />
+        <button
+          class="mealButtons"
+          type="button"
+        >
+          Dinner
+          <img
+            class="more"
+            src="[object Object]"
+          />
+        </button>
+      </div>
+    </div>
+    <a
+      href="/"
+    >
+      <div
+        class="datavizLink"
+      >
+        <p
+          class="linkText"
+        >
+          Visualiser
+        </p>
+        <img
+          class="rightArrow"
+          src="[object Object]"
+        />
+      </div>
+    </a>
+  </div>
+</div>
 `;
