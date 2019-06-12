@@ -1,13 +1,20 @@
 import React from 'react';
 import '../../../styles/ResultPage.css';
 
-const OriginComponent = ({ origin }: { origin: string }) => (
-  <div>
+// DoughnutComponent
+import DoughnutComponent from '../utils/Doughnut';
+
+const OriginComponent = ({ origin }) => (
+  <div style={{ width: '280px' }}>
     <p className="app__content__title app__content__title--md">
       Origines des produits
     </p>
     <div className="app__content__block">
-      <p className="app__content__block__text__origin">{origin}</p>
+      <div>
+        <div>
+          <DoughnutComponent elements={origin} />
+        </div>
+      </div>
     </div>
   </div>
 );

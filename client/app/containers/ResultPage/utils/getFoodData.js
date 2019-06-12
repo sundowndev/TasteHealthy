@@ -2,12 +2,17 @@ import { mean } from 'ramda';
 import mode from './mode';
 
 export const getMealsOrigin = mealsElements => {
-  const result = 'Inconnu';
-  const arrayResult = mealsElements.map(el =>
-    el.countries.match(/\S+(?=,)/) ? el.countries.match(/\S+(?=,)/)[0] : null,
-  );
-  const filtered = arrayResult.filter(el => el != null);
-  return mode(filtered) || result;
+  const resultArray = mealsElements.map(el => el.country);
+  const flattenArray = resultArray.flat();
+
+  const counts = {};
+
+  for (let i = 0; i < flattenArray.length; i += 1) {
+    const num = flattenArray[i] === undefined ? 'Inconnu' : flattenArray[i];
+    counts[num] = counts[num] ? counts[num] + 1 : 1;
+  }
+  return { France: 2, RoyaumeUni: 2, Suède: 3, Angleterre: 5, Allemagne: 3 };
+  // return counts;
 };
 
 export const getMealsPackaging = mealsElements => {

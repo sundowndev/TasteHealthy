@@ -51,14 +51,14 @@ const ResultPage = (props: Props) => {
   const [mealsElements, setMealsElements] = useState(
     mealType === 'total'
       ? [].concat.apply(
-          [],
-          [
-            props.mealsData.breakfast.consummedAliments,
-            props.mealsData.lunch.consummedAliments,
-            props.mealsData.snack.consummedAliments,
-            props.mealsData.dinner.consummedAliments,
-          ],
-        )
+        [],
+        [
+          props.mealsData.breakfast.consummedAliments,
+          props.mealsData.lunch.consummedAliments,
+          props.mealsData.snack.consummedAliments,
+          props.mealsData.dinner.consummedAliments,
+        ],
+      )
       : props.mealsData[mealType].consummedAliments,
   );
   const [usedMealsElements, setUsedMealsElements] = useState(mealsElements);
@@ -85,14 +85,14 @@ const ResultPage = (props: Props) => {
     const mealsElements2 =
       mealType === 'total'
         ? [].concat.apply(
-            [],
-            [
-              props.mealsData.breakfast.consummedAliments,
-            props.mealsData.lunch.consummedAliments,
-              props.mealsData.snack.consummedAliments,
-              props.mealsData.dinner.consummedAliments,
-          ],
-          )
+          [],
+          [
+            props.mealsData.breakfast.consummedAliments,
+              props.mealsData.lunch.consummedAliments,
+            props.mealsData.snack.consummedAliments,
+            props.mealsData.dinner.consummedAliments,
+            ],
+        )
         : props.mealsData[mealType].consummedAliments;
     const promises = [];
     for (let i = 0; i < mealsElements2.length; i++) {
