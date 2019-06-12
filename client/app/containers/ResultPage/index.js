@@ -231,7 +231,7 @@ const ResultPage = (props: Props) => {
                   280,
                   280,
                   40,
-                  'kcal',
+                  'cal',
                   checkReRender() ? getCalories(mealsElements) : null,
                   props.caloriesData.calories,
                 )}

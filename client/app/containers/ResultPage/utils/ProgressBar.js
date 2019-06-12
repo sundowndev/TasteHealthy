@@ -30,7 +30,7 @@ const CustomProgressBar = props => {
     >
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
         <CircularProgressbar
-          maxValue={unit === 'g' ? 100 : calories / 1000}
+          maxValue={unit === 'g' ? 100 : calories}
           value={percentage}
           {...propsProgress}
         />
@@ -38,7 +38,7 @@ const CustomProgressBar = props => {
       {percentage2 === null ? null : (
         <div style={{ position: 'absolute', width: '80%%', height: '80%%' }}>
           <CircularProgressbar
-            maxValue={unit === 'g' ? 100 : calories / 1000}
+            maxValue={unit === 'g' ? 100 : calories}
             value={percentage2}
             styles={{
               path: {
