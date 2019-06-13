@@ -27,7 +27,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
     packaging: {
-      type: Sequelize.ARRAY(Sequelize.TEXT),
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false,
     },
     manufacturing_places: {
@@ -35,7 +35,7 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
     },
     countries: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false,
     },
     labels: {
