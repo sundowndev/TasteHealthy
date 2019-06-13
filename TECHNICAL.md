@@ -1,8 +1,6 @@
 # Taste Healthy - Cahier technique
 
-Depuis de nombreuses années, l’impact écologique pèse de plus en plus lourd sur la société de consommation et le grand public n’y est que très peu sensibilisé. Les sucres ajoutés par exemple, font partie d’environ 80% de nos produits de consommation quotidienne. Alors comment savoir ce que représente vraiment ce que nous mangeons au quotidien ?
-
-Taste Healthy est un projet de data journalisme basé sur l'alimentation et la consommation journalière des Français. Grâce à des données ouvertes, nous sômmes en mesure de d'analyser la consommation de n'importe quel individu et de vulgariser sur la quantité de sucre qu'il mange au quotidien, les additifs qui peuvent impacter sa santé ou encore démentir les mythes auxquels il peut croire (bio = sain, par exemple).
+Taste Healthy est un projet de data journalisme basé sur l'alimentation et la consommation journalière des Français. Grâce à des données ouvertes, nous sômmes en mesure de d'analyser la consommation de n'importe quel individu et de vulgariser sur la quantité de sucre qu'il mange au quotidien, les additifs qui peuvent impacter sa santé ou encore démentir les différents mythes auxquels il peut être amené à croire (bio = sain, par exemple). Notre visualisation de données a une visée pédagogique et a pour but de sensibiliser le public sur ce qu'il consomme réellement au quotidien.
 
 ## Sommaire
 
