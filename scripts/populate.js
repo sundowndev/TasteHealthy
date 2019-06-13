@@ -56,21 +56,11 @@ async function main() {
           if (
             !doc['product_name'] ||
             !doc['main_category_fr'] ||
-            // doc['main_category_fr'].indexOf(':') === 2 ||
-            // !doc['countries_fr'] ||
             !doc['labels_fr'] ||
-            // !doc['origins'] ||
-            // !doc['manufacturing_places'] ||
-            // !doc['purchase_places'] ||
             !doc['energy_100g'] ||
-            // !doc['serving_size'] ||
             !doc['packaging'] ||
-            // !doc['additives_n'] ||
-            // !doc['additives'] ||
             !doc['quantity'] ||
-            // !doc['ingredients_from_palm_oil']' ||
             !doc['nutrition_grade_fr'] ||
-            // !doc['carbon-footprint_100g'] ||
             !doc['nutrition-score-fr_100g'] ||
             !doc['nutrition-score-uk_100g']
           ) {
@@ -81,22 +71,29 @@ async function main() {
           doc['quantity_unity'] = doc['quantity'].replace(/([0-9])\w+ /, '');
 
           if (doc['quantity'].indexOf('g') > -1) doc['quantity_unity'] = 'g';
-          else if (doc['quantity'].indexOf('l') > -1)
-            doc['quantity_unity'] = 'L';
+          else if (doc['quantity'].indexOf('dl') > -1)
+            doc['quantity_unity'] = 'cl';
           else if (doc['quantity'].indexOf('cl') > -1)
             doc['quantity_unity'] = 'cl';
           else if (doc['quantity'].indexOf('ml') > -1)
             doc['quantity_unity'] = 'ml';
-          else if (doc['quantity'].indexOf('oz') > -1)
-            doc['quantity_unity'] = 'OZ';
-          else return reject();
+          else if (doc['quantity'].indexOf('l') > -1)
+            doc['quantity_unity'] = 'L';
+          else if (doc['quantity'].indexOf('oz') > -1) {
+            doc['quantity'] = `${doc['quantity'] * 29.57353}`;
+            doc['quantity_unity'] = 'ml';
+          } else return reject();
 
           doc['quantity'] = parseFloat(
-            doc['quantity'].match(/[0-9]{1,5}( )[g,L,cl,ml,oz,OZ]{1,3}/g),
+            doc['quantity'].match(
+              /[0-9]{1,5}( ){0,}[g,L,dl,cl,ml,oz,OZ,kg,Kg]{1,3}/g,
+            ),
             100,
           );
 
-          if (doc['quantity'] === NaN) return reject();
+          if (isNaN(doc['quantity'])) {
+            return reject();
+          }
 
           if (doc.main_category_fr.indexOf(':') < 0) {
             promises.push(
