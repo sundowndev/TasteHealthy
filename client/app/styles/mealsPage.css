@@ -27,7 +27,8 @@
   height: 90vh;
   width: 94vw;
   margin: auto;
-  transform: translateY(1.5vw); }
+  transform: translateY(1.5vw);
+  font-family: 'Apercu' !important; }
   .mealsPage .modalContainer {
     height: 100%;
     width: 100%;
@@ -65,7 +66,8 @@
             display: flex; }
             .mealsPage .modalContainer .searchContainer .modalContent .foodItemContainer .foodItemContent p {
               font-size: 15px;
-              font-weight: bold; }
+              font-weight: bold;
+              font-family: 'Apercu'; }
             .mealsPage .modalContainer .searchContainer .modalContent .foodItemContainer .foodItemContent .operations {
               align-self: center;
               height: 25px;
@@ -96,7 +98,8 @@
         overflow: scroll;
         position: relative; }
         .mealsPage .modalContainer .summaryContainer .modalContent h1 {
-          margin: 0px 0px 28px 0px; }
+          margin: 0px 0px 28px 0px;
+          font-family: 'Apercu'; }
         .mealsPage .modalContainer .summaryContainer .modalContent .validateFood {
           width: 100%;
           display: flex;
@@ -109,7 +112,8 @@
           .mealsPage .modalContainer .summaryContainer .modalContent .validateFood p {
             font-size: 15px;
             font-weight: bold;
-            margin: 0px; }
+            margin: 0px;
+            font-family: 'Apercu'; }
           .mealsPage .modalContainer .summaryContainer .modalContent .validateFood .weight {
             font-size: 13px;
             font-weight: lighter; }
