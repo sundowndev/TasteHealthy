@@ -1,6 +1,9 @@
 // Needed for redux-saga es6 generator support
 import '@babel/polyfill';
 
+// Import global styles for each pages
+import './styles/index.css';
+
 // Import all the third party stuff
 import React from 'react';
 import ReactDOM from 'react-dom';
