@@ -214,6 +214,75 @@ async function main() {
               doc['packaging_tags'] = doc['packaging_tags'].split(',');
               doc['countries_fr'] = doc['countries_fr'].split(',');
 
+              let packaging = [];
+
+              // Packaging filtering
+              doc['packaging_tags'].map(p => {
+                const i = doc['packaging_tags'].indexOf(p);
+
+                switch (true) {
+                  case [
+                    'plastique',
+                    'barquette',
+                    'sachet',
+                    'plastic',
+                    'baquette-plastique',
+                    'film-plastique',
+                    'barquette-couvercle-plastique',
+                    'sachet-plastique-a-jeter',
+                    'coque-plastique',
+                    'plastico',
+                  ].includes(p):
+                    doc['packaging_tags'][i] = 'Plastique';
+                    packaging.push('Plastique');
+                    break;
+                  case [
+                    'carton',
+                    'brique',
+                    'caton-alumine',
+                    'box',
+                    'cardboard',
+                    'boite',
+                    'barquette-carton-videe-et-etui-carton-a-recycler',
+                  ].includes(p):
+                    doc['packaging_tags'][i] = 'Carton';
+                    packaging.push('Carton');
+                    break;
+                  case [
+                    'verre',
+                    'bocal',
+                    'glas',
+                    'glass',
+                    'pot',
+                    'flacon',
+                  ].includes(p):
+                    doc['packaging_tags'][i] = 'Verre';
+                    packaging.push('Carton');
+                    break;
+                  case ['papier'].includes(p):
+                    doc['packaging_tags'][i] = 'Papier';
+                    packaging.push('Papier');
+                    break;
+                  case ['tissu'].includes(p):
+                    doc['packaging_tags'][i] = 'Tissu';
+                    packaging.push('Tissu');
+                    break;
+                  case ['metal', 'conserve'].includes(p):
+                    doc['packaging_tags'][i] = 'Metal';
+                    packaging.push('Metal');
+                    break;
+                  case ['aluminium'].includes(p):
+                    doc['packaging_tags'][i] = 'Aluminium';
+                    packaging.push('Aluminium');
+                    break;
+                  default:
+                    delete doc['packaging_tags'][i];
+                    break;
+                }
+              });
+
+              packaging = [...new Set(packaging)];
+
               promises.push(
                 models.Products.create({
                   categoryId: doc['categoryId'] || defaultCategoryId,
@@ -226,7 +295,7 @@ async function main() {
                   quantity_unity: doc['quantity_unity'],
                   image_url: doc['image_url'],
                   origins: doc['origins'] || 'unknown',
-                  packaging: doc['packaging_tags'],
+                  packaging: packaging,
                   manufacturing_places: doc['manufacturing_places'],
                   countries: doc['countries_fr'],
                   labels: doc['labels_fr'],
