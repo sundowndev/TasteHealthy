@@ -21,7 +21,7 @@ const CustomProgressBar = props => {
     gradientId,
     ...propsProgress
   } = props;
-  const max = unit === 'g' ? 100 : calories * 2;
+  const max = unit === 'g' ? 60 : calories * 2;
   const color = percentageValue =>
     (percentageValue * 100) / max > 75
       ? 'red'
@@ -33,7 +33,7 @@ const CustomProgressBar = props => {
 
   const newValuePV = percentageValue => {
     if ((percentageValue * 100) / max > 50) {
-      const maxValue = unit === 'g' ? 3000 : 40000;
+      const maxValue = unit === 'g' ? 8000 : 60000;
       const newPercentage = Math.round(maxValue / 2 + percentageValue);
       return { maxValue, newPercentage };
     }

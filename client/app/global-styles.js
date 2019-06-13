@@ -59,7 +59,7 @@ const GlobalStyle = createGlobalStyle`
 
   p,
   label {
-    font-family: 'Apercu';
+    font-family: 'Apercu' !important;
     line-height: 1.5em;
     color: #33176E;
   }

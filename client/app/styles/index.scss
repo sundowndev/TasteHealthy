@@ -3,7 +3,7 @@ $primary-color: #333;
 
 @mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
   @font-face {
-    font-family: quote($font-name);
+    font-family: quote($font-name) !important;
     src: url($file-name + '.eot');
     src: url($file-name + '.eot?#iefix')  format('embedded-opentype'),
     url($file-name + '.woff') format('woff'),
@@ -21,4 +21,8 @@ $primary-color: #333;
 body {
   font: 100% $font-stack;
   color: $primary-color;
+}
+
+button {
+  border: none;
 }

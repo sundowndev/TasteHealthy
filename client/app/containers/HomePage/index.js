@@ -62,12 +62,16 @@ class HomePage extends Component {
 
             <select value={this.state.sport} onChange={this.handleSportChange}>
               <option selected>{this.state.sport} </option>
-              <option value="modéré">modéré</option>
-              <option value="intense">intense</option>
+              <option value="modéré">Modéré</option>
+              <option value="intense">Intense</option>
             </select>
             {/* <img alt="home-icon" src={Arrow}/> */}
 
-            <select value={this.state.sexe} onChange={this.handleSexChange}>
+            <select
+              name="test"
+              value={this.state.sexe}
+              onChange={this.handleSexChange}
+            >
               <option selected>{this.state.sexe} </option>
               <option value="Homme">Homme</option>
               <option value="Femme">Femmme</option>

@@ -12,6 +12,8 @@ import '../../styles/ResultPage.css';
 import axios from 'axios';
 import { map, assoc, prop } from 'ramda';
 
+import leftArrow from '../../images/left-arrow.png';
+
 // Components
 import SidebarComponent from './components/SideBarComponent';
 import NutriscoreComponent from './components/NutriscoreComponent';
@@ -112,7 +114,7 @@ const ResultPage = (props: Props) => {
 
     Promise.all(promises)
       .then(rr => {
-        setSubstitute(map(assoc('quantity', 100), rr));
+        setSubstitute(map(assoc('quantity', 50), rr));
       })
       .catch(err => {
         console.log(err);
@@ -172,18 +174,22 @@ const ResultPage = (props: Props) => {
         />
 
         <div className="app__content">
+          <a className="backLink" href="/meals">
+            <img alt="backArrow" className="backArrow" src={leftArrow} />
+            <p className="backText">Retour</p>
+          </a>
           <p className="app__content__title">
             Produits consommés - {getMeal()}
           </p>
-          <img
-            className="app__content__block__svg__half-circle"
-            src={require('../../images/1.svg')}
-          />
-          <img
-            className="app__content__block__svg__rectangle"
-            src={require('../../images/2.svg')}
-          />
           <div className="app__content__block__flex">
+            <img
+              className="app__content__block__svg__half-circle"
+              src={require('../../images/1.svg')}
+            />
+            <img
+              className="app__content__block__svg__rectangle"
+              src={require('../../images/2.svg')}
+            />
             <div
               className="app__content__block__flex__left"
               style={{ alignItems: 'baseline' }}
@@ -247,26 +253,6 @@ const ResultPage = (props: Props) => {
                 | <br />
                 <br /> Consommation recommandée
               </p>
-              {/* <p
-                style={{
-                  fontFamily: 'Apercu',
-                  marginTop: '20px',
-                  textAlign: 'center',
-                  fontSize: '15px',
-                }}
-              >
-                Consommation actuelle
-              </p>
-              <p
-                style={{
-                  fontFamily: 'Apercu',
-                  marginTop: '10px',
-                  textAlign: 'center',
-                  fontSize: '15px',
-                }}
-              >
-                Nouvelle consommation
-              </p> */}
             </div>
 
             <div
@@ -308,7 +294,7 @@ const ResultPage = (props: Props) => {
                   70,
                   70,
                   16,
-                  'g',
+                  '',
                   checkReRender() ? getAdditives(mealsElements) : null,
                 )}
               </div>
@@ -331,6 +317,10 @@ const ResultPage = (props: Props) => {
               <img
                 src={require('../../images/octo.svg')}
                 className="app__content__block__svg__special-rectangle"
+              />
+              <img
+                className="app__content__block__svg__rectangle"
+                src={require('../../images/2.svg')}
               />
               <div className="app__content__blocks">
                 <div className="app__content__substitute-products__content">

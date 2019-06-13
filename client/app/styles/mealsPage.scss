@@ -1,6 +1,6 @@
 @mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
   @font-face {
-    font-family: quote($font-name);
+    font-family: quote($font-name) !important;
     src: url($file-name + '.eot');
     src: url($file-name + '.eot?#iefix')  format('embedded-opentype'),
     url($file-name + '.woff') format('woff'),
@@ -25,6 +25,7 @@
     width: 94vw;
     margin: auto;
     transform: translateY(1.5vw);
+    font-family: 'Apercu' !important;
 
     .modalContainer {
       height: 100%;
@@ -77,6 +78,7 @@
               p {
                 font-size: 15px;
                 font-weight: bold;
+                font-family: 'Apercu';
               }
 
               .operations {
@@ -122,6 +124,7 @@
 
           h1 {
             margin: 0px 0px 28px 0px;
+            font-family: 'Apercu';
           }
 
           .validateFood {
@@ -138,6 +141,7 @@
               font-size: 15px;
               font-weight: bold;
               margin: 0px;
+              font-family: 'Apercu';
             }
 
             .weight {

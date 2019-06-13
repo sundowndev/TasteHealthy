@@ -1,19 +1,19 @@
 @font-face {
-  font-family: "Apercu";
+  font-family: "Apercu" !important;
   src: url("fonts/Apercu-Bold.eot");
   src: url("fonts/Apercu-Bold.eot?#iefix") format("embedded-opentype"), url("fonts/Apercu-Bold.woff") format("woff"), url("fonts/Apercu-Bold.ttf") format("truetype"), url("fonts/Apercu-Bold.svg#Apercu") format("svg");
   font-weight: 700;
   font-style: normal; }
 
 @font-face {
-  font-family: "Apercu";
+  font-family: "Apercu" !important;
   src: url("fonts/Apercu-Light.eot");
   src: url("fonts/Apercu-Light.eot?#iefix") format("embedded-opentype"), url("fonts/Apercu-Light.woff") format("woff"), url("fonts/Apercu-Light.ttf") format("truetype"), url("fonts/Apercu-Light.svg#Apercu") format("svg");
   font-weight: 300;
   font-style: normal; }
 
 @font-face {
-  font-family: "Apercu";
+  font-family: "Apercu" !important;
   src: url("fonts/Apercu-Regular.eot");
   src: url("fonts/Apercu-Regular.eot?#iefix") format("embedded-opentype"), url("fonts/Apercu-Regular.woff") format("woff"), url("fonts/Apercu-Regular.ttf") format("truetype"), url("fonts/Apercu-Regular.svg#Apercu") format("svg");
   font-weight: normal;
@@ -22,3 +22,6 @@
 body {
   font: 100% Helvetica, sans-serif;
   color: #333; }
+
+button {
+  border: none; }

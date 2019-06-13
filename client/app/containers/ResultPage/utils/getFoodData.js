@@ -1,8 +1,7 @@
 import { mean } from 'ramda';
-import mode from './mode';
 
 export const getMealsOrigin = mealsElements => {
-  const resultArray = mealsElements.map(el => el.country);
+  const resultArray = mealsElements.map(el => el.countries);
   const flattenArray = resultArray.flat();
 
   const counts = {};
@@ -11,8 +10,7 @@ export const getMealsOrigin = mealsElements => {
     const num = flattenArray[i] === undefined ? 'Inconnu' : flattenArray[i];
     counts[num] = counts[num] ? counts[num] + 1 : 1;
   }
-  return { France: 2, RoyaumeUni: 2, Suède: 3, Angleterre: 5, Allemagne: 3 };
-  // return counts;
+  return counts;
 };
 
 export const getMealsPackaging = mealsElements => {

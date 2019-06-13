@@ -95,8 +95,8 @@ const ModalComponent = ({
                         onClick={() => {
                           const tt = notConsummedAliments.map(aliment => {
                             if (aliment.id === el.id) {
-                              if (el.quantity > 100) {
-                                aliment.quantity -= 100;
+                              if (el.quantity > 50) {
+                                aliment.quantity -= 50;
                               }
                             }
                             return aliment;
@@ -111,7 +111,7 @@ const ModalComponent = ({
                         onClick={() => {
                           const tt = notConsummedAliments.map(aliment => {
                             if (aliment.id === el.id) {
-                              aliment.quantity += 100;
+                              aliment.quantity += 50;
                             }
                             return aliment;
                           });
