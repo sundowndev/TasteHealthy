@@ -41,6 +41,6 @@ export const updateStore = (
       });
       break;
     default:
-      console.error('The meal type does not match anything ! ');
+    // console.error('The meal type does not match anything ! ');
   }
 };

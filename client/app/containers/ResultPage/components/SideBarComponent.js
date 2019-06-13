@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from 'react';
 import '../../../styles/ResultPage.css';
 
@@ -122,10 +124,10 @@ const SidebarComponent = ({
           props.mealsData.snack.consummedAliments.length > 0 &&
           props.mealsData.lunch.consummedAliments.length > 0 &&
           props.mealsData.breakfast.consummedAliments.length > 0 ? (
-            rightComponent(props)
-            ) : (
-              <img alt="add" src={require('../../../images/add.svg')} />
-            )}
+              rightComponent(props)
+          ) : (
+            <img alt="add" src={require('../../../images/add.svg')} />
+          )}
         </div>
       </div>
     </div>

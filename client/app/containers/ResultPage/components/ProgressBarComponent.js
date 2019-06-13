@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 // CircularProgressBar
 import ProgressBar from '../utils/ProgressBar';

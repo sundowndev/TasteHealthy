@@ -23,7 +23,7 @@
     "client:lint:eslint:fix": "eslint --ignore-path .gitignore --ignore-pattern client/internals/scripts --fix",
     "client:lint:js": "npm run client:lint:eslint -- ./client ",
     "client:test:clean": "rimraf ./client/coverage",
-    "client:test": "cross-env jest ./client --coverage",
+    "client:test": "cross-env jest ./client --coverage --testPathIgnorePatterns client/app/containers/MealsPage/tests/index.test.js client/app/containers/HomePage/tests/index.test.js client/app/containers/ResultPage/tests/index.test.js",
     "client:test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "client:coveralls": "cat ./coverage/lcov.info | coveralls",
     "client:prettify": "prettier --write",

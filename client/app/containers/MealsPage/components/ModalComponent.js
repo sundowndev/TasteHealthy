@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -14,7 +16,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { map, prop } from 'ramda';
 import SearchBar from './SearchBar';
-import { updateStore } from '../utils.js';
+import { updateStore } from '../utils';
 
 import {
   changeLunch,
@@ -55,6 +57,8 @@ const ModalComponent = ({
   );
   const [notConsummedAliments, changeNotConsumedAliments] = useState([]);
   const [meals, setMeals] = useState(mealsData);
+
+  // eslint-disable-next-line no-shadow
   const { changeBreakfast, changeLunch, changeDinner, changeSnack } = props;
 
   const getProducts = products => {
@@ -76,6 +80,7 @@ const ModalComponent = ({
     <div className="modalContent">
       <SearchBar sendProducts={getProducts} />
       {notConsummedAliments !== [] &&
+        // eslint-disable-next-line array-callback-return
         notConsummedAliments.map(el => {
           if (!idConsummedElements.includes(el.id)) {
             return (

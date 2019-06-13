@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 // @flow
+/* eslint-disable */
 
 /*
  * HomePage
@@ -15,7 +16,6 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import ModalComponent from './components/ModalComponent';
 import { updateStore } from './utils';
-import messages from './messages';
 import '../../styles/mealsPage.css';
 import close from '../../images/close.png';
 
@@ -53,6 +53,10 @@ type propsType = {
   history: {
     push: string => void,
   },
+  changeBreakfast: any,
+  changeLunch: any,
+  changeDinner: any,
+  changeSnack: any,
 };
 
 const customStyles = {
@@ -70,11 +74,13 @@ const customStyles = {
 export const HomePage = (props: propsType) => {
   const [modalIsOpen, toggleModal] = useState(false);
   const [currentModalName, changeModalName] = useState(null);
+
+  // eslint-disable-next-line no-shadow
   const { changeBreakfast, changeLunch, changeDinner, changeSnack } = props;
 
   const getMealData = () => {
     const keys = Object.keys(props.mealsData);
-    for (let i = 0; i < keys.length; i++) {
+    for (let i = 0; i < keys.length; i += 1) {
       if (props.mealsData[keys[i]].consummedAliments.length > 0) {
         return keys[i];
       }

@@ -16,6 +16,7 @@ type Props = {
   history: {
     push: string => any,
   },
+  changeCalories: any,
 };
 
 const maleCalc = sport => (66.5 + 13.8 * 77.4 + 5 * 175.6 - 6.8 * 35) * sport;
@@ -31,7 +32,7 @@ const calc = (sport, sexe) => {
   return Math.round(femaleCalc(sportValue));
 };
 
-class HomePage extends Component {
+class HomePage extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
