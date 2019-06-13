@@ -8,10 +8,18 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Apercu';
+    font-family: 'Apercu'!important;
     min-height: 100%;
     min-width: 100%;
     color: #33176E;
+  }
+  
+  input,
+  select,
+  button {
+    outline: none;
+    border: none;
+    cursor: pointer;
   }
 
   h1 {
