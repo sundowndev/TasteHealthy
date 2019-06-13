@@ -25,7 +25,7 @@ env_config({
 });
 
 const corsOptions = {
-  origin: process.env.BASE_URL || 'http://localhost',
+  origin: process.env.BASE_URL || 'http://localhost:8000',
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 

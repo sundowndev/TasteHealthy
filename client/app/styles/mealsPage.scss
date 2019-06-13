@@ -1,12 +1,31 @@
+@mixin font-face($font-name, $file-name, $weight: normal, $style: normal) {
+  @font-face {
+    font-family: quote($font-name) !important;
+    src: url($file-name + '.eot');
+    src: url($file-name + '.eot?#iefix')  format('embedded-opentype'),
+    url($file-name + '.woff') format('woff'),
+    url($file-name + '.ttf')  format('truetype'),
+    url($file-name + '.svg##{$font-name}')  format('svg');
+    font-weight: $weight;
+    font-style: $style;
+  }
+}
+
+@include font-face('Apercu', 'fonts/Apercu-Bold', 700);
+@include font-face('Apercu', 'fonts/Apercu-Light', 300);
+@include font-face('Apercu', 'fonts/Apercu-Regular');
+
 .choiceContainer {
  width: 94vw;
  height: 90vh;
+}
 
   .mealsPage {
     height: 90vh;
     width: 94vw;
     margin: auto;
     transform: translateY(1.5vw);
+    font-family: 'Apercu' !important;
 
     .modalContainer {
       height: 100%;
@@ -59,10 +78,11 @@
               p {
                 font-size: 15px;
                 font-weight: bold;
+                font-family: 'Apercu';
               }
 
               .operations {
-                align-self: flex-end;
+                align-self: center;
                 height: 25px;
                 margin-left: 10px;
               }
@@ -104,6 +124,7 @@
 
           h1 {
             margin: 0px 0px 28px 0px;
+            font-family: 'Apercu';
           }
 
           .validateFood {
@@ -120,6 +141,7 @@
               font-size: 15px;
               font-weight: bold;
               margin: 0px;
+              font-family: 'Apercu';
             }
 
             .weight {
@@ -194,7 +216,9 @@
       .articlesContainer {
         width: 195px;
         margin-right: 63px;
-
+        &:hover {
+          cursor: pointer;
+        }
         .mealsPictures {
           height: 202px;
           border-radius: 10px 10px 0px 0px;
@@ -247,4 +271,3 @@
       }
     }
   }
-}

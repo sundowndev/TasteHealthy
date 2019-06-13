@@ -56,8 +56,8 @@ describe('PRODUCTS ROUTES -- GET', () => {
         const expectedQuery = {
           where: {
             [Op.or]: [
-              { product_name: { [Op.like]: `%${req.query.query}%` } },
-              { generic_name: { [Op.like]: `%${req.query.query}%` } },
+              { product_name: { [Op.iLike]: `%${req.query.query}%` } },
+              { generic_name: { [Op.iLike]: `%${req.query.query}%` } },
             ],
           },
           limit: req.limit,

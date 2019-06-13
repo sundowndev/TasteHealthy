@@ -7,6 +7,10 @@ import { routerMiddleware } from 'connected-react-router';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
 
+import { loadState, saveState } from './localStorage';
+
+const persistedState = loadState();
+
 export default function configureStore(initialState = {}, history) {
   let composeEnhancers = compose;
   const reduxSagaMonitorOptions = {};
@@ -38,9 +42,16 @@ export default function configureStore(initialState = {}, history) {
 
   const store = createStore(
     createReducer(),
-    initialState,
+    persistedState || initialState,
     composeEnhancers(...enhancers),
   );
+
+  store.subscribe(() => {
+    saveState({
+      meals: store.getState().meals,
+      calories: store.getState().calories,
+    });
+  });
 
   // Extensions
   store.runSaga = sagaMiddleware.run;

@@ -46,16 +46,16 @@ router
   .route('/:productId/nutrition_facts')
   .get(schemas.get_product_nutrition_facts, get.get_one_product_facts);
 
-// /**
-//  * @api {get} /products/:id/misc_data Fetch misc data of product
-//  * @apiName GetProductMiscData
-//  * @apiGroup Products
-//  *
-//  * @apiParam  {Integer} id  Product id
-//  *
-//  * @apiSuccess {Boolean} success Request status
-//  * @apiSuccess {Object} item  Misc data of product.
-//  */
+/**
+ * @api {get} /products/:id/misc_data Fetch misc data of product
+ * @apiName GetProductMiscData
+ * @apiGroup Products
+ *
+ * @apiParam  {Integer} id  Product id
+ *
+ * @apiSuccess {Boolean} success Request status
+ * @apiSuccess {Object} item  Misc data of product.
+ */
 router
   .route('/:productId/misc_data')
   .get(schemas.get_product_misc_data, get.get_one_product_misc_data);
