@@ -1,5 +1,4 @@
-import Sequelize from 'sequelize';
-
+/* eslint-disable new-cap */
 export default (sequelize, DataTypes) => {
   const Products = sequelize.define('Products', {
     product_name: {

@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-console */
 
+import Sequelize from 'sequelize';
 import sinon from 'sinon';
 import * as get from '@/routes/categories/get';
 import * as msg from '@/errors/message_errors.js';
@@ -9,6 +10,7 @@ import models from '@/db/models';
 
 const Categories = models.Categories;
 const Products = models.Products;
+const Op = Sequelize.Op;
 
 describe('CATEGORIES ROUTES -- GET', () => {
   afterEach(() => {
@@ -146,7 +148,14 @@ describe('CATEGORIES ROUTES -- GET', () => {
         const expectedQuery = {
           where: {
             categoryId: req.params.categoryId,
+            misc_data: { nutrition_score_fr_100g: { [Op.gt]: 0 } },
           },
+          limit: req.limit,
+          offset: req.offset,
+          order: [
+            ['misc_data.nutrition_grade_fr', 'ASC'],
+            ['misc_data.nutrition_score_fr_100g', 'DESC'],
+          ],
         };
 
         expect(query).toEqual(expectedQuery);
