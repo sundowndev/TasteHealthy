@@ -78,11 +78,22 @@ async function main() {
           doc['quantity_unity'] = doc['quantity'].replace(/([0-9])\w+ /, '');
 
           if (doc['quantity'].indexOf('g') > -1) doc['quantity_unity'] = 'g';
-          else if (doc['quantity'].indexOf('l') > -1) doc['quantity_unity'] = 'L';
-          else if (doc['quantity'].indexOf('cl') > -1) doc['quantity_unity'] = 'cl';
-          else if (doc['quantity'].indexOf('ml') > -1) doc['quantity_unity'] = 'ml';
-          else if (doc['quantity'].indexOf('oz') > -1) doc['quantity_unity'] = 'OZ';
+          else if (doc['quantity'].indexOf('l') > -1)
+            doc['quantity_unity'] = 'L';
+          else if (doc['quantity'].indexOf('cl') > -1)
+            doc['quantity_unity'] = 'cl';
+          else if (doc['quantity'].indexOf('ml') > -1)
+            doc['quantity_unity'] = 'ml';
+          else if (doc['quantity'].indexOf('oz') > -1)
+            doc['quantity_unity'] = 'OZ';
           else return reject();
+
+          doc['quantity'] = parseFloat(
+            doc['quantity'].match(/[0-9]{1,5}( )[g,L,cl,ml,oz,OZ]{1,3}/g),
+            100,
+          );
+
+          if (doc['quantity'] === NaN) return reject();
 
           if (doc.main_category_fr.indexOf(':') < 0) {
             promises.push(
@@ -197,7 +208,8 @@ async function main() {
                 if (misc_data[k] === null) delete misc_data[k];
               });
 
-              doc['packaging_tags'] = doc['packaging_tags'].split(',')
+              doc['packaging_tags'] = doc['packaging_tags'].split(',');
+              doc['countries_fr'] = doc['countries_fr'].split(',');
 
               promises.push(
                 models.Products.create({
@@ -207,7 +219,7 @@ async function main() {
                     doc['generic_name'] && doc['generic_name'].length < 250
                       ? doc['generic_name']
                       : null,
-                  quantity: parseFloat(doc['quantity'], 100),
+                  quantity: doc['quantity'],
                   quantity_unity: doc['quantity_unity'],
                   image_url: doc['image_url'],
                   origins: doc['origins'] || 'unknown',
