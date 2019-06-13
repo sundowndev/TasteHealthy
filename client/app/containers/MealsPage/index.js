@@ -39,7 +39,7 @@ import {
   changeDinner,
 } from './actions';
 
-Modal.setAppElement('#app');
+Modal.setAppElement('#modal');
 
 type mealsType = {
   breakfast: any,

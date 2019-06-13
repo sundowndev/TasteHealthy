@@ -175,15 +175,15 @@ const ResultPage = (props: Props) => {
           <p className="app__content__title">
             Produits consommés - {getMeal()}
           </p>
-          <img
-            className="app__content__block__svg__half-circle"
-            src={require('../../images/1.svg')}
-          />
-          <img
-            className="app__content__block__svg__rectangle"
-            src={require('../../images/2.svg')}
-          />
           <div className="app__content__block__flex">
+            <img
+              className="app__content__block__svg__half-circle"
+              src={require('../../images/1.svg')}
+            />
+            <img
+              className="app__content__block__svg__rectangle"
+              src={require('../../images/2.svg')}
+            />
             <div
               className="app__content__block__flex__left"
               style={{ alignItems: 'baseline' }}
@@ -311,6 +311,10 @@ const ResultPage = (props: Props) => {
               <img
                 src={require('../../images/octo.svg')}
                 className="app__content__block__svg__special-rectangle"
+              />
+              <img
+                className="app__content__block__svg__rectangle"
+                src={require('../../images/2.svg')}
               />
               <div className="app__content__blocks">
                 <div className="app__content__substitute-products__content">

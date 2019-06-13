@@ -79,7 +79,9 @@ body {
 .app {
   padding: calc(45px + 40px) calc(50px + 35px);
   background-color: #FBFBFB;
-  position: relative; }
+  position: relative;
+  z-index: 0;
+  overflow: hidden; }
   .app__top {
     position: absolute;
     top: 0;
@@ -195,8 +197,7 @@ body {
         z-index: -1; }
       .app__content__block__svg__half-circle {
         top: -35px;
-        left: 40%;
-        transform: translateX(-50%);
+        left: 65%;
         position: absolute;
         z-index: -1; }
       .app__content__block__svg__oval {
