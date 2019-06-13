@@ -38,6 +38,8 @@ import {
 
 import progressBar from './components/ProgressBarComponent';
 
+import { changeSubstitute } from '../MealsPage/actions';
+
 type Props = {
   match: {
     params: {
@@ -46,6 +48,8 @@ type Props = {
   },
   mealsData: any,
 };
+
+const isTrue = currentValue => currentValue === true;
 
 const ResultPage = (props: Props) => {
   const { mealType } = props.match.params;
@@ -80,6 +84,9 @@ const ResultPage = (props: Props) => {
         return el;
       });
       setUsedMealsElements(newMealsElements);
+      const b = props.mealsData.substitute;
+      b[[mealType]] = arrayIndex;
+      changeSubstitute(props.mealsData.substitute);
     }, 500);
   };
 
@@ -109,12 +116,31 @@ const ResultPage = (props: Props) => {
       );
     }
     setMealsElements(mealsElements2);
-    setUsedMealsElements(mealsElements2);
-    setArrayIndex(new Array(mealsElements2.length).fill(true));
+    if (arrayIndex.every(isTrue)) {
+      setUsedMealsElements(mealsElements2);
+    }
+
+    if (!props.mealsData.substitute[mealType].length > 0) {
+      setArrayIndex(new Array(mealsElements2.length).fill(true));
+      const b = props.mealsData.substitute;
+      b[[mealType]] = new Array(mealsElements2.length).fill(true);
+    } else {
+      setArrayIndex(props.mealsData.substitute[mealType]);
+    }
+
     Promise.all(promises)
       .then(rr => {
         const sub = map(assoc('quantity', 50), rr);
         setSubstitute(sub);
+        if (!arrayIndex.every(isTrue)) {
+          const newMealsElements = mealsElements2.map((el, index) => {
+            if (!props.mealsData.substitute[mealType][index]) {
+              return sub[index];
+            }
+            return el;
+          });
+          setUsedMealsElements(newMealsElements);
+        }
       })
       .catch(err => {
         console.log(err);
@@ -156,6 +182,8 @@ const ResultPage = (props: Props) => {
         return 'Total';
     }
   };
+
+  console.log(mealsElements, 'substitute', substitute);
 
   return (
     <div className="app">
@@ -332,7 +360,7 @@ const ResultPage = (props: Props) => {
                   </p>
                   {mealsElements.map((meal, index) => (
                     <ProductComponent
-                      key={index}
+                      key={`${index}, ${meal.id}mealsElements`}
                       mealProps={meal}
                       isChecked={arrayIndex[index]}
                       onClick={() =>
@@ -348,7 +376,7 @@ const ResultPage = (props: Props) => {
                   </p>
                   {substitute.map((meal, index) => (
                     <SubstituteProductComponent
-                      key={index}
+                      key={`${index}, ${meal.id}mealsElements`}
                       mealProps={meal}
                       isChecked={!arrayIndex[index]}
                       onClick={() =>
@@ -377,4 +405,7 @@ function mapStateToProps(state) {
   return { mealsData: meals, caloriesData: calories };
 }
 
-export default connect(mapStateToProps)(ResultPage);
+export default connect(
+  mapStateToProps,
+  { changeSubstitute },
+)(ResultPage);
