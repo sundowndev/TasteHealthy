@@ -6,7 +6,7 @@ const rightComponent = props => (
     <img
       style={{ marginLeft: '5px', marginRight: '5px', zIndex: 999 }}
       alt="checked"
-      onClick={() => props.history.push('/meals')}
+      // onClick={() => props.history.push('/meals')}
       src={require('../../../images/checked.svg')}
     />
     <img alt="checked" src={require('../../../images/checked2.svg')} />
@@ -26,17 +26,26 @@ const SidebarComponent = ({
     <div className="app__sidebar__content">
       <div
         style={mealType === 'breakfast' ? {} : { opacity: 0.5 }}
-        onClick={() =>
-          props.mealsData.breakfast.consummedAliments.length > 0
-            ? props.history.push('/result/breakfast')
-            : props.history.push('/meals')
-        }
         className="app__sidebar__content__block"
       >
-        <div className="app__sidebar__content__block__left">
+        <div
+          className="app__sidebar__content__block__left"
+          onClick={() =>
+            props.mealsData.breakfast.consummedAliments.length > 0
+              ? props.history.push('/result/breakfast')
+              : props.history.push('/meals')
+          }
+        >
           <p>Petit Déjeuner</p>
         </div>
-        <div className="app__sidebar__content__block__right">
+        <div
+          className="app__sidebar__content__block__right"
+          onClick={() =>
+            props.mealsData.breakfast.consummedAliments.length > 0
+              ? props.history.push('/meals')
+              : null
+          }
+        >
           {props.mealsData.breakfast.consummedAliments.length > 0 ? (
             rightComponent(props)
           ) : (
@@ -47,17 +56,26 @@ const SidebarComponent = ({
 
       <div
         style={mealType === 'lunch' ? {} : { opacity: 0.5 }}
-        onClick={() =>
-          props.mealsData.lunch.consummedAliments.length > 0
-            ? props.history.push('/result/lunch')
-            : props.history.push('/meals')
-        }
         className="app__sidebar__content__block"
       >
-        <div className="app__sidebar__content__block__left">
+        <div
+          className="app__sidebar__content__block__left"
+          onClick={() =>
+            props.mealsData.lunch.consummedAliments.length > 0
+              ? props.history.push('/result/lunch')
+              : props.history.push('/meals')
+          }
+        >
           <p>Déjeuner</p>
         </div>
-        <div className="app__sidebar__content__block__right">
+        <div
+          className="app__sidebar__content__block__right"
+          onClick={() =>
+            props.mealsData.lunch.consummedAliments.length > 0
+              ? props.history.push('/meals')
+              : null
+          }
+        >
           {props.mealsData.lunch.consummedAliments.length > 0 ? (
             rightComponent(props)
           ) : (
@@ -68,17 +86,26 @@ const SidebarComponent = ({
 
       <div
         style={mealType === 'snack' ? {} : { opacity: 0.5 }}
-        onClick={() =>
-          props.mealsData.snack.consummedAliments.length > 0
-            ? props.history.push('/result/snack')
-            : props.history.push('/meals')
-        }
         className="app__sidebar__content__block"
       >
-        <div className="app__sidebar__content__block__left">
+        <div
+          className="app__sidebar__content__block__left"
+          onClick={() =>
+            props.mealsData.snack.consummedAliments.length > 0
+              ? props.history.push('/result/snack')
+              : props.history.push('/meals')
+          }
+        >
           <p>Goûter</p>
         </div>
-        <div className="app__sidebar__content__block__right">
+        <div
+          className="app__sidebar__content__block__right"
+          onClick={() =>
+            props.mealsData.snack.consummedAliments.length > 0
+              ? props.history.push('/meals')
+              : null
+          }
+        >
           {props.mealsData.snack.consummedAliments.length > 0 ? (
             rightComponent(props)
           ) : (
@@ -89,17 +116,26 @@ const SidebarComponent = ({
 
       <div
         style={mealType === 'dinner' ? {} : { opacity: 0.5 }}
-        onClick={() =>
-          props.mealsData.dinner.consummedAliments.length > 0
-            ? props.history.push('/result/dinner')
-            : props.history.push('/meals')
-        }
         className="app__sidebar__content__block"
       >
-        <div className="app__sidebar__content__block__left">
+        <div
+          className="app__sidebar__content__block__left"
+          onClick={() =>
+            props.mealsData.dinner.consummedAliments.length > 0
+              ? props.history.push('/result/dinner')
+              : props.history.push('/meals')
+          }
+        >
           <p>Dîner</p>
         </div>
-        <div className="app__sidebar__content__block__right">
+        <div
+          className="app__sidebar__content__block__right"
+          onClick={() =>
+            props.mealsData.dinner.consummedAliments.length > 0
+              ? props.history.push('/meals')
+              : null
+          }
+        >
           {props.mealsData.dinner.consummedAliments.length > 0 ? (
             rightComponent(props)
           ) : (
@@ -128,10 +164,10 @@ const SidebarComponent = ({
           props.mealsData.snack.consummedAliments.length > 0 &&
           props.mealsData.lunch.consummedAliments.length > 0 &&
           props.mealsData.breakfast.consummedAliments.length > 0 ? (
-              rightComponent(props)
-          ) : (
-            <img alt="add" src={require('../../../images/add.svg')} />
-          )}
+            rightComponent(props)
+            ) : (
+              <img alt="add" src={require('../../../images/add.svg')} />
+            )}
         </div>
       </div>
     </div>

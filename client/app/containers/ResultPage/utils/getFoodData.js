@@ -1,7 +1,7 @@
 import { mean } from 'ramda';
 
 export const getMealsOrigin = mealsElements => {
-  const resultArray = mealsElements.map(el => el.country);
+  const resultArray = mealsElements.map(el => el.countries);
   const flattenArray = resultArray.flat();
 
   const counts = {};

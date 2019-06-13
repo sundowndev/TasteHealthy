@@ -288,7 +288,7 @@ const ResultPage = (props: Props) => {
                   70,
                   70,
                   16,
-                  'g',
+                  '',
                   checkReRender() ? getAdditives(mealsElements) : null,
                 )}
               </div>
