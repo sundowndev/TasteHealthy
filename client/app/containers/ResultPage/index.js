@@ -120,12 +120,26 @@ const ResultPage = (props: Props) => {
       setUsedMealsElements(mealsElements2);
     }
 
-    if (!props.mealsData.substitute[mealType].length > 0) {
+    const substituteElements = mealType === 'total' ? [].concat.apply(
+            [],
+            [
+              props.mealsData.substitute.breakfast,
+              props.mealsData.substitute.lunch,
+              props.mealsData.substitute.snack,
+              props.mealsData.substitute.dinner,
+          ],
+          ) : props.mealsData.substitute[mealType];
+
+    if (!substituteElements.length > 0) {
       setArrayIndex(new Array(mealsElements2.length).fill(true));
-      const b = props.mealsData.substitute;
-      b[[mealType]] = new Array(mealsElements2.length).fill(true);
+      if (mealType !== 'total') {
+        const b = props.mealsData.substitute;
+        b[mealType] = new Array(mealsElements2.length).fill(true);
+      } else {
+        props.mealsData.substitute.total = new Array(mealsElements2.length).fill(true);
+      }
     } else {
-      setArrayIndex(props.mealsData.substitute[mealType]);
+      setArrayIndex(substituteElements);
     }
 
     Promise.all(promises)
@@ -183,7 +197,7 @@ const ResultPage = (props: Props) => {
     }
   };
 
-  console.log(mealsElements, 'substitute', substitute);
+  console.log(arrayIndex)
 
   return (
     <div className="app">
@@ -364,7 +378,7 @@ const ResultPage = (props: Props) => {
                       mealProps={meal}
                       isChecked={arrayIndex[index]}
                       onClick={() =>
-                        !arrayIndex[index] ? toggleCheck(index) : null
+                        mealType !== 'total' && !arrayIndex[index] ? toggleCheck(index) : null
                       }
                     />
                   ))}
@@ -380,7 +394,7 @@ const ResultPage = (props: Props) => {
                       mealProps={meal}
                       isChecked={!arrayIndex[index]}
                       onClick={() =>
-                        arrayIndex[index] ? toggleCheck(index) : null
+                        mealType !== 'total' && arrayIndex[index] ? toggleCheck(index) : null
                       }
                     />
                   ))}
