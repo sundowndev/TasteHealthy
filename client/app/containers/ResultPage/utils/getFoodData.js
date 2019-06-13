@@ -1,8 +1,14 @@
 import { mean } from 'ramda';
 
+const isEmpty = a => Array.isArray(a) && a.every(isEmpty);
+
 export const getMealsOrigin = mealsElements => {
   const resultArray = mealsElements.map(el => el.countries);
   const flattenArray = resultArray.flat();
+
+  if (isEmpty(flattenArray)) {
+    return { Inconnu: 1 };
+  }
 
   const counts = {};
 
@@ -16,6 +22,10 @@ export const getMealsOrigin = mealsElements => {
 export const getMealsPackaging = mealsElements => {
   const resultArray = mealsElements.map(el => el.packaging);
   const flattenArray = resultArray.flat();
+
+  if (isEmpty(flattenArray)) {
+    return { Inconnu: 1 };
+  }
 
   const counts = {};
 
