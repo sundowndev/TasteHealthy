@@ -8,7 +8,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Apercu';
+    font-family: 'Apercu'!important;
     min-height: 100%;
     min-width: 100%;
     color: #33176E;
@@ -97,6 +97,13 @@ const GlobalStyle = createGlobalStyle`
     font-weight: bold;
     font-style: normal;
   }
+  
+  button,
+  select,
+  input {
+    outline: none;
+    border: none;
+    cursor: pointer; }
 `;
 
 export default GlobalStyle;
