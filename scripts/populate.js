@@ -56,21 +56,11 @@ async function main() {
           if (
             !doc['product_name'] ||
             !doc['main_category_fr'] ||
-            // doc['main_category_fr'].indexOf(':') === 2 ||
-            // !doc['countries_fr'] ||
             !doc['labels_fr'] ||
-            // !doc['origins'] ||
-            // !doc['manufacturing_places'] ||
-            // !doc['purchase_places'] ||
             !doc['energy_100g'] ||
-            // !doc['serving_size'] ||
             !doc['packaging'] ||
-            // !doc['additives_n'] ||
-            // !doc['additives'] ||
             !doc['quantity'] ||
-            // !doc['ingredients_from_palm_oil']' ||
             !doc['nutrition_grade_fr'] ||
-            // !doc['carbon-footprint_100g'] ||
             !doc['nutrition-score-fr_100g'] ||
             !doc['nutrition-score-uk_100g']
           ) {
@@ -81,22 +71,29 @@ async function main() {
           doc['quantity_unity'] = doc['quantity'].replace(/([0-9])\w+ /, '');
 
           if (doc['quantity'].indexOf('g') > -1) doc['quantity_unity'] = 'g';
-          else if (doc['quantity'].indexOf('l') > -1)
-            doc['quantity_unity'] = 'L';
+          else if (doc['quantity'].indexOf('dl') > -1)
+            doc['quantity_unity'] = 'cl';
           else if (doc['quantity'].indexOf('cl') > -1)
             doc['quantity_unity'] = 'cl';
           else if (doc['quantity'].indexOf('ml') > -1)
             doc['quantity_unity'] = 'ml';
-          else if (doc['quantity'].indexOf('oz') > -1)
-            doc['quantity_unity'] = 'OZ';
-          else return reject();
+          else if (doc['quantity'].indexOf('l') > -1)
+            doc['quantity_unity'] = 'L';
+          else if (doc['quantity'].indexOf('oz') > -1) {
+            doc['quantity'] = `${doc['quantity'] * 29.57353}`;
+            doc['quantity_unity'] = 'ml';
+          } else return reject();
 
           doc['quantity'] = parseFloat(
-            doc['quantity'].match(/[0-9]{1,5}( )[g,L,cl,ml,oz,OZ]{1,3}/g),
+            doc['quantity'].match(
+              /[0-9]{1,5}( ){0,}[g,L,dl,cl,ml,oz,OZ,kg,Kg]{1,3}/g,
+            ),
             100,
           );
 
-          if (doc['quantity'] === NaN) return reject();
+          if (isNaN(doc['quantity'])) {
+            return reject();
+          }
 
           if (doc.main_category_fr.indexOf(':') < 0) {
             promises.push(
@@ -214,6 +211,75 @@ async function main() {
               doc['packaging_tags'] = doc['packaging_tags'].split(',');
               doc['countries_fr'] = doc['countries_fr'].split(',');
 
+              let packaging = [];
+
+              // Packaging filtering
+              doc['packaging_tags'].map(p => {
+                const i = doc['packaging_tags'].indexOf(p);
+
+                switch (true) {
+                  case [
+                    'plastique',
+                    'barquette',
+                    'sachet',
+                    'plastic',
+                    'baquette-plastique',
+                    'film-plastique',
+                    'barquette-couvercle-plastique',
+                    'sachet-plastique-a-jeter',
+                    'coque-plastique',
+                    'plastico',
+                  ].includes(p):
+                    doc['packaging_tags'][i] = 'Plastique';
+                    packaging.push('Plastique');
+                    break;
+                  case [
+                    'carton',
+                    'brique',
+                    'caton-alumine',
+                    'box',
+                    'cardboard',
+                    'boite',
+                    'barquette-carton-videe-et-etui-carton-a-recycler',
+                  ].includes(p):
+                    doc['packaging_tags'][i] = 'Carton';
+                    packaging.push('Carton');
+                    break;
+                  case [
+                    'verre',
+                    'bocal',
+                    'glas',
+                    'glass',
+                    'pot',
+                    'flacon',
+                  ].includes(p):
+                    doc['packaging_tags'][i] = 'Verre';
+                    packaging.push('Carton');
+                    break;
+                  case ['papier'].includes(p):
+                    doc['packaging_tags'][i] = 'Papier';
+                    packaging.push('Papier');
+                    break;
+                  case ['tissu'].includes(p):
+                    doc['packaging_tags'][i] = 'Tissu';
+                    packaging.push('Tissu');
+                    break;
+                  case ['metal', 'conserve'].includes(p):
+                    doc['packaging_tags'][i] = 'Metal';
+                    packaging.push('Metal');
+                    break;
+                  case ['aluminium'].includes(p):
+                    doc['packaging_tags'][i] = 'Aluminium';
+                    packaging.push('Aluminium');
+                    break;
+                  default:
+                    delete doc['packaging_tags'][i];
+                    break;
+                }
+              });
+
+              packaging = [...new Set(packaging)];
+
               promises.push(
                 models.Products.create({
                   categoryId: doc['categoryId'] || defaultCategoryId,
@@ -226,7 +292,7 @@ async function main() {
                   quantity_unity: doc['quantity_unity'],
                   image_url: doc['image_url'],
                   origins: doc['origins'] || 'unknown',
-                  packaging: doc['packaging_tags'],
+                  packaging: packaging,
                   manufacturing_places: doc['manufacturing_places'],
                   countries: doc['countries_fr'],
                   labels: doc['labels_fr'],
