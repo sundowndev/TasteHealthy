@@ -88,7 +88,7 @@ const ModalComponent = ({
                       <p key={el.id}>
                         {el.product_name}
                         <br />
-                        {el.quantity} gr
+                        {el.quantity} {el.quantity_unity}
                       </p>
                       <p
                         className="operations"

@@ -36,7 +36,8 @@ const SearchBar = (props: Props) => {
       className="searchBar"
       value={valueSearch}
       onChange={e => handleValueChange(e.target.value)}
-      placeholder=" Rechercher..."
+      style={{ paddingLeft: '5px' }}
+      placeholder="Rechercher..."
     />
   );
 };

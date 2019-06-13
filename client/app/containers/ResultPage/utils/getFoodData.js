@@ -68,7 +68,7 @@ export const getFat = mealsElements => {
 export const getSodium = mealsElements => {
   let sodium = 0;
   for (let i = 0; i < mealsElements.length; i += 1) {
-    const nutrition = mealsElements[i].nutrition_facts.sodium_100g;
+    const nutrition = mealsElements[i].nutrition_facts.carbohydrates_100g;
     sodium += (mealsElements[i].quantity * nutrition) / 100;
   }
   return Math.round(sodium);

@@ -55,6 +55,7 @@ const CustomProgressBar = props => {
           styles={{
             path: {
               stroke: color(percentage),
+              strokeLinecap: 'butt',
               height: '100%',
             },
           }}
@@ -70,7 +71,7 @@ const CustomProgressBar = props => {
               path: {
                 stroke: color(percentage2),
                 height: '100%',
-
+                strokeLinecap: 'butt',
                 opacity: 0.4,
               },
             }}

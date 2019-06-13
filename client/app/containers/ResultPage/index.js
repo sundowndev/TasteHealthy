@@ -53,14 +53,14 @@ const ResultPage = (props: Props) => {
   const [mealsElements, setMealsElements] = useState(
     mealType === 'total'
       ? [].concat.apply(
-        [],
-        [
-          props.mealsData.breakfast.consummedAliments,
-          props.mealsData.lunch.consummedAliments,
-          props.mealsData.snack.consummedAliments,
-          props.mealsData.dinner.consummedAliments,
-        ],
-      )
+          [],
+          [
+            props.mealsData.breakfast.consummedAliments,
+            props.mealsData.lunch.consummedAliments,
+            props.mealsData.snack.consummedAliments,
+            props.mealsData.dinner.consummedAliments,
+          ],
+        )
       : props.mealsData[mealType].consummedAliments,
   );
   const [usedMealsElements, setUsedMealsElements] = useState(mealsElements);
@@ -87,14 +87,14 @@ const ResultPage = (props: Props) => {
     const mealsElements2 =
       mealType === 'total'
         ? [].concat.apply(
-          [],
-          [
-            props.mealsData.breakfast.consummedAliments,
-              props.mealsData.lunch.consummedAliments,
-            props.mealsData.snack.consummedAliments,
-            props.mealsData.dinner.consummedAliments,
-            ],
-        )
+            [],
+            [
+              props.mealsData.breakfast.consummedAliments,
+            props.mealsData.lunch.consummedAliments,
+              props.mealsData.snack.consummedAliments,
+              props.mealsData.dinner.consummedAliments,
+          ],
+          )
         : props.mealsData[mealType].consummedAliments;
     const promises = [];
     for (let i = 0; i < mealsElements2.length; i++) {
@@ -110,11 +110,11 @@ const ResultPage = (props: Props) => {
     }
     setMealsElements(mealsElements2);
     setUsedMealsElements(mealsElements2);
-    // setArrayIndex(new Array(mealsElements.length).fill(true));
-
+    setArrayIndex(new Array(mealsElements2.length).fill(true));
     Promise.all(promises)
       .then(rr => {
-        setSubstitute(map(assoc('quantity', 50), rr));
+        const sub = map(assoc('quantity', 50), rr);
+        setSubstitute(sub);
       })
       .catch(err => {
         console.log(err);
@@ -174,10 +174,13 @@ const ResultPage = (props: Props) => {
         />
 
         <div className="app__content">
-          <a className="backLink" href="/meals">
+          <div
+            onClick={() => props.history.push('/meals')}
+            className="backLink"
+          >
             <img alt="backArrow" className="backArrow" src={leftArrow} />
             <p className="backText">Retour</p>
-          </a>
+          </div>
           <p className="app__content__title">
             Produits consommés - {getMeal()}
           </p>
@@ -196,17 +199,6 @@ const ResultPage = (props: Props) => {
             >
               <div className="app__content__block__flex__component">
                 {progressBar(
-                  getSugar(usedMealsElements),
-                  70,
-                  70,
-                  16,
-                  'g',
-                  checkReRender() ? getSugar(mealsElements) : null,
-                )}
-                <p className="app__content__block__flex__left__detail">Sucre</p>
-              </div>
-              <div className="app__content__block__flex__component">
-                {progressBar(
                   getSodium(usedMealsElements),
                   70,
                   70,
@@ -215,8 +207,19 @@ const ResultPage = (props: Props) => {
                   checkReRender() ? getSodium(mealsElements) : null,
                 )}
                 <p className="app__content__block__flex__left__detail">
-                  Sodium
+                  Glucides
                 </p>
+              </div>
+              <div className="app__content__block__flex__component">
+                {progressBar(
+                  getSugar(usedMealsElements),
+                  70,
+                  70,
+                  16,
+                  'g',
+                  checkReRender() ? getSugar(mealsElements) : null,
+                )}
+                <p className="app__content__block__flex__left__detail">Sucre</p>
               </div>
               <div className="app__content__block__flex__component">
                 {progressBar(
