@@ -4,10 +4,13 @@ import path from 'path';
 import csv from 'csvtojson';
 import models from '../server/app/db/models';
 
+if (!process.argv[2]) {
+  console.error('Please specify a CSV file path.');
+  process.exit();
+}
+
 // ---------------- Variables ----------------
-// const csvFilePath = path.join(process.cwd(), './scripts/test2.csv');
-const csvFilePath =
-  '/home/sundowndev/Downloads/fr.openfoodfacts.org.products.csv';
+const csvFilePath = path.resolve(process.argv[2]);
 
 // ---------------- Functions & script ----------------
 const logger = (...args) => console.log(...args);
