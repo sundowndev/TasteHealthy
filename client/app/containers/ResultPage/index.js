@@ -247,26 +247,6 @@ const ResultPage = (props: Props) => {
                 | <br />
                 <br /> Consommation recommandée
               </p>
-              {/* <p
-                style={{
-                  fontFamily: 'Apercu',
-                  marginTop: '20px',
-                  textAlign: 'center',
-                  fontSize: '15px',
-                }}
-              >
-                Consommation actuelle
-              </p>
-              <p
-                style={{
-                  fontFamily: 'Apercu',
-                  marginTop: '10px',
-                  textAlign: 'center',
-                  fontSize: '15px',
-                }}
-              >
-                Nouvelle consommation
-              </p> */}
             </div>
 
             <div
