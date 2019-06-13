@@ -12,6 +12,8 @@ import '../../styles/ResultPage.css';
 import axios from 'axios';
 import { map, assoc, prop } from 'ramda';
 
+import leftArrow from '../../images/left-arrow.png';
+
 // Components
 import SidebarComponent from './components/SideBarComponent';
 import NutriscoreComponent from './components/NutriscoreComponent';
@@ -112,7 +114,7 @@ const ResultPage = (props: Props) => {
 
     Promise.all(promises)
       .then(rr => {
-        setSubstitute(map(assoc('quantity', 100), rr));
+        setSubstitute(map(assoc('quantity', 50), rr));
       })
       .catch(err => {
         console.log(err);
@@ -172,6 +174,10 @@ const ResultPage = (props: Props) => {
         />
 
         <div className="app__content">
+          <a className="backLink" href="/meals">
+            <img alt="backArrow" className="backArrow" src={leftArrow} />
+            <p className="backText">Retour</p>
+          </a>
           <p className="app__content__title">
             Produits consommés - {getMeal()}
           </p>
