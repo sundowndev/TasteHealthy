@@ -1,6 +1,8 @@
 <div align="center">
-  <h1>TasteHealthy</h1>
-  <a href="https://travis-ci.org/sundowndev/TasteHealthy"><img src="https://travis-ci.org/sundowndev/TasteHealthy.svg?branch=master" alt="Build Status"></a>
+  <img src="client/app/images/logo.png" alt="">
+  <a href="https://travis-ci.org/sundowndev/TasteHealthy">
+    <img src="https://travis-ci.org/sundowndev/TasteHealthy.svg?branch=master" alt="Build Status">
+  </a>
 </div>
 
 ## Qu'est-ce que c'est ?
