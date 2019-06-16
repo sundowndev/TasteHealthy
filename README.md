@@ -1,7 +1,7 @@
 <div align="center">
-  <img src="client/app/images/logo.png" alt="">
+  <img src="client/app/images/logo.png" alt=""><br>
   <a href="https://travis-ci.org/sundowndev/TasteHealthy">
-    <img src="https://travis-ci.org/sundowndev/TasteHealthy.svg?branch=master" alt="Build Status">
+    <img src="https://img.shields.io/travis/sundowndev/TasteHealthy/master.svg?style=flat-square" alt="Build Status">
   </a>
 </div>
 
