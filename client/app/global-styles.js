@@ -8,10 +8,18 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Apercu';
+    font-family: 'Apercu'!important;
     min-height: 100%;
     min-width: 100%;
     color: #33176E;
+  }
+  
+  input,
+  select,
+  button {
+    outline: none;
+    border: none;
+    cursor: pointer;
   }
 
   h1 {
@@ -38,7 +46,10 @@ const GlobalStyle = createGlobalStyle`
     transform: translateY(3vw);
     margin: auto;
     position: relative;
-    z-index: 1;
+  }
+
+  a {
+    text-decoration: none;
   }
 
   select {
@@ -48,7 +59,7 @@ const GlobalStyle = createGlobalStyle`
 
   p,
   label {
-    font-family: 'Apercu';
+    font-family: 'Apercu' !important;
     line-height: 1.5em;
     color: #33176E;
   }
@@ -56,7 +67,7 @@ const GlobalStyle = createGlobalStyle`
   .logo {
     position: absolute !important;
     top: 0px !important;
-    z-index: 999;
+    z-index: 2;
     width: 137px;
     height: 120px;
   }

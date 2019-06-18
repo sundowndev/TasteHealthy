@@ -32,7 +32,6 @@ const ModalElement = (props: Props) => {
         <button type="button" onClick={() => toggleModal(false)}>
           close
         </button>
-        <div>I am a modal</div>
       </Modal>
     </div>
   );

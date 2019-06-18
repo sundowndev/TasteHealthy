@@ -23,7 +23,7 @@ export default function App() {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/meals" component={MealsPage} />
-        <Route exact path="/result" component={ResultPage} />
+        <Route path="/result/:mealType" component={ResultPage} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

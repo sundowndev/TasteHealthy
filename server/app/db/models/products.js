@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 export default (sequelize, DataTypes) => {
   const Products = sequelize.define('Products', {
     product_name: {
@@ -25,7 +26,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
     packaging: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false,
     },
     manufacturing_places: {
@@ -33,7 +34,7 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
     },
     countries: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: false,
     },
     labels: {

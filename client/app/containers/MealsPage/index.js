@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 // @flow
+/* eslint-disable */
 
 /*
  * HomePage
@@ -11,11 +12,25 @@
  */
 
 import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
-// import { withRouter } from 'react-router';
-import messages from './messages';
+import ModalComponent from './components/ModalComponent';
+import { updateStore } from './utils';
+import '../../styles/mealsPage.css';
+import close from '../../images/close.png';
+
+import leftArrow from '../../images/left-arrow.png';
+import rightArrow from '../../images/right-arrow.png';
+import choice from '../../images/choice.jpg';
+import panier from '../../images/panier.jpg';
+import more from '../../images/more.png';
+import breakfast from '../../images/breakfast.png';
+import lunch from '../../images/lunch.png';
+import snack from '../../images/snack.png';
+import dinner from '../../images/dinner.png';
+
+import check from '../../images/check.png';
+// import pen from '../../images/pen.png';
 
 import {
   changeLunch,
@@ -23,6 +38,8 @@ import {
   changeSnack,
   changeDinner,
 } from './actions';
+
+Modal.setAppElement('#modal');
 
 type mealsType = {
   breakfast: any,
@@ -32,132 +49,119 @@ type mealsType = {
 };
 
 type propsType = {
-  changeBreakfast: mealsType => any,
-  changeLunch: mealsType => any,
-  changeSnack: mealsType => any,
-  changeDinner: mealsType => any,
   mealsData: mealsType,
+  history: {
+    push: string => void,
+  },
+  changeBreakfast: any,
+  changeLunch: any,
+  changeDinner: any,
+  changeSnack: any,
 };
 
 const customStyles = {
   content: {
-    top: '5%',
-    left: '5%',
-    right: '5%',
-    bottom: '5%',
+    top: '0%',
+    left: '0%',
+    right: '0%',
+    bottom: '0%',
+    width: '100%',
+    height: '100%',
+    border: 'none',
   },
-};
-
-const SearchBar = () => {
-  const [valueSearch, handleChange] = useState('');
-  return (
-    <input
-      type="text"
-      value={valueSearch}
-      onChange={e => handleChange(e.target.value)}
-      placeholder="Search..."
-    />
-  );
-};
-
-const ModalComponent = ({ mealsData }: { mealsData: mealsType }) => {
-  const [consummedAliments, changeConsumedAliments] = useState([]);
-  const [meals, setMeals] = useState(mealsData);
-  return (
-    <div>
-      <SearchBar />
-      {[
-        { name: 'ZAEAZZE', id: 132, quantity: 100 },
-        { name: 'fsddsfsd', id: 341, quantity: 100 },
-      ].map(_ => (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-        <div
-          onClick={() => {
-            if (!consummedAliments.some(e => e.id === _.id)) {
-              changeConsumedAliments(consummedAliments.concat([_]));
-            }
-          }}
-          key={_.id}
-        >
-          {_.name}
-        </div>
-      ))}
-      <button
-        type="button"
-        onClick={() =>
-          setMeals({
-            ...meals,
-            breakfast: {
-              test: 'OK',
-            },
-          })
-        }
-      >
-        Valider
-      </button>
-      <h1>Aliments consommés</h1>
-      {consummedAliments.map(el => (
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
-        <div>
-          <h1
-            key={el.id}
-            onClick={() =>
-              changeConsumedAliments(
-                consummedAliments.filter(ll => ll.id !== el.id),
-              )
-            }
-          >
-            {el.name}
-            {el.quantity} gr
-          </h1>
-          <p
-            onClick={() => {
-              const tt = consummedAliments.map(aliment => {
-                if (aliment.id === el.id) {
-                  if (el.quantity > 100) {
-                    aliment.quantity -= 100;
-                  }
-                }
-                return aliment;
-              });
-              changeConsumedAliments(tt);
-            }}
-          >
-            -
-          </p>
-          <p
-            onClick={() => {
-              const tt = consummedAliments.map(aliment => {
-                if (aliment.id === el.id) {
-                  aliment.quantity += 100;
-                }
-                return aliment;
-              });
-              changeConsumedAliments(tt);
-            }}
-          >
-            +
-          </p>
-        </div>
-      ))}
-    </div>
-  );
 };
 
 export const HomePage = (props: propsType) => {
   const [modalIsOpen, toggleModal] = useState(false);
   const [currentModalName, changeModalName] = useState(null);
 
+  // eslint-disable-next-line no-shadow
+  const { changeBreakfast, changeLunch, changeDinner, changeSnack } = props;
+
+  const getMealData = () => {
+    const keys = Object.keys(props.mealsData);
+    for (let i = 0; i < keys.length; i += 1) {
+      if (props.mealsData[keys[i]].consummedAliments.length > 0) {
+        return keys[i];
+      }
+    }
+    return null;
+  };
+
+  const SummaryComponent = ({
+    name,
+    quantity,
+    index,
+  }: {
+    name: string,
+    quantity: number,
+    index: number,
+  }) => (
+    <div>
+      <div className="validateFood">
+        <div>
+          <p>{name}</p>
+          <p className="weight">{quantity}gr</p>
+        </div>
+        <img
+          onClick={() => {
+            const consummedAliments = props.mealsData[
+              currentModalName
+            ].consummedAliments.filter(
+              (item, indexValue) => indexValue !== index,
+            );
+            updateStore(
+              currentModalName,
+              consummedAliments,
+              props.mealsData,
+              changeBreakfastData,
+              changeDinnerData,
+              changeSnackData,
+              changeLunchData,
+            );
+          }}
+          src={close}
+          alt="close"
+        />
+      </div>
+    </div>
+  );
+
+  const openModal = (name: string) => {
+    toggleModal(true);
+    changeModalName(name);
+  };
+
   const afterOpenModal = () => {};
 
-  // const changeBreakfast = data => props.changeBreakfast(data);
-  // const changeLunch = data => props.changeLunch(data);
-  // const changeDinner = data => props.changeDinner(data);
-  // const changeSnack = data => props.changeSnack(data);
+  const getMeal = () => {
+    switch (currentModalName) {
+      case 'breakfast':
+        return 'Petit Déjeuner';
+      case 'lunch':
+        return 'Déjeuner';
+      case 'snack':
+        return 'Goûter';
+      case 'dinner':
+        return 'Dîner';
+      default:
+        return null;
+    }
+  };
+
+  const changeBreakfastData = data => changeBreakfast(data);
+  const changeLunchData = data => changeLunch(data);
+  const changeDinnerData = data => changeDinner(data);
+  const changeSnackData = data => changeSnack(data);
 
   return (
-    <h1>
+    <div
+      className="choiceContainer"
+      style={{
+        backgroundImage: `url(${choice})`,
+        backgroundSize: '100% 100%',
+      }}
+    >
       {/**
        * Modal component
        */}
@@ -168,52 +172,190 @@ export const HomePage = (props: propsType) => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <button type="button" onClick={() => toggleModal(false)}>
-          close
-        </button>
-        <div>{currentModalName}</div>
-        <ModalComponent mealsData={props.mealsData} />
+        <div className="mealsPage">
+          <div className="modalContainer">
+            <img
+              className="closeModal"
+              onClick={() => toggleModal(false)}
+              src={close}
+              alt="close"
+            />
+            <div
+              className="searchContainer"
+              style={{
+                backgroundImage: `url(${panier})`,
+                backgroundSize: '100% 100%',
+              }}
+            >
+              <ModalComponent
+                props={props}
+                currentModalName={currentModalName}
+              />
+            </div>
+            <div className="summaryContainer">
+              <div className="modalContent">
+                <h1>{getMeal()}</h1>
+                {currentModalName &&
+                  props.mealsData[currentModalName].consummedAliments.map(
+                    (el, index) => (
+                      <SummaryComponent
+                        name={el.product_name}
+                        quantity={el.quantity}
+                        index={index}
+                      />
+                    ),
+                  )}
+                <div className="buttonsContainer">
+                  <button
+                    onClick={() => {
+                      const consummedAliments = [];
+                      updateStore(
+                        currentModalName,
+                        consummedAliments,
+                        props.mealsData,
+                        changeBreakfastData,
+                        changeDinnerData,
+                        changeSnackData,
+                        changeLunchData,
+                      );
+                    }}
+                    type="button"
+                    className="resetButton"
+                  >
+                    Vider
+                  </button>
+                  <button
+                    onClick={() => currentModalName && toggleModal(false)}
+                    type="button"
+                  >
+                    Valider
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </Modal>
       {/**  */}
 
-      <FormattedMessage {...messages.header} />
-      <button
-        type="button"
-        onClick={() => {
-          toggleModal(true);
-          changeModalName('Breakfast');
-        }}
-      >
-        Breakfast
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          toggleModal(true);
-          changeModalName('Lunch');
-        }}
-      >
-        Lunch
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          toggleModal(true);
-          changeModalName('Dinner');
-        }}
-      >
-        Dinner
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          toggleModal(true);
-          changeModalName('Snack');
-        }}
-      >
-        Snack
-      </button>
-    </h1>
+      <div className="choicePageContainer">
+        <a className="backLink" href="/">
+          <img alt="backArrow" className="backArrow" src={leftArrow} />
+          <p className="backText">Retour</p>
+        </a>
+
+        <h1 className="choiceText">
+          {/* <FormattedMessage {...messages.header} /> */}
+          Remplissez le(s) repas <br /> de votre choix.
+        </h1>
+
+        <div className="mealsButtonsContainer">
+          <div className="articlesContainer">
+            <img
+              alt="mealsPictures"
+              className="mealsPictures"
+              src={breakfast}
+            />
+            <button
+              className="mealButtons"
+              type="button"
+              onClick={() => {
+                openModal('breakfast');
+              }}
+            >
+              Petit Déjeuner
+              <img
+                alt="more"
+                className="more"
+                src={
+                  props.mealsData.breakfast.consummedAliments.length > 0
+                    ? check
+                    : more
+                }
+              />
+            </button>
+          </div>
+
+          <div className="articlesContainer">
+            <img alt="mealsPictures" className="mealsPictures" src={lunch} />
+            <button
+              className="mealButtons"
+              type="button"
+              onClick={() => {
+                openModal('lunch');
+              }}
+            >
+              Déjeuner
+              <img
+                alt="more"
+                className="more"
+                src={
+                  props.mealsData.lunch.consummedAliments.length > 0
+                    ? check
+                    : more
+                }
+              />
+            </button>
+          </div>
+
+          <div className="articlesContainer">
+            <img alt="mealsPictures" className="mealsPictures" src={snack} />
+            <button
+              className="mealButtons"
+              type="button"
+              onClick={() => {
+                openModal('snack');
+              }}
+            >
+              Goûter
+              <img
+                alt="more"
+                className="more"
+                src={
+                  props.mealsData.snack.consummedAliments.length > 0
+                    ? check
+                    : more
+                }
+              />
+            </button>
+          </div>
+
+          <div className="articlesContainer">
+            <img alt="mealsPictures" className="mealsPictures" src={dinner} />
+            <button
+              className="mealButtons"
+              type="button"
+              onClick={() => {
+                openModal('dinner');
+              }}
+            >
+              Dinner
+              <img
+                alt="more"
+                className="more"
+                src={
+                  props.mealsData.dinner.consummedAliments.length > 0
+                    ? check
+                    : more
+                }
+              />
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={() =>
+            getMealData() && props.history.push(`/result/${getMealData()}`)
+          }
+        >
+          <div className="datavizLink">
+            <p className="linkText">Visualiser</p>
+            <img alt="rightArrow" className="rightArrow" src={rightArrow} />
+          </div>
+        </button>
+      </div>
+    </div>
   );
 };
 
